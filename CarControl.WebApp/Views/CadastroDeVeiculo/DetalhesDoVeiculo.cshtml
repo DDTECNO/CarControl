@@ -1,0 +1,60 @@
+﻿@model CarControl.Domain.Veiculo
+
+@{
+    ViewData["Title"] = "Detalhes do veículo";
+}
+
+<h1>Detalhes do veículo</h1>
+
+<div>
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Marca)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Marca)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Modelo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Modelo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TpVeiculo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TpVeiculo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Cor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Cor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.PlacaVeiculo)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.PlacaVeiculo)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NmCondutor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NmCondutor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.CpfCondutor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.CpfCondutor)
+        </dd>
+    </dl>
+</div>
+<div>
+    @Html.ActionLink("Editar", "EditarVeiculo", new { id=Model.IdVeiculo }) |
+    <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
+    <a asp-controller="CadastroDeVeiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
+    <a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
+</div>

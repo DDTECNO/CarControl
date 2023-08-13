@@ -1,0 +1,70 @@
+﻿@model CarControl.Domain.Veiculo
+
+@{
+    ViewData["Title"] = "Excluir veículo";
+}
+
+<h1>Excluir</h1>
+
+<h3>Deseja excluir esse veículo?</h3>
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="ExcluirVeiculo" id="searchForm">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Marca" class="control-label"></label>
+                <input asp-for="Marca" disabled="disabled" class="form-control" />
+                <span asp-validation-for="Marca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Modelo" class="control-label"></label>
+                <input asp-for="Modelo" disabled="disabled" class="form-control" />
+                <span asp-validation-for="Modelo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PlacaVeiculo" class="control-label">Placa do veículo</label>
+                <input asp-for="PlacaVeiculo" disabled="disabled" class="form-control" />
+                <span asp-validation-for="PlacaVeiculo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NmCondutor" class="control-label">Nome do condutor</label>
+                <input asp-for="NmCondutor" disabled="disabled" class="form-control" />
+                <span asp-validation-for="NmCondutor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CpfCondutor" class="control-label"> CPf do condutor</label>
+                <input asp-for="CpfCondutor" disabled="disabled" class="form-control" />
+                <span asp-validation-for="CpfCondutor" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdVeiculo" hidden class="control-label">Código do Veículo</label>
+                <input asp-for="IdVeiculo" hidden id="idVeiculo" class="form-control" />
+                <span asp-validation-for="IdVeiculo" hidden class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" id="btnExcluirVeiculo" value="Excluir" class="btn btn-danger" />
+            </div>
+        </form>
+    </div>
+</div>
+    
+
+        <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
+        <a asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
+        <a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script type="text/jscript">
+        $('#btnExcluirVeiculo').click(function () {
+            var url = "/CadastroDeVeiculo/ExcluirVeiculo";
+            var id = $("#idVeiculo").val();
+            $.post(url, { idVeiculo: id }
+                    });
+                })
+    </script>
+
+}

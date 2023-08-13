@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CarControl.Domain.Vaga>
+
+@{
+    ViewData["Title"] = "Consultar vagas";
+}
+
+<h1>Consultar vagas</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NmVaga)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.flVaga)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IdVeiculo)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NmVaga)
+                </td>
+                @if(item.flVaga.ToString() == "D"){
+                <td class="flagVagaDisponivel" id="flagVaga" >
+                    @Html.DisplayFor(modelItem => item.flVaga)
+                </td>
+
+                }
+                else{
+                    <td class="flagVagaIndisponivel" id="flagVaga">
+                        @Html.DisplayFor(modelItem => item.flVaga)
+                    </td>
+                }
+                <td>
+                    @Html.DisplayFor(modelItem => item.IdVeiculo)
+                </td>
+                <td class="tdIdVeiculo">
+                    @Html.ActionLink("Registrar movimento", "RegistrarMovimento", "RegistroDeMovimento", new {  id=item.IdVeiculo })
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>
+<a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
+<a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
+

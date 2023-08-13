@@ -1,0 +1,55 @@
+﻿@model IEnumerable<CarControl.Domain.Veiculo>
+
+@{
+    ViewData["Title"] = "Veículos cadastrados";
+}
+
+<h1>Veículos cadastrados</h1>
+
+<p>
+    
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.IdVeiculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PlacaVeiculo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NmCondutor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CpfCondutor)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdVeiculo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlacaVeiculo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NmCondutor)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CpfCondutor)
+            </td>
+            <td>
+
+                @Html.ActionLink("Editar", "EditarVeiculo", new {  id=item.IdVeiculo  }) |
+                @Html.ActionLink("Detalhes", "DetalhesDoVeiculo", new {  id=item.IdVeiculo}) |
+                @Html.ActionLink("Excluir", "Excluir", new { id=item.IdVeiculo }) |
+                @Html.ActionLink("Inserir Entrada", "RegistroDeEntrada", "RegistroDeMovimento" )
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
