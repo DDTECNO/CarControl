@@ -46,25 +46,7 @@ namespace CarControl.WebApp.Controllers
             return View(movimentoViewModel);
         }
 
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+   
 
         #endregion GET
 
@@ -94,35 +76,6 @@ namespace CarControl.WebApp.Controllers
 
         }
 
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(RegistroDeEntrada));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
- 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(RegistroDeEntrada));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
         #endregion POST
     }
