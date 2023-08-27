@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32804.467
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.WebApp", "CarControl.WebApp.csproj", "{A62BE3BD-C07A-4EB6-ADC5-227C07211086}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.WebApp", "CarControl.WebApp.csproj", "{A62BE3BD-C07A-4EB6-ADC5-227C07211086}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.Service", "..\CarControl.Service\CarControl.Service.csproj", "{474AAF51-06BB-4F3C-A83E-777AA000B7DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Service", "..\CarControl.Service\CarControl.Service.csproj", "{474AAF51-06BB-4F3C-A83E-777AA000B7DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.Domain", "..\CarControl.Domain\CarControl.Domain.csproj", "{E35F273C-D1B2-4475-A977-C5893A99E58F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Domain", "..\CarControl.Domain\CarControl.Domain.csproj", "{E35F273C-D1B2-4475-A977-C5893A99E58F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.Infrastructure", "..\CarControl.Infrastructure\CarControl.Infrastructure.csproj", "{D6F54C8C-F881-4CBD-BF8D-DEEDC4B6A53D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Infrastructure", "..\CarControl.Infrastructure\CarControl.Infrastructure.csproj", "{D6F54C8C-F881-4CBD-BF8D-DEEDC4B6A53D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
