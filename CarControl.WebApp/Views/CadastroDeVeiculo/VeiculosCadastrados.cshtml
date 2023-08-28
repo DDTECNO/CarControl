@@ -47,7 +47,7 @@
                 @Html.ActionLink("Editar", "EditarVeiculo", new {  id=item.IdVeiculo  }) |
                 @Html.ActionLink("Detalhes", "DetalhesDoVeiculo", new {  id=item.IdVeiculo}) |
                 @Html.ActionLink("Excluir", "Excluir", new { id=item.IdVeiculo }) |
-                <a href="@Url.Action("RegistroPrincipal", "RegistroDeMovimento")?IdVeiculo=@item.IdVeiculo">Resgistrar Movimento</a>
+                <a href="@Url.Action("RegistroDeEntrada", "RegistroDeMovimento")?IdVeiculo=@item.IdVeiculo">Resgistrar Movimento</a>
             </td>
         </tr>
 }

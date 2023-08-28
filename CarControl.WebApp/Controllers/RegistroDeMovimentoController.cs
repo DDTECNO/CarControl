@@ -29,7 +29,7 @@ namespace CarControl.WebApp.Controllers
         #region GET 
 
   
-        public ActionResult RegistroPrincipal(int idVeiculo = 0)
+        public ActionResult RegistroDeEntrada(int idVeiculo = 0)
         {
             if (idVeiculo != 0)
             {
@@ -88,12 +88,14 @@ namespace CarControl.WebApp.Controllers
         public ActionResult RegistroDeMovimentoDeVeiculo(MovimentoViewModel movimentoViewModel)
         {
             
+            //Movimento movimento  =  new Movimento();
 
+            //movimento.
          
-            if (ModelState.IsValid)
-            {
-                //_movimentoRepository.RegistrarEntrada(movimento);
-            }
+            //if (ModelState.IsValid)
+            //{
+            //    _movimentoRepository.RegistrarEntrada(movimentoViewModel);
+            //}
             return RedirectToAction("VeiculosCadastrados");
 
         }

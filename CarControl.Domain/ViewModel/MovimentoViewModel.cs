@@ -33,10 +33,6 @@ namespace CarControl.Domain.ViewModel
         [Required(ErrorMessage = "A operação é obrigatória")]
         public int idOperacao { get; set; }
 
-        [Required(ErrorMessage = "O tipo de movimento é obrigatório")]
-        public char TpMovimento { get; set; }
-
-
-
+    
     }
 }
