@@ -3,6 +3,7 @@ using CarControl.Domain.ViewModel;
 using CarControl.Infrastructure.Repositories.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace CarControl.WebApp.Controllers
@@ -26,24 +27,44 @@ namespace CarControl.WebApp.Controllers
         #endregion REPOSITORY
 
         #region GET 
-        public ActionResult RegistroDeEntrada()
+
+  
+        public ActionResult RegistroPrincipal(int idVeiculo = 0)
         {
-            
-            
+            if (idVeiculo != 0)
+            {
+                Veiculo veiculo = _veiculoRepository.obterVeiculos(idVeiculo);
+
+                IList<Veiculo> veiculos1 = new List<Veiculo>(); 
+                veiculos1.Add(veiculo);
+
+                IList<Vaga> vgs = _vagaRepository.ListaVaga();
+                IList<Operacao> ops = _operacaoRepository.ListaOperacao();
+                var mvViewModel1 = new MovimentoViewModel()
+                {
+                    Veiculos = veiculos1,
+                    Vagas = vgs,
+                    Operacoes = ops,
+
+                };
+               
+                return View(mvViewModel1);
+
+            }
+           
             IList<Veiculo> veiculos = _veiculoRepository.ListaVeiculos();
             IList<Vaga> vagas = _vagaRepository.ListaVaga();
             IList<Operacao> operacoes = _operacaoRepository.ListaOperacao();
 
-
-
             var movimentoViewModel = new MovimentoViewModel()
             {
                 Veiculos = veiculos,
-                Vagas=vagas,    
-                Operacoes=operacoes,    
+                Vagas = vagas,
+                Operacoes = operacoes,
             };
-            
-            
+
+
+
             return View(movimentoViewModel);
         }
 
@@ -64,7 +85,7 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RegistroDeEntradaDeVeiculo(MovimentoViewModel movimentoViewModel)
+        public ActionResult RegistroDeMovimentoDeVeiculo(MovimentoViewModel movimentoViewModel)
         {
             
 
