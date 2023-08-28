@@ -23,6 +23,9 @@ namespace CarControl.Domain
 
         [Required(ErrorMessage = "O tipo de opreção do veículo é obrigatório")]
         public Operacao IdTpOperacao { get; set; }
+
+        [Required(ErrorMessage = "O tipo de movimento (entrada e saída) é obrigatório")]
+        public char TpMovimento { get; set; }
         public Movimento()
         {
 
