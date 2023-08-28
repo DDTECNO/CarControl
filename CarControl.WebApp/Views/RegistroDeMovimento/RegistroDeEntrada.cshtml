@@ -24,23 +24,23 @@
 
             <div class="form-group">
                 <label asp-for="Veiculos" class="control-label">Selecione o CPF do condutor</label>
-                @Html.DropDownListFor(model => model.idVeiculo, new SelectList(Model.Veiculos, "IdVeiculo","CpfCondutor"),"Selecione um condutor"
+                @Html.DropDownListFor(model => model.IdVeiculo, new SelectList(Model.Veiculos, "IdVeiculo","CpfCondutor"),"Selecione um condutor"
                 , new { @class = "form-control" })
-                <span asp-validation-for="idVeiculo" class="text-danger"></span>
+                <span asp-validation-for="IdVeiculo" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Vagas" class="control-label">Selecione a vaga</label>
-                @Html.DropDownListFor(model => model.idVaga, new SelectList(Model.Vagas, "IdVaga","NmVaga"),"Selecione uma vaga"
+                @Html.DropDownListFor(model => model.IdVaga, new SelectList(Model.Vagas, "IdVaga","NmVaga"),"Selecione uma vaga"
                 , new { @class = "form-control" })
-                <span asp-validation-for="idVaga" class="text-danger"></span>
+                <span asp-validation-for="IdVaga" class="text-danger"></span>
             </div>
 
             <div class="form-group">
                 <label asp-for="Operacoes" class="control-label">Selecione o tipo de operação</label>
-                @Html.DropDownListFor(model => model.idOperacao, new SelectList(Model.Operacoes, "IdTpOperacao","nmOperacao"),"Selecione uma operação"
+                @Html.DropDownListFor(model => model.IdOperacao, new SelectList(Model.Operacoes, "IdTpOperacao","nmOperacao"),"Selecione uma operação"
                 , new { @class = "form-control" })
-                <span asp-validation-for="idOperacao" class="text-danger"></span>
+                <span asp-validation-for="IdOperacao" class="text-danger"></span>
             </div>
 
             <div class="form-group">

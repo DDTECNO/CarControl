@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
 {
@@ -15,7 +16,7 @@ namespace CarControl.Domain
         [Display(Name = "Situação da vaga")]
         public char flVaga { get; set; }
 
-
+        public ICollection<Movimento> Movimentos { get; set; }
         public Vaga()
         {
 

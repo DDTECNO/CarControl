@@ -21,18 +21,20 @@ namespace CarControl.Domain.ViewModel
         public IList<Vaga> Vagas { get; set; }
 
         [Required(ErrorMessage = "A vaga do veículo é obrigatória")]
-        public int idVaga { get; set; }
+        public int IdVaga { get; set; }
 
         public IList<Veiculo> Veiculos { get; set; }
 
         [Required(ErrorMessage = "O veículo é obrigatório")]
-        public int idVeiculo { get; set; }
+        public int IdVeiculo { get; set; }
 
         public IList<Operacao> Operacoes { get; set; }
 
         [Required(ErrorMessage = "A operação é obrigatória")]
-        public int idOperacao { get; set; }
+        public int IdOperacao { get; set; }
 
-    
+
+
+
     }
 }

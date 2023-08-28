@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CarControl.Domain.ViewModel;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
@@ -19,14 +20,18 @@ namespace CarControl.Domain
         public TimeSpan? HrSaida  { get; set; }
 
         [Required(ErrorMessage = "A vaga do veículo é obrigatória")]
-        public Vaga IdVaga { get; set; }
+        public int IdVaga { get; set; }
+        public Vaga Vaga { get; set; }
 
         [Required(ErrorMessage = "O tipo de opreção do veículo é obrigatório")]
-        public Operacao IdTpOperacao { get; set; }
+        public int IdTpOperacao { get; set; }
+        public Operacao TpOperacao { get; set; }
 
         public Movimento()
         {
 
         }
+
+
     }
 }

@@ -3,6 +3,7 @@ using System;
 using CarControl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarControl.Infrastructure.Migrations
 {
     [DbContext(typeof(CarControlContext))]
-    partial class CarControlContextModelSnapshot : ModelSnapshot
+    [Migration("20230828054702_atualizaOperacao")]
+    partial class atualizaOperacao
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -46,6 +49,8 @@ namespace CarControl.Infrastructure.Migrations
                     b.HasKey("IdMovimento", "IdVeiculo");
 
                     b.HasIndex("IdTpOperacao");
+
+                    b.HasIndex("IdVaga");
 
                     b.ToTable("Movimento");
                 });
@@ -130,30 +135,20 @@ namespace CarControl.Infrastructure.Migrations
             modelBuilder.Entity("CarControl.Domain.Movimento", b =>
                 {
                     b.HasOne("CarControl.Domain.Operacao", "TpOperacao")
-                        .WithMany("Movimentos")
+                        .WithMany()
                         .HasForeignKey("IdTpOperacao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CarControl.Domain.Vaga", "Vaga")
-                        .WithMany("Movimentos")
-                        .HasForeignKey("IdTpOperacao")
+                        .WithMany()
+                        .HasForeignKey("IdVaga")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("TpOperacao");
 
                     b.Navigation("Vaga");
-                });
-
-            modelBuilder.Entity("CarControl.Domain.Operacao", b =>
-                {
-                    b.Navigation("Movimentos");
-                });
-
-            modelBuilder.Entity("CarControl.Domain.Vaga", b =>
-                {
-                    b.Navigation("Movimentos");
                 });
 #pragma warning restore 612, 618
         }
