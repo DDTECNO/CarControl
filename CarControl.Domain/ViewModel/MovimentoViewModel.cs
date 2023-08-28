@@ -9,27 +9,28 @@ namespace CarControl.Domain.ViewModel
 {
     public class MovimentoViewModel
     {
-        public int IdMovimento { get; set; }
 
         [Display(Name = "Data de entrada")]
         [Required(ErrorMessage = "A data de entrada do veículo é obrigatória")]
         public DateTime DtEntrada { get; set; }
 
-
         [Display(Name = "Hora de entrada")]
         [Required(ErrorMessage = "A hora de entrada do veículo é obrigatória")]
         public TimeSpan HrEntrada { get; set; }
 
-
-        [Required(ErrorMessage = "A vaga do veículo é obrigatória")]
         public IList<Vaga> Vagas { get; set; }
 
+        [Required(ErrorMessage = "A vaga do veículo é obrigatória")]
+        public int idVaga { get; set; }
 
-        [Required(ErrorMessage = "O veículo é obrigatório")]
         public IList<Veiculo> Veiculos { get; set; }
 
-        [Required(ErrorMessage = "A opreção é obrigatória")]
+        [Required(ErrorMessage = "O veículo é obrigatório")]
+        public int idVeiculo { get; set; }
+
         public IList<Operacao> Operacoes { get; set; }
+        [Required(ErrorMessage = "A operação é obrigatória")]
+        public int idOperacao { get; set; }
 
 
 

@@ -29,6 +29,7 @@ namespace CarControl.WebApp.Controllers
         public ActionResult RegistroDeEntrada()
         {
             
+            
             IList<Veiculo> veiculos = _veiculoRepository.ListaVeiculos();
             IList<Vaga> vagas = _vagaRepository.ListaVaga();
             IList<Operacao> operacoes = _operacaoRepository.ListaOperacao();
@@ -63,7 +64,7 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RegistroDeEntradaDeVeiculo(Movimento movimento)
+        public ActionResult RegistroDeEntradaDeVeiculo(MovimentoViewModel movimentoViewModel)
         {
             
 
