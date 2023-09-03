@@ -105,7 +105,7 @@ namespace CarControl.WebApp.Controllers
             {
                 _movimentoRepository.RegistrarEntrada(movimento);
             }
-            return RedirectToAction("VeiculosCadastrados");
+            return RedirectToAction("RegistroDeEntrada");
 
         }
 

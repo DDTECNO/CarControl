@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
@@ -23,7 +24,7 @@ namespace CarControl.Domain
 
         public Vaga()
         {
-
+            Movimentos = new Collection<Movimento>();
         }
     }
 }
