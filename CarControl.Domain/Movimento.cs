@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
 {
-    public class Movimento:BaseModel
+    public class Movimento
     {
         public int IdMovimento { get; set; }
 
@@ -26,6 +26,12 @@ namespace CarControl.Domain
         [Required(ErrorMessage = "O tipo de opreção do veículo é obrigatório")]
         public int IdTpOperacao { get; set; }
         public Operacao TpOperacao { get; set; }
+
+        [Required(ErrorMessage = "O veículo é obrigatório")]
+        public int IdVeiculo { get; set; }
+
+        public Veiculo Veiculo { get; set; }
+
 
         public Movimento()
         {

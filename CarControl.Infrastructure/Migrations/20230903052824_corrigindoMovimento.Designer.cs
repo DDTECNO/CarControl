@@ -3,6 +3,7 @@ using System;
 using CarControl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarControl.Infrastructure.Migrations
 {
     [DbContext(typeof(CarControlContext))]
-    partial class CarControlContextModelSnapshot : ModelSnapshot
+    [Migration("20230903052824_corrigindoMovimento")]
+    partial class corrigindoMovimento
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -39,9 +42,6 @@ namespace CarControl.Infrastructure.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("IdVaga")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("IdVeiculo")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("IdMovimento");

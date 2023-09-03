@@ -95,16 +95,9 @@ namespace CarControl.WebApp.Controllers
                 DtEntrada = movimentoViewModel.DtEntrada,
                 HrEntrada = movimentoViewModel.HrEntrada,
                 IdVeiculo = movimentoViewModel.IdVeiculo,
+                IdVaga = movimentoViewModel.IdVaga,             
+                IdTpOperacao = movimentoViewModel.IdOperacao
 
-                Vaga = new Vaga
-                {
-                    IdVaga = movimentoViewModel.IdVaga,
-                },
-
-                TpOperacao = new Operacao
-                {
-                    IdTpOperacao = movimentoViewModel.IdOperacao
-                },
 
             };
 

@@ -1,10 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
 {
-    public class Veiculo:BaseModel
+    public class Veiculo
     {
-       
+        [Display(Name = "Código do veículo")]
+        [Required(ErrorMessage = "O veículo é obrigatório. Caso não conste, cadastrar o mesmo")]
+        public int IdVeiculo { get; set; }
+
         [MinLength(3, ErrorMessage = "A marca do veículo deve ter no mínimo 3 caracteres")]
         [MaxLength(20, ErrorMessage = "A marca do veículo deve ter no máximo 20 caracteres")]
         [Required(ErrorMessage = "A marca do veículo é obrigatória")]
@@ -44,6 +48,7 @@ namespace CarControl.Domain
         [Required(ErrorMessage = "O CPF do codutor do veículo é obrigatório")]
         public long CpfCondutor { get; set; }
 
+        public ICollection<Movimento> Movimentos { get; set; }
 
         public void Atualiza(Veiculo novoCadastro)
         {

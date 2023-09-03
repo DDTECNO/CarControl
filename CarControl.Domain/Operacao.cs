@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
 {
-    public class Operacao : BaseModel
+    public class Operacao
     {
         public int IdTpOperacao { get; set; }
        

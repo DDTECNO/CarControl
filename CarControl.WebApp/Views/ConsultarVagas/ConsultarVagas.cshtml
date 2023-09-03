@@ -15,9 +15,6 @@
             <th>
                 @Html.DisplayNameFor(model => model.flVaga)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IdVeiculo)
-            </th>
             <th></th>
         </tr>
     </thead>
@@ -39,12 +36,9 @@
                         @Html.DisplayFor(modelItem => item.flVaga)
                     </td>
                 }
-                <td>
-                    @Html.DisplayFor(modelItem => item.IdVeiculo)
-                </td>
                 <td class="tdIdVeiculo">
-                    @Html.ActionLink("Registrar movimento", "RegistrarMovimento", "RegistroDeEntrada", new {  id=item.IdVeiculo })
-                </td>
+@*                     @Html.ActionLink("Registrar movimento", "RegistrarMovimento", "RegistroDeEntrada", new {  id=item.IdVeiculo })
+ *@                </td>
 
             </tr>
         }

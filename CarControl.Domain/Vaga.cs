@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
 {
-    public class Vaga : BaseModel
+    public class Vaga
     {
         public int IdVaga { get; set; }
 
@@ -16,7 +16,11 @@ namespace CarControl.Domain
         [Display(Name = "Situação da vaga")]
         public char flVaga { get; set; }
 
+
+
         public ICollection<Movimento> Movimentos { get; set; }
+
+
         public Vaga()
         {
 

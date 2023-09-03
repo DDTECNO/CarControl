@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarControl.Infrastructure.Repositories
 {
-    public class BaseRepository<T> where T : BaseModel
+    public class BaseRepository<T> where T :  class
     {
         protected readonly CarControlContext _context;
 
