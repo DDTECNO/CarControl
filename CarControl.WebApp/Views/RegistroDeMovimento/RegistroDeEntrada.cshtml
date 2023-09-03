@@ -34,7 +34,7 @@
                 @{
                     var flVaga = Model.Vagas.Where(v => v.flVaga.Equals('D')).ToList();
 
-                    var selectList = new SelectList(flVaga, "IdVaga", "NmVaga");
+                    var selectList = flVaga.Count() != 0 ? new SelectList(Model.Vagas, "IdVaga", "NmVaga") : new SelectList(new List<SelectListItem> { new SelectListItem { Text = "Nenhuma vaga disponível", Value = "" } }, "Value", "Text");
                 }
                 @Html.DropDownListFor( model => model.IdVaga,selectList,"Selecione uma vaga", new { @class = "form-control" })
                 <span asp-validation-for="IdVaga" class="text-danger"></span>
