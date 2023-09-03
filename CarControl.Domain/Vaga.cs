@@ -26,5 +26,11 @@ namespace CarControl.Domain
         {
             Movimentos = new Collection<Movimento>();
         }
+
+        public void AtualizaFlVaga(Vaga novoCadastro)
+        {
+            this.flVaga = novoCadastro.flVaga;
+
+        }
     }
 }

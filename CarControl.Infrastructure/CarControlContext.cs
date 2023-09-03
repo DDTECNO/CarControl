@@ -22,8 +22,11 @@ namespace CarControl.Infrastructure
             modelBuilder.Entity<Movimento>().Property(e => e.IdMovimento).ValueGeneratedOnAdd();
 
             modelBuilder.Entity<Movimento>().HasOne(m => m.TpOperacao).WithMany(o => o.Movimentos).HasForeignKey(m => m.IdTpOperacao);
-            modelBuilder.Entity<Movimento>().HasOne(m => m.Veiculo).WithMany(o => o.Movimentos).HasForeignKey(m => m.IdTpOperacao);
-            modelBuilder.Entity<Movimento>().HasOne(s => s.Vaga).WithMany(o => o.Movimentos).HasForeignKey(m => m.IdTpOperacao);
+            modelBuilder.Entity<Movimento>().HasOne(m => m.Veiculo).WithMany(o => o.Movimentos).HasForeignKey(m => m.IdVeiculo);
+            modelBuilder.Entity<Movimento>().HasOne(s => s.Vaga).WithMany(o => o.Movimentos).HasForeignKey(m => m.IdVaga);
+            modelBuilder.Entity<Movimento>().HasIndex(e => e.IdTpOperacao).IsUnique(false);
+            modelBuilder.Entity<Movimento>().HasIndex(e => e.IdVaga).IsUnique(false);
+            modelBuilder.Entity<Movimento>().HasIndex(e => e.IdVeiculo).IsUnique(false);
 
         }
 

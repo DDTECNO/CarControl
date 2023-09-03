@@ -104,6 +104,7 @@ namespace CarControl.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 _movimentoRepository.RegistrarEntrada(movimento);
+                _vagaRepository.AtualizaVaga(movimento.Vaga);
             }
             return RedirectToAction("RegistroDeEntrada");
 

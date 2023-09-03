@@ -3,6 +3,7 @@ using System;
 using CarControl.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CarControl.Infrastructure.Migrations
 {
     [DbContext(typeof(CarControlContext))]
-    partial class CarControlContextModelSnapshot : ModelSnapshot
+    [Migration("20230903142929_ATULIAZACAMPOTIPOAPERACAO")]
+    partial class ATULIAZACAMPOTIPOAPERACAO
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.10");
@@ -47,10 +50,6 @@ namespace CarControl.Infrastructure.Migrations
                     b.HasKey("IdMovimento");
 
                     b.HasIndex("IdTpOperacao");
-
-                    b.HasIndex("IdVaga");
-
-                    b.HasIndex("IdVeiculo");
 
                     b.ToTable("Movimento");
                 });
@@ -142,13 +141,13 @@ namespace CarControl.Infrastructure.Migrations
 
                     b.HasOne("CarControl.Domain.Vaga", "Vaga")
                         .WithMany("Movimentos")
-                        .HasForeignKey("IdVaga")
+                        .HasForeignKey("IdTpOperacao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("CarControl.Domain.Veiculo", "Veiculo")
                         .WithMany("Movimentos")
-                        .HasForeignKey("IdVeiculo")
+                        .HasForeignKey("IdTpOperacao")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -10,10 +10,12 @@ namespace CarControl.WebApp.Controllers
 
         #region REPOSITORY
         private readonly IVeiculoRepository _veiculoRepository;
+        private readonly IVagaRepository _vagaRepository;
 
-        public CadastroDeVeiculoController(IVeiculoRepository veiculoRepository)
+        public CadastroDeVeiculoController(IVeiculoRepository veiculoRepository, IVagaRepository vagaRepository)
         {
             this._veiculoRepository = veiculoRepository;
+            _vagaRepository = vagaRepository;
         }
         #endregion REPOSITORY
 
@@ -78,6 +80,7 @@ namespace CarControl.WebApp.Controllers
         public ActionResult ExcluirVeiculo(Veiculo veiculo)
         {
             
+
           _veiculoRepository.ExcluirVeiculo(veiculo.IdVeiculo);
             
             return RedirectToAction("VeiculosCadastrados");

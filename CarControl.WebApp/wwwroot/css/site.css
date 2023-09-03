@@ -42,17 +42,16 @@ textarea {
     background-color: #98009D;
     border-radius: 20px;
     color: #ffff;
-    Height: 210px;
-    Width: 200px;
-    border-top-width: 90px;
+    Height: 180px;
+    Width: 170px;
+    border-top-width: 75px;
     margin:10px;
 }
 
 .fundoMenu {
     background-color: #D595D8; 
-/*    #98009D*/
     border-radius: 20px;
-    padding:40px
+    padding:30px
 
 }
 
