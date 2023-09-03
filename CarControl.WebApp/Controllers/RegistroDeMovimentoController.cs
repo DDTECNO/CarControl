@@ -97,6 +97,7 @@ namespace CarControl.WebApp.Controllers
                 IdVeiculo = movimentoViewModel.IdVeiculo,
                 IdVaga = movimentoViewModel.IdVaga,             
                 IdTpOperacao = movimentoViewModel.IdOperacao
+                
 
 
             };
@@ -104,9 +105,9 @@ namespace CarControl.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 _movimentoRepository.RegistrarEntrada(movimento);
-                _vagaRepository.AtualizaVaga(movimento.Vaga);
+                _vagaRepository.AtualizaFLVaga(movimento.IdVaga);
             }
-            return RedirectToAction("RegistroDeEntrada");
+            return RedirectToAction("ConsultarVagas", "ConsultarVagas");
 
         }
 

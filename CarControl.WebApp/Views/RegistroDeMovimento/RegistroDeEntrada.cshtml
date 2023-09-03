@@ -31,8 +31,11 @@
 
             <div class="form-group">
                 <label asp-for="Vagas" class="control-label">Selecione a vaga</label>
-                @Html.DropDownListFor(model => model.IdVaga, new SelectList(Model.Vagas, "IdVaga","NmVaga"),"Selecione uma vaga"
-                , new { @class = "form-control" })
+                @{
+                    var flVaga = Model.Vagas.Select(m => m.flVaga).ToList();
+                    var selectList = flVaga.Any(v => v != 'O') ? new SelectList(Model.Vagas, "IdVaga", "NmVaga") : new SelectList("","Selecione uma vaga");
+                }
+                @Html.DropDownListFor( model => model.IdVaga,selectList,"Selecione uma vaga", new { @class = "form-control" })
                 <span asp-validation-for="IdVaga" class="text-danger"></span>
             </div>
 
@@ -61,4 +64,4 @@
 
     }
 
- 
+

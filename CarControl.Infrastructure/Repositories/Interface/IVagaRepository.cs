@@ -8,7 +8,7 @@ namespace CarControl.Infrastructure.Repositories.Interface
        
         #region CRUD
         IList<Vaga> ListaVaga();
-        Vaga AtualizaVaga(Vaga idVaga);
+        Vaga AtualizaFLVaga(int idVaga);
 
         #endregion CRUD
     }

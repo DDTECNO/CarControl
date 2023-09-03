@@ -33,7 +33,7 @@ namespace CarControl.Domain.ViewModel
         [Required(ErrorMessage = "A operação é obrigatória")]
         public int IdOperacao { get; set; }
 
-
+        public Vaga Vaga { get; set; }
 
 
     }
