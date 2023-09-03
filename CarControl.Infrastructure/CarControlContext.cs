@@ -28,6 +28,7 @@ namespace CarControl.Infrastructure
             modelBuilder.Entity<Movimento>().HasIndex(e => e.IdVaga).IsUnique(false);
             modelBuilder.Entity<Movimento>().HasIndex(e => e.IdVeiculo).IsUnique(false);
 
+      
         }
 
 

@@ -23,7 +23,7 @@ namespace CarControl.Domain.ViewModel
         public TimeSpan HrEntrada { get; set; }
 
         [Display(Name = "Hora de saída")]
-        [Required(ErrorMessage = "A hora de saída do veículo é obrigatória")]
+        [Required(ErrorMessage = "A hora de entrada do veículo é obrigatória")]
         public TimeSpan HrSaida { get; set; }
 
         public IList<Vaga> Vagas { get; set; }

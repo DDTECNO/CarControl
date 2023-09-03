@@ -74,7 +74,7 @@ namespace CarControl.Infrastructure.Repositories
             _context.SaveChanges();
         }
 
-        public Veiculo obterVeiculoPorCPF(long cpf)
+        public Veiculo obterVeiculoPorCPF(string cpf)
         {
             var veiculo = _context.Set<Veiculo>().Where(p => p.CpfCondutor == cpf).SingleOrDefault();
             if (veiculo == null)
