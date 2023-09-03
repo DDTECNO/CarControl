@@ -1,0 +1,48 @@
+﻿@model CarControl.Domain.ViewModel.MovimentoViewModel
+
+@{
+    ViewData["Title"] = "Registro de saída";
+}
+
+<h1>Registro de saída</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="RegistroDeSaidaDeVeiculo">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="DtSaida" class="control-label"></label>
+                <input type="date" asp-for="DtSaida" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                <span asp-validation-for="DtSaida" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HrSaida" class="control-label"></label>
+                <input type="time" asp-for="HrSaida" class="form-control" value="@DateTime.Now.ToString("HH:mm")" />
+                <span asp-validation-for="HrSaida" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Veiculos" class="control-label">Selecione o CPF do condutor</label>
+                @Html.DropDownListFor(model => model.IdVeiculo, new SelectList(Model.Veiculos, "IdVeiculo","CpfCondutor"),"Selecione um condutor"
+                , new { @class = "form-control" })
+                <span asp-validation-for="IdVeiculo" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <input id="btnSalvar" type="submit" value="Salvar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
+<a asp-controller="CadastroDeVeiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
+<a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados  |</a>
+<a asp-controller="ConsultarVagas" asp-action="ConsultarVagas">Consultar vagas  |</a>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    }

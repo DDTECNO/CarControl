@@ -70,6 +70,22 @@ namespace CarControl.WebApp.Controllers
         }
 
 
+        public ActionResult RegistroDeSaida()
+        {
+
+            IList<Veiculo> veiculos = _veiculoRepository.ListaVeiculos();
+            IList<Vaga> vagas = _vagaRepository.ListaVaga();
+
+            var movimentoViewModel = new MovimentoViewModel()
+            {
+                Veiculos = veiculos,
+                Vagas = vagas,
+             
+            };
+
+            return View(movimentoViewModel);
+        }
+
 
         #endregion GET
 
@@ -86,7 +102,7 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult RegistroDeMovimentoDeVeiculo(MovimentoViewModel movimentoViewModel)
+        public ActionResult RegistroDeEntradaDeVeiculo(MovimentoViewModel movimentoViewModel)
         {
 
 
@@ -111,6 +127,33 @@ namespace CarControl.WebApp.Controllers
 
         }
 
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult RegistroDeSaidaDeVeiculo(MovimentoViewModel movimentoViewModel)
+        {
+
+
+            Movimento movimento = new Movimento()
+            {
+                DtEntrada = movimentoViewModel.DtEntrada,
+                HrEntrada = movimentoViewModel.HrEntrada,
+                IdVeiculo = movimentoViewModel.IdVeiculo,
+                IdVaga = movimentoViewModel.IdVaga,
+                IdTpOperacao = movimentoViewModel.IdOperacao
+
+
+
+            };
+
+            if (ModelState.IsValid)
+            {
+                _movimentoRepository.RegistrarEntrada(movimento);
+                _vagaRepository.AtualizaFLVaga(movimento.IdVaga);
+            }
+            return RedirectToAction("ConsultarVagas", "ConsultarVagas");
+
+        }
 
         #endregion POST
     }

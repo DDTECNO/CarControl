@@ -14,9 +14,17 @@ namespace CarControl.Domain.ViewModel
         [Required(ErrorMessage = "A data de entrada do veículo é obrigatória")]
         public DateTime DtEntrada { get; set; }
 
+        [Display(Name = "Data de saída")]
+        [Required(ErrorMessage = "A data de saída do veículo é obrigatória")]
+        public DateTime DtSaida { get; set; }
+
         [Display(Name = "Hora de entrada")]
         [Required(ErrorMessage = "A hora de entrada do veículo é obrigatória")]
         public TimeSpan HrEntrada { get; set; }
+
+        [Display(Name = "Hora de saída")]
+        [Required(ErrorMessage = "A hora de saída do veículo é obrigatória")]
+        public TimeSpan HrSaida { get; set; }
 
         public IList<Vaga> Vagas { get; set; }
 
