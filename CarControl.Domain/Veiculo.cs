@@ -46,6 +46,8 @@ namespace CarControl.Domain
 
 
         [Display(Name = "CPF do condutor")]
+        [MinLength(11, ErrorMessage = "O CPF do condutor deve ter no mínimo 11 caracteres (Insira sem pontuação)")]
+        [MaxLength(11, ErrorMessage = "O CPF do condutor deve ter no máximo 11 caracteres (Insira sem pontuação)")]
         [Required(ErrorMessage = "O CPF do codutor do veículo é obrigatório")]
         public long CpfCondutor { get; set; }
 
