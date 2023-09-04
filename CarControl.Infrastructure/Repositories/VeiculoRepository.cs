@@ -1,5 +1,6 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Veiculo obterVeiculos(int id)
         {
-            var veiculo = _context.Set<Veiculo>().Where(p => p.IdVeiculo == id).SingleOrDefault();
+            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
             if (veiculo == null)
             {
@@ -63,7 +64,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public void ExcluirVeiculo(int id)
         {
-            var veiculo = _context.Set<Veiculo>().Where(p => p.IdVeiculo == id).SingleOrDefault();
+            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
             if (veiculo == null)
             {
@@ -76,7 +77,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Veiculo obterVeiculoPorCPF(string cpf)
         {
-            var veiculo = _context.Set<Veiculo>().Where(p => p.CpfCondutor == cpf).SingleOrDefault();
+            var veiculo = _dbset.Where(p => p.CpfCondutor == cpf).SingleOrDefault();
             if (veiculo == null)
             {
                 throw new ArgumentException("Veículo não encontrado");
