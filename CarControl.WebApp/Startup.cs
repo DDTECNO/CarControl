@@ -35,10 +35,10 @@ namespace CarControl.WebApp
             services.AddControllersWithViews();
             var connectionString = Configuration["ConexaoSqlite:SqliteConnectionString"];
             services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
-            services.AddTransient<IMovimentoRepository, MovimentoRepository>();
-            services.AddTransient<IOperacaoRepository, OperacaoRepository>();
-            services.AddTransient<IVagaRepository, VagaRepository>();
-            services.AddTransient<IVeiculoRepository, VeiculoRepository>();
+            services.AddScoped<IMovimentoRepository, MovimentoRepository>();
+            services.AddScoped<IOperacaoRepository, OperacaoRepository>();
+            services.AddScoped<IVagaRepository, VagaRepository>();
+            services.AddScoped<IVeiculoRepository, VeiculoRepository>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
