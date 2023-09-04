@@ -1,5 +1,7 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
+using System.Linq;
+using System;
 
 namespace CarControl.Infrastructure.Repositories
 {
@@ -12,6 +14,7 @@ namespace CarControl.Infrastructure.Repositories
 
         }
 
+        #region  CRUD
 
         public Movimento RegistrarEntrada(Movimento movimento)
         {
@@ -20,5 +23,18 @@ namespace CarControl.Infrastructure.Repositories
 
             return movimento;
         }
+
+        public Movimento RegistrarSaida(Movimento movimento)
+        {
+            var vagaCadastrada = _dbset.Where(p => p.IdVaga == movimento.IdVaga).SingleOrDefault() ?? throw new ArgumentException("Vaga não encontrado");
+
+            vagaCadastrada.Atualiza(movimento);
+
+            _context.SaveChanges();
+
+            return vagaCadastrada;
+
+        }
+        #endregion
     }
 }

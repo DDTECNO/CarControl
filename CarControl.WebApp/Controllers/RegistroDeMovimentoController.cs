@@ -132,19 +132,15 @@ namespace CarControl.WebApp.Controllers
 
             Movimento movimento = new Movimento()
             {
-                DtEntrada = movimentoViewModel.DtEntrada,
-                HrEntrada = movimentoViewModel.HrEntrada,
-                IdVeiculo = movimentoViewModel.IdVeiculo,
+                DtSaida = movimentoViewModel.DtSaida,
+                HrSaida = movimentoViewModel.HrSaida,
                 IdVaga = movimentoViewModel.IdVaga,
-                IdTpOperacao = movimentoViewModel.IdOperacao
-
-
-
+              
             };
 
             if (ModelState.IsValid)
             {
-                _movimentoRepository.RegistrarEntrada(movimento);
+                _movimentoRepository.RegistrarSaida(movimento);
                 _vagaRepository.AtualizaFLVaga(movimento.IdVaga);
             }
             return RedirectToAction("ConsultarVagas", "ConsultarVagas");

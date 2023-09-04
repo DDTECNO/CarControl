@@ -32,7 +32,13 @@ namespace CarControl.Domain
 
         public Veiculo Veiculo { get; set; }
 
-
+        public void Atualiza(Movimento novoCadastro)
+        {
+            this.DtSaida = novoCadastro.DtSaida;
+            this.HrSaida = novoCadastro.HrSaida;
+            
+            
+        }
         public Movimento()
         {
 

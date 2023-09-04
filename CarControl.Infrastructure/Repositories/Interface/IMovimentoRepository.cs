@@ -5,6 +5,6 @@ namespace CarControl.Infrastructure.Repositories.Interface
     public interface IMovimentoRepository
     {
         Movimento RegistrarEntrada(Movimento movimento);
-
+        Movimento RegistrarSaida(Movimento movimento);
     }
 }

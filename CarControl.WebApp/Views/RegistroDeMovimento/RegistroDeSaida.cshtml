@@ -23,10 +23,14 @@
             </div>
 
             <div class="form-group">
-                <label asp-for="Veiculos" class="control-label">Selecione o CPF do condutor</label>
-                @Html.DropDownListFor(model => model.IdVeiculo, new SelectList(Model.Veiculos, "IdVeiculo","CpfCondutor"),"Selecione um condutor"
-                , new { @class = "form-control" })
-                <span asp-validation-for="IdVeiculo" class="text-danger"></span>
+                <label asp-for="Vagas" class="control-label">Selecione a vaga</label>
+                @{
+                    var flVaga = Model.Vagas.Where(v => v.FlVaga.Equals('O')).ToList();
+
+                    var selectList = flVaga.Count() != 0 ? new SelectList(flVaga, "IdVaga", "NmVaga") : new SelectList(new List<SelectListItem> { new SelectListItem { Text = "Nenhuma vaga disponível", Value = "" } }, "Value", "Text");
+                }
+                @Html.DropDownListFor( model => model.IdVaga,selectList,"Selecione uma vaga", new { @class = "form-control" })
+                <span asp-validation-for="IdVaga" class="text-danger"></span>
             </div>
 
             <div class="form-group">
