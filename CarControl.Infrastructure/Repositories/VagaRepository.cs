@@ -28,14 +28,8 @@ namespace CarControl.Infrastructure.Repositories
 
         public Vaga AtualizaFLVaga(int idVaga)
         {
-            var vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault();
-
-            if (vaga == null)
-            {
-                throw new ArgumentException("Veículo não encontrado");
-            }
-
-            vaga.flVaga = 'O';
+            var vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault() ?? throw new ArgumentException("Veículo não encontrado");
+            vaga.FlVaga = 'O';
 
             _context.SaveChanges();
 

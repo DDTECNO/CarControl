@@ -9,7 +9,7 @@ namespace CarControl.Domain
         public int IdTpOperacao { get; set; }
        
         [Required]
-        public string nmOperacao { get; set; }
+        public string NmOperacao { get; set; }
 
         public ICollection<Movimento> Movimentos { get; set; }
 

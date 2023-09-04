@@ -10,12 +10,10 @@ namespace CarControl.WebApp.Controllers
 
         #region REPOSITORY
         private readonly IVeiculoRepository _veiculoRepository;
-        private readonly IVagaRepository _vagaRepository;
 
-        public CadastroDeVeiculoController(IVeiculoRepository veiculoRepository, IVagaRepository vagaRepository)
+        public CadastroDeVeiculoController(IVeiculoRepository veiculoRepository)
         {
             this._veiculoRepository = veiculoRepository;
-            _vagaRepository = vagaRepository;
         }
         #endregion REPOSITORY
 
@@ -34,18 +32,18 @@ namespace CarControl.WebApp.Controllers
 
         public ActionResult EditarVeiculo(int id)
         {
-            return View(_veiculoRepository.obterVeiculos(id));
+            return View(_veiculoRepository.ObterVeiculos(id));
         }
 
 
         public ActionResult DetalhesDoVeiculo(int id)
         {
-            return View(_veiculoRepository.obterVeiculos(id));
+            return View(_veiculoRepository.ObterVeiculos(id));
         }
 
         public ActionResult Excluir(int id)
         {
-            return View(_veiculoRepository.obterVeiculos(id));
+            return View(_veiculoRepository.ObterVeiculos(id));
         }
         #endregion GET
 
@@ -79,9 +77,10 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExcluirVeiculo(Veiculo veiculo)
         {
-            
-
-          _veiculoRepository.ExcluirVeiculo(veiculo.IdVeiculo);
+            if (ModelState.IsValid)
+            {
+                _veiculoRepository.ExcluirVeiculo(veiculo.IdVeiculo);
+            } 
             
             return RedirectToAction("VeiculosCadastrados");
         }

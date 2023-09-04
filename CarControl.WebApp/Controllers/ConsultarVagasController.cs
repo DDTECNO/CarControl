@@ -23,7 +23,6 @@ namespace CarControl.WebApp.Controllers
             return View(_vagaRepository.ListaVaga());
         }
 
-
     
     }
 }

@@ -34,7 +34,7 @@ namespace CarControl.WebApp.Controllers
         {
             if (idVeiculo != 0)
             {
-                Veiculo veiculo = _veiculoRepository.obterVeiculos(idVeiculo);
+                Veiculo veiculo = _veiculoRepository.ObterVeiculos(idVeiculo);
 
                 IList<Veiculo> veiculos1 = new List<Veiculo>();
                 veiculos1.Add(veiculo);
@@ -89,14 +89,13 @@ namespace CarControl.WebApp.Controllers
 
         #endregion GET
 
-
         #region POST
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult BuscarVeiculo(Veiculo veiculo)
         {
-            return View(_veiculoRepository.obterVeiculoPorCPF(veiculo.CpfCondutor));
+            return View(_veiculoRepository.ObterVeiculoPorCPF(veiculo.CpfCondutor));
 
         }
 
@@ -113,9 +112,6 @@ namespace CarControl.WebApp.Controllers
                 IdVeiculo = movimentoViewModel.IdVeiculo,
                 IdVaga = movimentoViewModel.IdVaga,             
                 IdTpOperacao = movimentoViewModel.IdOperacao
-                
-
-
             };
 
             if (ModelState.IsValid)

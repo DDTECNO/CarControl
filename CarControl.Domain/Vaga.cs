@@ -15,7 +15,7 @@ namespace CarControl.Domain
 
         [Required]
         [Display(Name = "Situação da vaga")]
-        public char flVaga { get; set; }
+        public char FlVaga { get; set; }
 
 
 

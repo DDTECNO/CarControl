@@ -8,8 +8,8 @@ namespace CarControl.Infrastructure.Repositories.Interface
         #region CRUD
         Veiculo Create(Veiculo veiculo);
         IList<Veiculo> ListaVeiculos();
-        Veiculo obterVeiculos(int id);
-        Veiculo obterVeiculoPorCPF(string cpf);
+        Veiculo ObterVeiculos(int id);
+        Veiculo ObterVeiculoPorCPF(string cpf);
         Veiculo EditarVeiculo(Veiculo veiculo);
         void ExcluirVeiculo(int id);
 

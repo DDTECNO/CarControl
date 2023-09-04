@@ -32,27 +32,17 @@ namespace CarControl.Infrastructure.Repositories
             return _dbset.ToList();
         }
 
-        public Veiculo obterVeiculos(int id)
+        public Veiculo ObterVeiculos(int id)
         {
             var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
-            if (veiculo == null)
-            {
-                throw new ArgumentException("Veículo não encontrado");
-            }
-
-            return veiculo;
+            return veiculo ?? throw new ArgumentException("Veículo não encontrado");
         }
 
 
         public Veiculo EditarVeiculo(Veiculo veiculo)
         {
-            var veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault();
-
-            if (veiculoCadastrado == null)
-            {
-                throw new ArgumentException("Veículo não encontrado");
-            }
+            var veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault() ?? throw new ArgumentException("Veículo não encontrado");
 
             veiculoCadastrado.Atualiza(veiculo);
 
@@ -64,26 +54,15 @@ namespace CarControl.Infrastructure.Repositories
 
         public void ExcluirVeiculo(int id)
         {
-            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
-
-            if (veiculo == null)
-            {
-                throw new ArgumentException("Veículo não encontrado");
-            }
-
+            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault() ?? throw new ArgumentException("Veículo não encontrado");
             _dbset.Remove(veiculo);
             _context.SaveChanges();
         }
 
-        public Veiculo obterVeiculoPorCPF(string cpf)
+        public Veiculo ObterVeiculoPorCPF(string cpf)
         {
             var veiculo = _dbset.Where(p => p.CpfCondutor == cpf).SingleOrDefault();
-            if (veiculo == null)
-            {
-                throw new ArgumentException("Veículo não encontrado");
-            }
-
-            return veiculo;
+            return veiculo ?? throw new ArgumentException("Veículo não encontrado");
         }
 
         #endregion CRUD

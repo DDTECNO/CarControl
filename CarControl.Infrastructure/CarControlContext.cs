@@ -7,6 +7,7 @@ namespace CarControl.Infrastructure
     {
         public CarControlContext(DbContextOptions options) : base(options)
         {
+
         }
 
 
@@ -30,10 +31,6 @@ namespace CarControl.Infrastructure
 
       
         }
-
-
-
-
 
     }
 }

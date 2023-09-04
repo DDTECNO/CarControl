@@ -32,9 +32,9 @@
             <div class="form-group">
                 <label asp-for="Vagas" class="control-label">Selecione a vaga</label>
                 @{
-                    var flVaga = Model.Vagas.Where(v => v.flVaga.Equals('D')).ToList();
+                    var flVaga = Model.Vagas.Where(v => v.FlVaga.Equals('D')).ToList();
 
-                    var selectList = flVaga.Count() != 0 ? new SelectList(Model.Vagas, "IdVaga", "NmVaga") : new SelectList(new List<SelectListItem> { new SelectListItem { Text = "Nenhuma vaga disponível", Value = "" } }, "Value", "Text");
+                    var selectList = flVaga.Count() != 0 ? new SelectList(flVaga, "IdVaga", "NmVaga") : new SelectList(new List<SelectListItem> { new SelectListItem { Text = "Nenhuma vaga disponível", Value = "" } }, "Value", "Text");
                 }
                 @Html.DropDownListFor( model => model.IdVaga,selectList,"Selecione uma vaga", new { @class = "form-control" })
                 <span asp-validation-for="IdVaga" class="text-danger"></span>
@@ -42,7 +42,7 @@
 
             <div class="form-group">
                 <label asp-for="Operacoes" class="control-label">Selecione o tipo de operação</label>
-                @Html.DropDownListFor(model => model.IdOperacao, new SelectList(Model.Operacoes, "IdTpOperacao","nmOperacao"),"Selecione uma operação"
+                @Html.DropDownListFor(model => model.IdOperacao, new SelectList(Model.Operacoes, "IdTpOperacao","NmOperacao"),"Selecione uma operação"
                 , new { @class = "form-control" })
                 <span asp-validation-for="IdOperacao" class="text-danger"></span>
             </div>

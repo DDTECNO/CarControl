@@ -13,7 +13,7 @@
                 @Html.DisplayNameFor(model => model.NmVaga)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.flVaga)
+                @Html.DisplayNameFor(model => model.FlVaga)
             </th>
             <th></th>
         </tr>
@@ -25,15 +25,15 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.NmVaga)
                 </td>
-                @if(item.flVaga.ToString() == "D"){
+                @if(item.FlVaga.ToString() == "D"){
                 <td class="flagVagaDisponivel" id="flagVaga" >
-                    @Html.DisplayFor(modelItem => item.flVaga)
+                    @Html.DisplayFor(modelItem => item.FlVaga)
                 </td>
 
                 }
                 else{
                     <td class="flagVagaIndisponivel" id="flagVaga">
-                        @Html.DisplayFor(modelItem => item.flVaga)
+                        @Html.DisplayFor(modelItem => item.FlVaga)
                     </td>
                 }
                 <td class="tdIdVeiculo">

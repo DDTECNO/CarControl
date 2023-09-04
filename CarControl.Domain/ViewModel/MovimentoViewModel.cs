@@ -43,6 +43,5 @@ namespace CarControl.Domain.ViewModel
 
         public Vaga Vaga { get; set; }
 
-
     }
 }
