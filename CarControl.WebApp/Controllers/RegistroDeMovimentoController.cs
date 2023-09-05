@@ -2,6 +2,7 @@
 using CarControl.Domain.ViewModel;
 using CarControl.Infrastructure.Migrations;
 using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
@@ -12,19 +13,20 @@ namespace CarControl.WebApp.Controllers
     public class RegistroDeMovimentoController : Controller
     {
         #region REPOSITORY
-        private readonly IVeiculoRepository _veiculoRepository;
-        private readonly IVagaRepository _vagaRepository;
-        private readonly IOperacaoRepository _operacaoRepository;
-        private readonly IMovimentoRepository _movimentoRepository;
+        private readonly IVeiculoService _veiculoService;
+        private readonly IVagaService _vagaService;
+        private readonly IOperacaoService _operacaoService;
+        private readonly IMovimentoService _movimentoService;
 
-
-        public RegistroDeMovimentoController(IVeiculoRepository veiculoRepository, IVagaRepository vagaRepository, IOperacaoRepository operacaoRepository, IMovimentoRepository movimentoRepository)
+        public RegistroDeMovimentoController(IVeiculoService veiculoService, IVagaService vagaService, IOperacaoService operacaoService, IMovimentoService movimentoService)
         {
-            this._veiculoRepository = veiculoRepository;
-            this._vagaRepository = vagaRepository;
-            this._operacaoRepository = operacaoRepository;
-            this._movimentoRepository = movimentoRepository;
+            _veiculoService = veiculoService;
+            _vagaService = vagaService;
+            _operacaoService = operacaoService;
+            _movimentoService = movimentoService;
         }
+
+
         #endregion REPOSITORY
 
         #region GET 
@@ -34,13 +36,15 @@ namespace CarControl.WebApp.Controllers
         {
             if (idVeiculo != 0)
             {
-                Veiculo veiculo = _veiculoRepository.ObterVeiculos(idVeiculo);
+                Veiculo veiculo = _veiculoService.ObterVeiculos(idVeiculo);
 
-                IList<Veiculo> veiculos1 = new List<Veiculo>();
-                veiculos1.Add(veiculo);
+                IEnumerable<Veiculo> veiculos1 = new List<Veiculo>
+                {
+                    veiculo
+                };
 
-                IList<Vaga> vgs = _vagaRepository.ListaVaga();
-                IList<Operacao> ops = _operacaoRepository.ListaOperacao();
+                IEnumerable<Vaga> vgs = _vagaService.ListaVaga();
+                IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
                 var mvViewModel1 = new MovimentoViewModel()
                 {
                     Veiculos = veiculos1,
@@ -53,9 +57,9 @@ namespace CarControl.WebApp.Controllers
 
             }
 
-            IList<Veiculo> veiculos = _veiculoRepository.ListaVeiculos();
-            IList<Vaga> vagas = _vagaRepository.ListaVaga();
-            IList<Operacao> operacoes = _operacaoRepository.ListaOperacao();
+            IEnumerable<Veiculo> veiculos = _veiculoService.ListaVeiculos();
+            IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
+            IEnumerable<Operacao> operacoes = _operacaoService.ListaOperacao();
 
             var movimentoViewModel = new MovimentoViewModel()
             {
@@ -73,8 +77,8 @@ namespace CarControl.WebApp.Controllers
         public ActionResult RegistroDeSaida()
         {
 
-            IList<Veiculo> veiculos = _veiculoRepository.ListaVeiculos();
-            IList<Vaga> vagas = _vagaRepository.ListaVaga();
+            IEnumerable<Veiculo> veiculos = _veiculoService.ListaVeiculos();
+            IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
 
             var movimentoViewModel = new MovimentoViewModel()
             {
@@ -95,7 +99,7 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BuscarVeiculo(Veiculo veiculo)
         {
-            return View(_veiculoRepository.ObterVeiculoPorCPF(veiculo.CpfCondutor));
+            return View(_veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor));
 
         }
 
@@ -116,8 +120,8 @@ namespace CarControl.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _movimentoRepository.RegistrarEntrada(movimento);
-                _vagaRepository.AtualizaFLVaga(movimento.IdVaga);
+                _movimentoService.RegistrarEntrada(movimento);
+                _vagaService.AtualizaFLVaga(movimento.IdVaga);
             }
             return RedirectToAction("ConsultarVagas", "ConsultarVagas");
 
@@ -140,8 +144,8 @@ namespace CarControl.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
-                _movimentoRepository.RegistrarSaida(movimento);
-                _vagaRepository.AtualizaFLVaga(movimento.IdVaga);
+                _movimentoService.RegistrarSaida(movimento);
+                _vagaService.AtualizaFLVaga(movimento.IdVaga);
             }
             return RedirectToAction("ConsultarVagas", "ConsultarVagas");
 

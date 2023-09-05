@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CarControl.Infrastructure\CarControl.Infrastructure.csproj" />
+    <ProjectReference Include="..\CarControl.Service\CarControl.Service.csproj" />
   </ItemGroup>
 
 </Project>

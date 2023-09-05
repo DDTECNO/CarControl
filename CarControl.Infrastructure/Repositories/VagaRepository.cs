@@ -20,7 +20,7 @@ namespace CarControl.Infrastructure.Repositories
         #region CRUD
 
 
-        public IList<Vaga> ListaVaga()
+        public IEnumerable<Vaga> ListaVaga()
         {
             return _dbset.ToList();
         }

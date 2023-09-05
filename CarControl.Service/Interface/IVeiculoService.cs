@@ -1,11 +1,10 @@
 ﻿using CarControl.Domain;
 using System.Collections.Generic;
 
-namespace CarControl.Infrastructure.Repositories.Interface
+namespace CarControl.Service.Interface
 {
-    public interface IVeiculoRepository
+    public interface IVeiculoService
     {
-        #region CRUD
         Veiculo Create(Veiculo veiculo);
         IEnumerable<Veiculo> ListaVeiculos();
         Veiculo ObterVeiculos(int id);
@@ -13,6 +12,5 @@ namespace CarControl.Infrastructure.Repositories.Interface
         Veiculo EditarVeiculo(Veiculo veiculo);
         void ExcluirVeiculo(int id);
 
-        #endregion CRUD
     }
 }

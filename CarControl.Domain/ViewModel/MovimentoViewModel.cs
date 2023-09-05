@@ -26,17 +26,17 @@ namespace CarControl.Domain.ViewModel
         [Required(ErrorMessage = "A hora de entrada do veículo é obrigatória")]
         public TimeSpan HrSaida { get; set; }
 
-        public IList<Vaga> Vagas { get; set; }
+        public IEnumerable<Vaga> Vagas { get; set; }
 
         [Required(ErrorMessage = "A vaga do veículo é obrigatória")]
         public int IdVaga { get; set; }
 
-        public IList<Veiculo> Veiculos { get; set; }
+        public IEnumerable<Veiculo> Veiculos { get; set; }
 
         [Required(ErrorMessage = "O veículo é obrigatório")]
         public int IdVeiculo { get; set; }
 
-        public IList<Operacao> Operacoes { get; set; }
+        public IEnumerable<Operacao> Operacoes { get; set; }
 
         [Required(ErrorMessage = "A operação é obrigatória")]
         public int IdOperacao { get; set; }

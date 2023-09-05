@@ -1,5 +1,7 @@
 ﻿using CarControl.Domain;
+using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.WebApp.Controllers
@@ -9,12 +11,14 @@ namespace CarControl.WebApp.Controllers
     {
 
         #region REPOSITORY
-        private readonly IVeiculoRepository _veiculoRepository;
+        private readonly IVeiculoService _veiculoService;
 
-        public CadastroDeVeiculoController(IVeiculoRepository veiculoRepository)
+        public CadastroDeVeiculoController(IVeiculoService veiculoService)
         {
-            this._veiculoRepository = veiculoRepository;
+            _veiculoService = veiculoService;
         }
+
+
         #endregion REPOSITORY
 
         #region GET
@@ -26,24 +30,24 @@ namespace CarControl.WebApp.Controllers
 
         public ActionResult VeiculosCadastrados()
         {
-            return View(_veiculoRepository.ListaVeiculos());
+            return View(_veiculoService.ListaVeiculos());
         }
 
 
         public ActionResult EditarVeiculo(int id)
         {
-            return View(_veiculoRepository.ObterVeiculos(id));
+            return View(_veiculoService.ObterVeiculos(id));
         }
 
 
         public ActionResult DetalhesDoVeiculo(int id)
         {
-            return View(_veiculoRepository.ObterVeiculos(id));
+            return View(_veiculoService.ObterVeiculos(id));
         }
 
         public ActionResult Excluir(int id)
         {
-            return View(_veiculoRepository.ObterVeiculos(id));
+            return View(_veiculoService.ObterVeiculos(id));
         }
         #endregion GET
 
@@ -55,7 +59,7 @@ namespace CarControl.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _veiculoRepository.Create(veiculo);
+                _veiculoService.Create(veiculo);
             }
             return RedirectToAction("VeiculosCadastrados");
         }
@@ -67,7 +71,7 @@ namespace CarControl.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _veiculoRepository.EditarVeiculo(veiculo);
+                _veiculoService.EditarVeiculo(veiculo);
             }
             return RedirectToAction("VeiculosCadastrados");
         }
@@ -77,11 +81,10 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExcluirVeiculo(Veiculo veiculo)
         {
-            if (ModelState.IsValid)
-            {
-                _veiculoRepository.ExcluirVeiculo(veiculo.IdVeiculo);
-            } 
-            
+
+            _veiculoService.ExcluirVeiculo(veiculo.IdVeiculo);
+
+
             return RedirectToAction("VeiculosCadastrados");
         }
         #endregion POST

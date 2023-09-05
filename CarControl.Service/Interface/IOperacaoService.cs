@@ -1,10 +1,11 @@
 ﻿using CarControl.Domain;
 using System.Collections.Generic;
 
-namespace CarControl.Infrastructure.Repositories.Interface
+namespace CarControl.Service.Interface
 {
-    public interface IOperacaoRepository
+    public interface IOperacaoService
     {
         IEnumerable<Operacao> ListaOperacao();
+
     }
 }

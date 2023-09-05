@@ -4,4 +4,8 @@
     <TargetFramework>net7.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CarControl.Infrastructure\CarControl.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -27,7 +27,7 @@ namespace CarControl.Infrastructure.Repositories
         }
 
 
-        public IList<Veiculo> ListaVeiculos()
+        public IEnumerable<Veiculo> ListaVeiculos()
         {
             return _dbset.ToList();
         }

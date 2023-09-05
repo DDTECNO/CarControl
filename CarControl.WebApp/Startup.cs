@@ -1,6 +1,8 @@
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Service;
+using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -39,6 +41,10 @@ namespace CarControl.WebApp
             services.AddScoped<IOperacaoRepository, OperacaoRepository>();
             services.AddScoped<IVagaRepository, VagaRepository>();
             services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+            services.AddScoped<IMovimentoService, MovimentoService>();
+            services.AddScoped<IOperacaoService, OperacaoService>();
+            services.AddScoped<IVagaService, VagaService>();
+            services.AddScoped<IVeiculoService, VeiculoService>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.

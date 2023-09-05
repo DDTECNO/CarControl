@@ -1,4 +1,5 @@
 ﻿using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,19 +9,20 @@ namespace CarControl.WebApp.Controllers
     {
 
         #region REPOSITORY
-        private readonly IVagaRepository _vagaRepository;
+        private readonly IVagaService _vagaService;
 
-        public ConsultarVagasController(IVagaRepository vagaRepository)
+        public ConsultarVagasController(IVagaService vagaService)
         {
-            this._vagaRepository = vagaRepository;
+            _vagaService = vagaService;
         }
+
 
         #endregion REPOSITORY
 
 
         public ActionResult ConsultarVagas()
         {
-            return View(_vagaRepository.ListaVaga());
+            return View(_vagaService.ListaVaga());
         }
 
     

@@ -12,9 +12,11 @@ namespace CarControl.Infrastructure.Repositories
 
         }
 
-        public IList<Operacao> ListaOperacao()
+        #region CRUD
+        public IEnumerable<Operacao> ListaOperacao()
         {
             return _dbset.ToList();
         }
+        #endregion
     }
 }

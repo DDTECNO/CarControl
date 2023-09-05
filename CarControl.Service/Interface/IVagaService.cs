@@ -1,11 +1,10 @@
 ﻿using CarControl.Domain;
 using System.Collections.Generic;
 
-namespace CarControl.Infrastructure.Repositories.Interface
+namespace CarControl.Service.Interface
 {
-    public interface IVagaRepository
+    public interface IVagaService
     {
-         
         IEnumerable<Vaga> ListaVaga();
         Vaga AtualizaFLVaga(int idVaga);
 
