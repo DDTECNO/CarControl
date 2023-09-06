@@ -1,5 +1,6 @@
 ﻿body {
     background-color: #FFFFFF;
+
 }
 
 /* Wrapping element */
@@ -68,5 +69,32 @@ textarea {
 }
 
 .tdIdVeiculo {
+    text-align: center;
+}
+
+.logo {
+    text-align: center; 
+}
+
+.form{
+    text-align:center;
+    margin-top: 5%;
+}
+
+.form-group {
+    margin-bottom: 20px; /* Espaçamento entre os grupos de campos */
+    display: flex;
+    flex-direction: column;
+}
+
+#form-input {
+    display: flex;
+    justify-content: center; /* Centraliza horizontalmente */
+    align-items: center; /* Centraliza verticalmente (opcional) */
+}
+
+.Titulo {
+    color: #98009d;
+    height: 12px;
     text-align: center;
 }

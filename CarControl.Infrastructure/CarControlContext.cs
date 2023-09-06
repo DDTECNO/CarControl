@@ -1,15 +1,18 @@
 ﻿using CarControl.Domain;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace CarControl.Infrastructure
 {
-    public class CarControlContext : DbContext
+    public class CarControlContext : IdentityDbContext<ApplicationUser>
     {
         public CarControlContext(DbContextOptions options) : base(options)
         {
 
         }
 
+       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +22,7 @@ namespace CarControl.Infrastructure
             modelBuilder.Entity<Vaga>().HasKey(pp => new { pp.IdVaga });
             modelBuilder.Entity<Operacao>().HasKey(pp => new { pp.IdTpOperacao });
             modelBuilder.Entity<Movimento>().HasKey(pp => new { pp.IdMovimento});
+            modelBuilder.Entity<ApplicationUser>().HasKey(pp => new { pp.Id});
 
             modelBuilder.Entity<Movimento>().Property(e => e.IdMovimento).ValueGeneratedOnAdd();
 
@@ -28,8 +32,9 @@ namespace CarControl.Infrastructure
             modelBuilder.Entity<Movimento>().HasIndex(e => e.IdTpOperacao).IsUnique(false);
             modelBuilder.Entity<Movimento>().HasIndex(e => e.IdVaga).IsUnique(false);
             modelBuilder.Entity<Movimento>().HasIndex(e => e.IdVeiculo).IsUnique(false);
+            modelBuilder.Entity<IdentityUserRole<string>>().HasKey(r => new { r.UserId, r.RoleId });
 
-      
+
         }
 
     }

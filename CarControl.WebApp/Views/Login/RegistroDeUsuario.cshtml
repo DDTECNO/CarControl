@@ -1,0 +1,38 @@
+﻿@model CarControl.Domain.ViewModel.RegistroDeUsuarioViewModel
+
+@{
+    ViewData["Title"] = "Registro de usuário";
+}
+<div class="logo">
+    <img src="../Imagens/Logos/logoSite.png" />
+</div>
+<hr />
+<hr />
+<h1 class="Titulo">Registre-se</h1>
+<div class="form"> 
+    <form asp-action="RegistroDeUsuario" method="post">
+        <div class="form-group" id="form-input">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group" id="form-input">
+            <label asp-for="Senha">Senha</label>
+            <input asp-for="Senha" type="password" class="form-control" />
+            <span asp-validation-for="Senha" class="text-danger"></span>
+        </div>
+        <div class="form-group" id="form-input">
+            <label asp-for="NrTelefone">Número de telefone</label>
+            <input type="tel" asp-for="NrTelefone" class="form-control" />
+            <span asp-validation-for="NrTelefone" class="text-danger"></span>
+        </div>
+        <div class="form-group" id="form-input">
+            <label asp-for="NmUsuario">Nome do usuário</label>
+            <input asp-for="NmUsuario" class="form-control" />
+            <span asp-validation-for="NmUsuario" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Registrar</button>
+        <hr />
+        @Html.ValidationSummary()
+    </form>
+</div>

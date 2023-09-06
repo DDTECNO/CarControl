@@ -1,3 +1,4 @@
+using CarControl.Domain;
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
@@ -6,11 +7,13 @@ using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace CarControl.WebApp
 {
@@ -27,13 +30,12 @@ namespace CarControl.WebApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSession(); 
+            services.AddSession();
             services.AddDistributedMemoryCache();
             services.AddControllersWithViews();
             services.AddApplicationInsightsTelemetry();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews().AddNewtonsoftJson();
-
             services.AddControllersWithViews();
             var connectionString = Configuration["ConexaoSqlite:SqliteConnectionString"];
             services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
@@ -51,6 +53,17 @@ namespace CarControl.WebApp
                 options.CheckConsentNeeded = context => false;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            //Autenticação
+         
+
+            services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+            {
+                options.Lockout.MaxFailedAccessAttempts = 5;
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15); 
+            })
+             .AddEntityFrameworkStores<CarControlContext>()
+             .AddDefaultTokenProviders();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,9 +88,12 @@ namespace CarControl.WebApp
 
             app.UseEndpoints(endpoints =>
             {
+               
                 endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                     name: "default",
+                     pattern: "{controller=Login}/{action=LoginUsuario}/{id?}");
+                     endpoints.MapRazorPages();
+               
             });
         }
     }
