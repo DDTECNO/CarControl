@@ -55,7 +55,13 @@ namespace CarControl.WebApp
             });
 
             //Autenticação
-         
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequerAdmin", policy =>
+                    policy.RequireRole("Admin"));
+            });
+
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -78,12 +84,14 @@ namespace CarControl.WebApp
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseRouting();
+            app.UseSession();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            app.UseRouting();
+            app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSession();
-            app.UseAuthorization();
+            
 
             app.UseEndpoints(endpoints =>
             {
@@ -92,6 +100,12 @@ namespace CarControl.WebApp
                      name: "default",
                      pattern: "{controller=Login}/{action=LoginUsuario}/{id?}");
                      endpoints.MapRazorPages();
+
+
+                endpoints.MapControllerRoute(
+                    name: "login",
+                    pattern: "Account/Login",
+                    defaults: new { controller = "Account", action = "Login" });
 
 
             });

@@ -3,6 +3,7 @@ using CarControl.Domain.ViewModel;
 using CarControl.Infrastructure.Migrations;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 
 namespace CarControl.WebApp.Controllers
 {
+    [Authorize]
     public class RegistroDeMovimentoController : Controller
     {
         #region REPOSITORY

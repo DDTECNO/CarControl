@@ -1,10 +1,12 @@
 ﻿using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.WebApp.Controllers
 {
+    [Authorize]
     public class ConsultarVagasController : Controller
     {
 

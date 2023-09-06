@@ -1,6 +1,5 @@
 ﻿using CarControl.Domain;
 using CarControl.Domain.ViewModel;
-using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace CarControl.WebApp.Controllers
 {
+    [AllowAnonymous]
     public class LoginController : Controller
     {
 
@@ -56,7 +56,6 @@ namespace CarControl.WebApp.Controllers
 
                 if (result.Succeeded)
                 {
-                    user.LockoutEnabled = false;
                     return RedirectToAction("Index", "Home");
                 }
                 if (user.AccessFailedCount >= 4 || user.LockoutEnd >= DateTime.UtcNow)
@@ -93,7 +92,6 @@ namespace CarControl.WebApp.Controllers
 
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistroDeUsuario(RegistroDeUsuarioViewModel model)
         {
