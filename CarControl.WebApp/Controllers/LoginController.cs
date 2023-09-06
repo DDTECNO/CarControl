@@ -4,6 +4,7 @@ using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Threading.Tasks;
 
 namespace CarControl.WebApp.Controllers
@@ -21,7 +22,7 @@ namespace CarControl.WebApp.Controllers
         }
 
         public IActionResult LoginUsuario()
-        
+
         {
             return View();
         }
@@ -45,25 +46,41 @@ namespace CarControl.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user== null)
+                if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Tentativa de login inválida.Verifique seu login e senha e tente novamente");
                     return View(model);
                 }
 
-                var result = await _signInManager.PasswordSignInAsync(user, model.Senha, isPersistent: false, lockoutOnFailure: false);
+                var result = await _signInManager.PasswordSignInAsync(user, model.Senha, isPersistent: false, lockoutOnFailure: true);
+
                 if (result.Succeeded)
                 {
-                   
+                    user.LockoutEnabled = false;
                     return RedirectToAction("Index", "Home");
                 }
-                if (result.IsLockedOut)
+                if (user.AccessFailedCount >= 4 || user.LockoutEnd >= DateTime.UtcNow)
                 {
-                    return RedirectToAction("ContaBloqueada");
+                    
+                    if (user.LockoutEnd >= DateTime.UtcNow)
+                    {
+                        ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                        return View(model);
+                    }
+                    
+
+                    if (user.AccessFailedCount >= 4)
+                    {
+                        user.LockoutEnabled = true;
+                        await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddMinutes(5));
+
+                        ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                        return View(model);
+                    }
+                    
                 }
                 else
                 {
-                    await _userManager.AccessFailedAsync(user);
                     ModelState.AddModelError(string.Empty, "Tentativa de login inválida. Verifique seu login e senha e tente novamente");
                     return View(model);
                 }
@@ -87,7 +104,7 @@ namespace CarControl.WebApp.Controllers
 
                 if (result.Succeeded)
                 {
-                   
+
                     return RedirectToAction("LoginUsuario", "Login");
                 }
                 else
@@ -114,13 +131,13 @@ namespace CarControl.WebApp.Controllers
                 var result = await _userManager.ResetPasswordAsync(user, resetToken, novaSenha);
 
                 if (result.Succeeded)
-                {                   
+                {
                     await _userManager.ResetAccessFailedCountAsync(user);
                     return RedirectToAction("LoginUsuario", "Login");
                 }
                 else
                 {
-                    
+
                     foreach (var error in result.Errors)
                     {
                         ModelState.AddModelError(string.Empty, error.Description);
@@ -130,7 +147,7 @@ namespace CarControl.WebApp.Controllers
             }
             else
             {
-                
+
                 ModelState.AddModelError(string.Empty, "Usuário não encontrado. Verifique o e-mail digitado e tente novamente");
                 return View();
             }

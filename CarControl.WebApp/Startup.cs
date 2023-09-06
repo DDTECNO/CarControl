@@ -60,7 +60,6 @@ namespace CarControl.WebApp
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
                 options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15); 
             })
              .AddEntityFrameworkStores<CarControlContext>()
              .AddDefaultTokenProviders();
@@ -93,7 +92,8 @@ namespace CarControl.WebApp
                      name: "default",
                      pattern: "{controller=Login}/{action=LoginUsuario}/{id?}");
                      endpoints.MapRazorPages();
-               
+
+
             });
         }
     }
