@@ -95,6 +95,7 @@ textarea {
 
 .Titulo {
     color: #98009d;
-    height: 12px;
     text-align: center;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }

@@ -95,17 +95,51 @@ namespace CarControl.WebApp
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "CadastroDeVeiculo",
+                    pattern: "Home/CadastroDeVeiculo/CadastroDeVeiculo",
+                    defaults: new { controller = "CadastroDeVeiculo", action = "CadastroDeVeiculo" });
+
+                endpoints.MapControllerRoute(
+                    name: "VeiculosCadastrados",
+                    pattern: "Home/CadastroDeVeiculo/VeiculosCadastrados",
+                    defaults: new { controller = "CadastroDeVeiculo", action = "VeiculosCadastrados" });
                
                 endpoints.MapControllerRoute(
-                     name: "default",
-                     pattern: "{controller=Login}/{action=LoginUsuario}/{id?}");
-                     endpoints.MapRazorPages();
-
+                    name: "EditarVeiculo",
+                    pattern: "Home/CadastroDeVeiculo/EditarVeiculo",
+                    defaults: new { controller = "CadastroDeVeiculo", action = "EditarVeiculo" });
 
                 endpoints.MapControllerRoute(
-                    name: "login",
-                    pattern: "Account/Login",
-                    defaults: new { controller = "Account", action = "Login" });
+                    name: "Excluir",
+                    pattern: "Home/CadastroDeVeiculo/Excluir",
+                    defaults: new { controller = "CadastroDeVeiculo", action = "Excluir" });
+
+                endpoints.MapControllerRoute(
+                    name: "DetalhesDoVeiculo",
+                    pattern: "Home/CadastroDeVeiculo/DetalhesDoVeiculo",
+                    defaults: new { controller = "CadastroDeVeiculo", action = "DetalhesDoVeiculo" });
+
+                endpoints.MapControllerRoute(
+                    name: "RegistroDeMovimento",
+                    pattern: "Home/RegistroDeMovimento/RegistroDeEntrada",
+                    defaults: new { controller = "RegistroDeMovimento", action = "RegistroDeEntrada" });
+
+                endpoints.MapControllerRoute(
+                    name: "RegistroDeMovimento",
+                    pattern: "Home/RegistroDeMovimento/RegistroDeSaida",
+                    defaults: new { controller = "RegistroDeMovimento", action = "RegistroDeSaida" });
+
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Login}/{action=LoginUsuario}/{id?}");
+                    endpoints.MapRazorPages();
+
+                endpoints.MapControllerRoute(
+                   name: "ConsultarVagas",
+                   pattern: "Home/ConsultarVagas/ConsultarVagas",
+                   defaults: new { controller = "ConsultarVagas", action = "ConsultarVagas" });
+
 
 
             });
