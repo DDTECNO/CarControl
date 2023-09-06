@@ -7,12 +7,14 @@ namespace CarControl.Service
 {
     public class OperacaoService : IOperacaoService
     {
+        #region DEPENDÊNCIAS
         private readonly IOperacaoRepository _operacaoRepository;
 
         public OperacaoService(IOperacaoRepository operacaoRepository)
         {
             _operacaoRepository = operacaoRepository;
         }
+        #endregion DEPENDÊNCIAS
 
         #region CRUD
         public IEnumerable<Operacao> ListaOperacao()

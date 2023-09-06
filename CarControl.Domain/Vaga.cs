@@ -12,15 +12,11 @@ namespace CarControl.Domain
         [Display(Name = "Nome da vaga")]
         public string NmVaga { get; set; }
 
-
         [Required]
         [Display(Name = "Situação da vaga")]
         public char FlVaga { get; set; }
 
-
-
         public ICollection<Movimento> Movimentos { get; set; }
-
 
         public Vaga()
         {

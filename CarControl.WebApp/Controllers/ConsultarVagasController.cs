@@ -1,7 +1,5 @@
-﻿using CarControl.Infrastructure.Repositories.Interface;
-using CarControl.Service.Interface;
+﻿using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.WebApp.Controllers
@@ -10,7 +8,7 @@ namespace CarControl.WebApp.Controllers
     public class ConsultarVagasController : Controller
     {
 
-        #region REPOSITORY
+        #region DEPENDÊNCIAS
         private readonly IVagaService _vagaService;
 
         public ConsultarVagasController(IVagaService vagaService)
@@ -19,14 +17,14 @@ namespace CarControl.WebApp.Controllers
         }
 
 
-        #endregion REPOSITORY
+        #endregion DEPENDÊNCIAS
 
-
+        #region GET
         public ActionResult ConsultarVagas()
         {
             return View(_vagaService.ListaVaga());
         }
+        #endregion GET
 
-    
     }
 }

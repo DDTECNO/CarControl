@@ -15,8 +15,7 @@ namespace CarControl.Infrastructure.Repositories
         {
 
         }
-
-        
+    
         #region CRUD
 
 

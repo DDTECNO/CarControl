@@ -1,12 +1,8 @@
 ﻿using CarControl.Domain;
 using CarControl.Domain.ViewModel;
-using CarControl.Infrastructure.Migrations;
-using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace CarControl.WebApp.Controllers
@@ -14,7 +10,7 @@ namespace CarControl.WebApp.Controllers
     [Authorize]
     public class RegistroDeMovimentoController : Controller
     {
-        #region REPOSITORY
+        #region DEPENDÊNCIAS
         private readonly IVeiculoService _veiculoService;
         private readonly IVagaService _vagaService;
         private readonly IOperacaoService _operacaoService;
@@ -29,7 +25,7 @@ namespace CarControl.WebApp.Controllers
         }
 
 
-        #endregion REPOSITORY
+        #endregion DEPENDÊNCIAS
 
         #region GET 
 

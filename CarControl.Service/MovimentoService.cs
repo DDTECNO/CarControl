@@ -8,13 +8,14 @@ namespace CarControl.Service
 {
     public class MovimentoService : IMovimentoService
     {
-
+        #region DEPENDÊNCIAS
         private readonly IMovimentoRepository _movimentoRepository;
 
         public MovimentoService(IMovimentoRepository movimentoRepository)
         {
             _movimentoRepository = movimentoRepository;
         }
+        #endregion DEPENDÊNCIAS
 
         #region  CRUD
 

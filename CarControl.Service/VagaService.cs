@@ -7,12 +7,14 @@ namespace CarControl.Service
 {
     public class VagaService : IVagaService
     {
+        #region DEPENDÊNCIAS
         private readonly IVagaRepository _vagaRepository;
 
         public VagaService(IVagaRepository vagaRepository)
         {
             _vagaRepository = vagaRepository;
         }
+        # endregion DEPENDÊNCIAS
 
         #region CRUD
 

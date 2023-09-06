@@ -10,9 +10,7 @@ namespace CarControl.Infrastructure
         public CarControlContext(DbContextOptions options) : base(options)
         {
 
-        }
-
-       
+        }      
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

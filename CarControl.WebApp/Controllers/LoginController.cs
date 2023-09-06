@@ -11,7 +11,7 @@ namespace CarControl.WebApp.Controllers
     [AllowAnonymous]
     public class LoginController : Controller
     {
-
+        #region  DEPENDÊNCIAS
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
 
@@ -20,7 +20,9 @@ namespace CarControl.WebApp.Controllers
             _signInManager = signInManager;
             _userManager = userManager;
         }
+        # endregion DEPENDÊNCIAS
 
+        #region GET
         public IActionResult LoginUsuario()
 
         {
@@ -37,8 +39,9 @@ namespace CarControl.WebApp.Controllers
             return View();
         }
 
+        #endregion GET
 
-
+        #region POST 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginUsuario(LoginViewModel model)
@@ -150,6 +153,6 @@ namespace CarControl.WebApp.Controllers
                 return View();
             }
         }
-
+        #endregion POST
     }
 }

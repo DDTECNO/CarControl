@@ -1,6 +1,4 @@
 ﻿using CarControl.Domain;
-using CarControl.Infrastructure.Repositories;
-using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +9,7 @@ namespace CarControl.WebApp.Controllers
     public class CadastroDeVeiculoController : Controller
     {
 
-        #region REPOSITORY
+        #region DEPENDÊNCIAS
         private readonly IVeiculoService _veiculoService;
 
         public CadastroDeVeiculoController(IVeiculoService veiculoService)
@@ -20,7 +18,7 @@ namespace CarControl.WebApp.Controllers
         }
 
 
-        #endregion REPOSITORY
+        #endregion DEPENDÊNCIAS
 
         #region GET
 

@@ -7,12 +7,16 @@ namespace CarControl.Service
 {
     public class VeiculoService : IVeiculoService
     {
+        #region DEPENDÊNCIAS    
+
         private readonly IVeiculoRepository _veiculoRepository;
 
         public VeiculoService(IVeiculoRepository iveiculoRepository)
         {
             _veiculoRepository = iveiculoRepository;
         }
+
+        #endregion DEPENDÊNCIAS
 
         #region CRUD
         public Veiculo Create(Veiculo veiculo)

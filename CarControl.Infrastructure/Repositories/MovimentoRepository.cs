@@ -8,7 +8,6 @@ namespace CarControl.Infrastructure.Repositories
     public class MovimentoRepository : BaseRepository<Movimento>, IMovimentoRepository
     {
 
-
         public MovimentoRepository(CarControlContext context) : base(context)
         {
 

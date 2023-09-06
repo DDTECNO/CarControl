@@ -8,7 +8,6 @@ namespace CarControl.Domain
     {
         public int IdMovimento { get; set; }
 
-
         [Required(ErrorMessage = "A data de entrada do veículo é obrigatória")]
         public DateTime DtEntrada { get; set; }
 
