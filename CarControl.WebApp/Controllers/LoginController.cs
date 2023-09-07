@@ -34,7 +34,7 @@ namespace CarControl.WebApp.Controllers
             return View();
         }
 
-        public IActionResult ContaBloqueada()
+        public IActionResult RedefinirSenha()
         {
             return View();
         }

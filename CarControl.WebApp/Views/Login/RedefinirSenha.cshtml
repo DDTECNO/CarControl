@@ -1,0 +1,30 @@
+﻿@model CarControl.Domain.ViewModel.RedefinirSenhaViewModel
+@{
+    ViewData["Title"] = "Redefinir senha";
+}
+
+<div class="logo">
+    <img src="../Imagens/Logos/logoSite.png" />
+</div>
+<<div class="form">
+    <form asp-action="RedefinirSenha" method="post">
+        <div class="form-group" id="form-input">
+            <label asp-for="Email">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <div class="form-group" id="form-input">
+            <label asp-for="NovaSenha">Nova Senha</label>
+            <input asp-for="NovaSenha" type="password" class="form-control" />
+            <span asp-validation-for="NovaSenha" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Redefinir senha</button>
+        <hr />
+        @Html.ValidationSummary()
+        <hr />
+        <div>
+            <a asp-controller="Login" asp-action="RegistroDeUsuario">Registre-se</a>
+        </div>
+    </form>
+
+</div>
