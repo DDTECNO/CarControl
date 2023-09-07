@@ -44,10 +44,11 @@
             <div class="form-group">
                 <input type="submit" id="btnExcluirVeiculo" value="Excluir" class="btn btn-danger" />
             </div>
+            @Html.ValidationSummary()
         </form>
     </div>
 </div>
-    
+
         <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
         <a asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
         <a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>

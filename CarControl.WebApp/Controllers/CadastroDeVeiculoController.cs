@@ -11,10 +11,12 @@ namespace CarControl.WebApp.Controllers
 
         #region DEPENDÊNCIAS
         private readonly IVeiculoService _veiculoService;
+        private readonly IMovimentoService _movimentoService;
 
-        public CadastroDeVeiculoController(IVeiculoService veiculoService)
+        public CadastroDeVeiculoController(IVeiculoService veiculoService, IMovimentoService movimentoService)
         {
             _veiculoService = veiculoService;
+            _movimentoService = movimentoService;
         }
 
 
@@ -80,6 +82,11 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExcluirVeiculo(Veiculo veiculo)
         {
+            if (_movimentoService.ConsultaSeTemMovimento(veiculo))
+            {
+                ModelState.AddModelError(string.Empty, "O veículo possuí movimentações, sendo assim não pode ser excluído.");
+                return View("Excluir");
+            }
 
             _veiculoService.ExcluirVeiculo(veiculo.IdVeiculo);
 

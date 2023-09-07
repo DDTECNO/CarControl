@@ -1,8 +1,7 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
-using Microsoft.EntityFrameworkCore;
-using System;
+using System.Linq;
 
 namespace CarControl.Service
 {
@@ -15,6 +14,7 @@ namespace CarControl.Service
         {
             _movimentoRepository = movimentoRepository;
         }
+
         #endregion DEPENDÊNCIAS
 
         #region  CRUD
@@ -30,6 +30,16 @@ namespace CarControl.Service
             
             return _movimentoRepository.RegistrarSaida(movimento);
 
+        }
+
+        public bool ConsultaSeTemMovimento(Veiculo veiculo)
+        {
+            if(_movimentoRepository.ConsultaSeTemMovimento(veiculo).Count() == 0)
+            {
+                return false;   
+            } 
+
+            return true;    
         }
         #endregion
     }

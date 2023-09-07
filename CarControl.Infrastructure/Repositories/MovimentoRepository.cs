@@ -2,6 +2,7 @@
 using CarControl.Infrastructure.Repositories.Interface;
 using System.Linq;
 using System;
+using System.Collections.Generic;
 
 namespace CarControl.Infrastructure.Repositories
 {
@@ -13,6 +14,7 @@ namespace CarControl.Infrastructure.Repositories
 
         }
 
+      
         #region  CRUD
 
         public Movimento RegistrarEntrada(Movimento movimento)
@@ -34,6 +36,14 @@ namespace CarControl.Infrastructure.Repositories
             return vagaCadastrada;
 
         }
+        public IEnumerable<Movimento> ConsultaSeTemMovimento(Veiculo veiculo)
+        {
+            var movimento = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).ToList() ?? null;
+
+            return movimento;
+        }
+
+
         #endregion
     }
 }

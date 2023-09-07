@@ -11,6 +11,6 @@ namespace CarControl.Service.Interface
         Veiculo ObterVeiculoPorCPF(string cpf);
         Veiculo EditarVeiculo(Veiculo veiculo);
         void ExcluirVeiculo(int id);
-
+   
     }
 }

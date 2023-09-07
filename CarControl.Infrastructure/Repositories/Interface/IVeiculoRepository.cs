@@ -5,7 +5,7 @@ namespace CarControl.Infrastructure.Repositories.Interface
 {
     public interface IVeiculoRepository
     {
-        #region CRUD
+     
         Veiculo Create(Veiculo veiculo);
         IEnumerable<Veiculo> ListaVeiculos();
         Veiculo ObterVeiculos(int id);
@@ -13,6 +13,6 @@ namespace CarControl.Infrastructure.Repositories.Interface
         Veiculo EditarVeiculo(Veiculo veiculo);
         void ExcluirVeiculo(int id);
 
-        #endregion CRUD
+     
     }
 }

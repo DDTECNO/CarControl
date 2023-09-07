@@ -1,5 +1,4 @@
-﻿using CarControl.Domain.ViewModel;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CarControl.Domain
