@@ -21,8 +21,13 @@ namespace CarControl.Service
 
         public Movimento RegistrarEntrada(Movimento movimento)
         {
+            if (!_movimentoRepository.ConsultaSeTemMovimento(movimento).Any())
+            {
+                return _movimentoRepository.RegistrarEntrada(movimento);
+            }
 
-            return _movimentoRepository.RegistrarEntrada(movimento);
+            return null;
+           
         }
 
         public Movimento RegistrarSaida(Movimento movimento)
@@ -34,7 +39,7 @@ namespace CarControl.Service
 
         public bool ConsultaSeTemMovimento(Veiculo veiculo)
         {
-            if(_movimentoRepository.ConsultaSeTemMovimento(veiculo).Count() == 0)
+            if(!_movimentoRepository.ConsultaSeTemMovimento(veiculo).Any())
             {
                 return false;   
             } 

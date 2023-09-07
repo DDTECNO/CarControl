@@ -38,6 +38,9 @@ namespace CarControl.Domain.ViewModel
         [Required(ErrorMessage = "A operação é obrigatória")]
         public int IdOperacao { get; set; }
 
+        public IEnumerable<Movimento> Movimentos { get; set; }
+        public Movimento Movimento { get; set; }
+
         public Vaga Vaga { get; set; }
 
     }

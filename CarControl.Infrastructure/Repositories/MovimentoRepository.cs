@@ -43,6 +43,13 @@ namespace CarControl.Infrastructure.Repositories
             return movimento;
         }
 
+        public IEnumerable<Movimento> ConsultaSeTemMovimento(Movimento movimento)
+        {
+            var movimentoVeiculo = _dbset.Where(p => p.IdVeiculo == movimento.IdVeiculo && p.DtSaida == null).ToList() ?? null;
+
+            return movimentoVeiculo;
+        }
+
 
         #endregion
     }

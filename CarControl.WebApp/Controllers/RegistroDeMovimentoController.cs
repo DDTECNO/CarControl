@@ -183,9 +183,16 @@ namespace CarControl.WebApp.Controllers
                 IdTpOperacao = movimentoViewModel.IdOperacao
             };
 
+
             if (ModelState.IsValid)
             {
-                _movimentoService.RegistrarEntrada(movimento);
+                if (_movimentoService.RegistrarEntrada(movimento) == null)
+                {
+                    ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");
+                    TempData["ErrorMessage"] = "O veículo já está em uma vaga, se necessário registre sua saída.";
+
+                  return RedirectToAction("RegistroDeEntrada", "RegistroDeMovimento");
+                };
                 _vagaService.AtualizaFLVaga(movimento.IdVaga);
             }
             return RedirectToAction("ConsultarVagas", "ConsultarVagas");

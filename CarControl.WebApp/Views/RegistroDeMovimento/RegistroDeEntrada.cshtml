@@ -3,7 +3,12 @@
 @{
     ViewData["Title"] = "Registro de Entrada";
 }
-
+@if (TempData.ContainsKey("ErrorMessage"))
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
 <h1 class="Titulo">Registro de entrada</h1>
 
 <hr />
@@ -51,6 +56,7 @@
                 <input id="btnSalvar" type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
+        @Html.ValidationSummary()
     </div>
 </div>
 
