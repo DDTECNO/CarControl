@@ -30,13 +30,13 @@ namespace CarControl.WebApp.Controllers
         #region GET 
 
 
-        public ActionResult RegistroDeEntrada(int idVeiculo = 0)
+        public ActionResult RegistroDeEntrada(int idVeiculo = 0, int idVaga = 0)
         {
             if (idVeiculo != 0)
             {
                 Veiculo veiculo = _veiculoService.ObterVeiculos(idVeiculo);
 
-                IEnumerable<Veiculo> veiculos1 = new List<Veiculo>
+                IEnumerable<Veiculo> vcls = new List<Veiculo>
                 {
                     veiculo
                 };
@@ -45,7 +45,7 @@ namespace CarControl.WebApp.Controllers
                 IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
                 var mvViewModel1 = new MovimentoViewModel()
                 {
-                    Veiculos = veiculos1,
+                    Veiculos = vcls,
                     Vagas = vgs,
                     Operacoes = ops,
 
@@ -54,6 +54,29 @@ namespace CarControl.WebApp.Controllers
                 return View(mvViewModel1);
 
             }
+            if (idVaga != 0) {
+
+                Vaga vaga = _vagaService.ObterVaga(idVaga);
+
+                IEnumerable<Vaga> vgs2 = new List<Vaga>
+                {
+                    vaga
+                };
+
+                IEnumerable<Veiculo> vcls2 = _veiculoService.ListaVeiculos();
+                IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
+                var mvViewModel2 = new MovimentoViewModel()
+                {
+                    Veiculos = vcls2,
+                    Vagas = vgs2,
+                    Operacoes = ops,
+
+                };
+
+                return View(mvViewModel2);
+
+            }
+
 
             IEnumerable<Veiculo> veiculos = _veiculoService.ListaVeiculos();
             IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
@@ -72,8 +95,52 @@ namespace CarControl.WebApp.Controllers
         }
 
 
-        public ActionResult RegistroDeSaida()
+        public ActionResult RegistroDeSaida(int idVeiculo = 0, int idVaga = 0)
         {
+
+            if (idVeiculo != 0)
+            {
+                Veiculo veiculo = _veiculoService.ObterVeiculos(idVeiculo);
+
+                IEnumerable<Veiculo> vcls = new List<Veiculo>
+                {
+                    veiculo
+                };
+
+                IEnumerable<Vaga> vgs = _vagaService.ListaVaga();
+                var mvViewModel1 = new MovimentoViewModel()
+                {
+                    Veiculos = vcls,
+                    Vagas = vgs,
+
+                };
+
+                return View(mvViewModel1);
+
+            }
+            if (idVaga != 0)
+            {
+
+                Vaga vaga = _vagaService.ObterVaga(idVaga);
+
+                IEnumerable<Vaga> vgs2 = new List<Vaga>
+                {
+                    vaga
+                };
+
+                IEnumerable<Veiculo> vcls2 = _veiculoService.ListaVeiculos();
+                var mvViewModel2 = new MovimentoViewModel()
+                {
+                    Veiculos = vcls2,
+                    Vagas = vgs2,
+
+                };
+
+                return View(mvViewModel2);
+
+            }
+
+
 
             IEnumerable<Veiculo> veiculos = _veiculoService.ListaVeiculos();
             IEnumerable<Vaga> vagas = _vagaService.ListaVaga();

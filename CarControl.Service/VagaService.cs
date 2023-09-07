@@ -31,6 +31,11 @@ namespace CarControl.Service
             return _vagaRepository.AtualizaFLVaga(idVaga);
         }
 
+        public Vaga ObterVaga(int idVaga)
+        {
+            return _vagaRepository.ObterVaga(idVaga);
+        }
+
 
 
         #endregion CRUD

@@ -37,9 +37,15 @@
                     </td>
                 }
                 <td class="tdIdVeiculo">
-@*                     @Html.ActionLink("Registrar movimento", "RegistrarMovimento", "RegistroDeEntrada", new {  id=item.IdVeiculo })
- *@                </td>
-
+                    @if (item.FlVaga.ToString() == "D")
+                    {
+                        <a href="@Url.Action("RegistroDeEntrada", "RegistroDeMovimento")?IdVaga=@item.IdVaga">Registrar entrada</a>
+                    }
+                    else
+                    {
+                        <a href="@Url.Action("RegistroDeSaida", "RegistroDeMovimento")?IdVaga=@item.IdVaga">Registrar saída</a>
+                    }                
+                </td>
             </tr>
         }
     </tbody>

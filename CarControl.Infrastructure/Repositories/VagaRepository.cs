@@ -27,7 +27,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Vaga AtualizaFLVaga(int idVaga)
         {
-            var vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault() ?? throw new ArgumentException("Veículo não encontrado");
+            var vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault() ?? throw new ArgumentException("Vaga não encontrada");
 
             if(vaga.FlVaga == 'D')
             {
@@ -42,7 +42,12 @@ namespace CarControl.Infrastructure.Repositories
             return vaga;
         }
 
-    
+        public Vaga ObterVaga(int idVaga)
+        {
+           return _dbset.Where(v => v.IdVaga == idVaga).SingleOrDefault() ?? throw new ArgumentException("Vaga não encontrada");
+        }
+
+
 
         #endregion CRUD
     }
