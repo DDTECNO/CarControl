@@ -26,8 +26,7 @@ namespace CarControl.Service
 
 
         public Vaga AtualizaFLVaga(int idVaga)
-        {
-           
+        {    
             return _vagaRepository.AtualizaFLVaga(idVaga);
         }
 

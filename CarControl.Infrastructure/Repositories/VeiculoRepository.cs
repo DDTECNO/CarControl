@@ -35,33 +35,41 @@ namespace CarControl.Infrastructure.Repositories
         {
             var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
-            return veiculo ?? throw new ArgumentException("Veículo não encontrado");
+            return veiculo;
         }
 
 
         public Veiculo EditarVeiculo(Veiculo veiculo)
         {
-            var veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault() ?? throw new ArgumentException("Veículo não encontrado");
+            var veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault();
 
-            veiculoCadastrado.Atualiza(veiculo);
+            if (veiculoCadastrado != null)
+            {
+                veiculoCadastrado.Atualiza(veiculo);
 
-            _context.SaveChanges();
-
-            return veiculoCadastrado;
+                _context.SaveChanges();
+                 return veiculoCadastrado;
+            }
+       
+            return null; 
 
         }
 
         public void ExcluirVeiculo(int id)
         {
-            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault() ?? throw new ArgumentException("Veículo não encontrado");
-            _dbset.Remove(veiculo);
-            _context.SaveChanges();
+            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
+
+            if(veiculo != null)
+            {
+                _dbset.Remove(veiculo);
+                _context.SaveChanges();
+            }
+            
         }
 
         public Veiculo ObterVeiculoPorCPF(string cpf)
         {
-            var veiculo = _dbset.Where(p => p.CpfCondutor == cpf).SingleOrDefault();
-            return veiculo ?? throw new ArgumentException("Veículo não encontrado");
+            return _dbset.Where(p => p.CpfCondutor == cpf).SingleOrDefault();   
         }
 
         #endregion CRUD

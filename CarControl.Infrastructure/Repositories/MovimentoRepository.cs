@@ -27,7 +27,12 @@ namespace CarControl.Infrastructure.Repositories
 
         public Movimento RegistrarSaida(Movimento movimento)
         {
-            var vagaCadastrada = _dbset.Where(p => p.IdVaga == movimento.IdVaga && p.HrSaida == null).SingleOrDefault() ?? throw new ArgumentException("Vaga não encontrada");
+            var vagaCadastrada = _dbset.Where(p => p.IdVaga == movimento.IdVaga && p.HrSaida == null).SingleOrDefault();
+
+            if (vagaCadastrada == null)
+            {
+                return null;
+            }
 
             vagaCadastrada.Atualiza(movimento);
 

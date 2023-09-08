@@ -2,6 +2,7 @@
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace CarControl.WebApp.Controllers
 {
@@ -37,18 +38,35 @@ namespace CarControl.WebApp.Controllers
 
         public ActionResult EditarVeiculo(int id)
         {
-            return View(_veiculoService.ObterVeiculos(id));
+            var viewEditar = _veiculoService.ObterVeiculos(id);
+
+            if (viewEditar == null)
+            {
+                throw new ArgumentException("Veículo não encontrado");
+            }
+            return View(viewEditar);
         }
 
 
         public ActionResult DetalhesDoVeiculo(int id)
         {
-            return View(_veiculoService.ObterVeiculos(id));
+            var viewDetalhes = View(_veiculoService.ObterVeiculos(id));
+            if (viewDetalhes != null)
+            {
+                throw new ArgumentException("Veículo não encontrado");
+            }
+            return View(viewDetalhes);
         }
 
         public ActionResult Excluir(int id)
         {
-            return View(_veiculoService.ObterVeiculos(id));
+            var viewExcluir = _veiculoService.ObterVeiculos(id);
+            if (viewExcluir == null)
+            {
+                throw new ArgumentException("Veículo não encontrado");
+            }
+            return View(viewExcluir);
+
         }
         #endregion GET
 
@@ -72,7 +90,11 @@ namespace CarControl.WebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                _veiculoService.EditarVeiculo(veiculo);
+                var editar = _veiculoService.EditarVeiculo(veiculo);
+                if (editar == null)
+                {
+                    throw new ArgumentException("Veículo não encontrado");
+                }
             }
             return RedirectToAction("VeiculosCadastrados");
         }
