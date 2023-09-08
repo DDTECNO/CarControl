@@ -1,5 +1,6 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.APIVeiculos.Controllers
@@ -8,18 +9,18 @@ namespace CarControl.APIVeiculos.Controllers
     [ApiController]
     public class VeiculosController : Controller
     {
-        private readonly IVeiculoRepository _veiculoRepository;
+        private readonly IVeiculoService _veiculoService;
 
-        public VeiculosController(IVeiculoRepository veiculoRepository)
+        public VeiculosController(IVeiculoService veiculoService)
         {
-            _veiculoRepository = veiculoRepository;
+            _veiculoService = veiculoService;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Veiculo>> Get()
         {
 
-            var veiculos = _veiculoRepository.ListaVeiculos().ToList();
+            var veiculos = _veiculoService.ListaVeiculos().ToList();
 
             if (veiculos == null)
             {
@@ -34,7 +35,7 @@ namespace CarControl.APIVeiculos.Controllers
         [HttpGet("{id:int}", Name = "GetVeiculo")]
         public ActionResult<Veiculo> Get(int id)
         {
-            var veiculo = _veiculoRepository.ObterVeiculos(id);
+            var veiculo = _veiculoService.ObterVeiculos(id);
 
             if (veiculo == null)
             {
@@ -50,7 +51,7 @@ namespace CarControl.APIVeiculos.Controllers
             if (veiculo == null)
                 return BadRequest();
 
-            _veiculoRepository.Create(veiculo);
+            _veiculoService.Create(veiculo);
 
             return new CreatedAtRouteResult("GetVeiculo", new { id = veiculo.IdVeiculo }, veiculo);
 
