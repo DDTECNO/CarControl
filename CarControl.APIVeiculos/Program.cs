@@ -25,7 +25,7 @@ builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 //string? mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 //builder.Services.AddDbContext<CarControlContext>(options =>  options.UseMySql(mySqlConnection,ServerVersion.AutoDetect(mySqlConnection)));
 
-var connectionString = builder.Configuration["ConexaoSqlite:SqliteConnectionString"];
+var connectionString = builder.Configuration["ConnectionStrings:SqliteConnectionString"];
 builder.Services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
 
 

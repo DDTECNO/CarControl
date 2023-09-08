@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Domain", "..\Car
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Infrastructure", "..\CarControl.Infrastructure\CarControl.Infrastructure.csproj", "{D6F54C8C-F881-4CBD-BF8D-DEEDC4B6A53D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.APIVeiculos", "..\CarControl.APIVeiculos\CarControl.APIVeiculos.csproj", "{A001491E-EB9E-40ED-8F6E-2F7D18201C89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.APIVeiculos", "..\CarControl.APIVeiculos\CarControl.APIVeiculos.csproj", "{A001491E-EB9E-40ED-8F6E-2F7D18201C89}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.Banco", "..\CarControl.Banco\CarControl.Banco.csproj", "{F14BB4BC-F856-4F4D-9C7E-399EA68E7FC0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{A001491E-EB9E-40ED-8F6E-2F7D18201C89}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A001491E-EB9E-40ED-8F6E-2F7D18201C89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A001491E-EB9E-40ED-8F6E-2F7D18201C89}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F14BB4BC-F856-4F4D-9C7E-399EA68E7FC0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F14BB4BC-F856-4F4D-9C7E-399EA68E7FC0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F14BB4BC-F856-4F4D-9C7E-399EA68E7FC0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F14BB4BC-F856-4F4D-9C7E-399EA68E7FC0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

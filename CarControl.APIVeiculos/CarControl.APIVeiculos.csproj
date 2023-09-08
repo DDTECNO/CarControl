@@ -26,8 +26,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarControl.Banco\CarControl.Banco.csproj" />
     <ProjectReference Include="..\CarControl.Service\CarControl.Service.csproj" />
-    <ProjectReference Include="..\CarControl.WebApp\CarControl.WebApp.csproj" />
   </ItemGroup>
 
 </Project>

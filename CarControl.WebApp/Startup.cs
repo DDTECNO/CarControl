@@ -37,7 +37,7 @@ namespace CarControl.WebApp
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddControllersWithViews();
-            var connectionString = Configuration["ConexaoSqlite:SqliteConnectionString"];
+            var connectionString = Configuration["ConnectionStrings:SqliteConnectionString"];
             services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
             services.AddScoped<IMovimentoRepository, MovimentoRepository>();
             services.AddScoped<IOperacaoRepository, OperacaoRepository>();
