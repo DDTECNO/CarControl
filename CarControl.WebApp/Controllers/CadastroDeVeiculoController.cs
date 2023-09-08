@@ -50,8 +50,8 @@ namespace CarControl.WebApp.Controllers
 
         public ActionResult DetalhesDoVeiculo(int id)
         {
-            var viewDetalhes = View(_veiculoService.ObterVeiculos(id));
-            if (viewDetalhes != null)
+            var viewDetalhes = _veiculoService.ObterVeiculos(id);
+            if (viewDetalhes == null)
             {
                 throw new ArgumentException("Veículo não encontrado");
             }
