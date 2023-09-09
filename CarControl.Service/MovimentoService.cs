@@ -37,9 +37,9 @@ namespace CarControl.Service
 
         }
 
-        public bool ConsultaSeTemMovimento(Veiculo veiculo)
+        public bool ConsultaSeTemMovimento(int idVeiculo)
         {
-            if(!_movimentoRepository.ConsultaSeTemMovimento(veiculo).Any())
+            if(!_movimentoRepository.ConsultaSeTemMovimento(idVeiculo).Any())
             {
                 return false;   
             } 

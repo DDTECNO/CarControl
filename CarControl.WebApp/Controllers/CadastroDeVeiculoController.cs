@@ -102,18 +102,21 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ExcluirVeiculo(Veiculo veiculo)
+        public ActionResult ExcluirVeiculo(int idVeiculo)
         {
-            if (_movimentoService.ConsultaSeTemMovimento(veiculo))
+            if (_movimentoService.ConsultaSeTemMovimento(idVeiculo))
             {
-                ModelState.AddModelError(string.Empty, "O veículo possuí movimentações, sendo assim não pode ser excluído.");
-                return View("Excluir");
+                return Json(new { success = false });
+            }
+           
+            var veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
+            if (veiculoExcluido==null)
+            {
+                return Json(new { success = false });
             }
 
-            _veiculoService.ExcluirVeiculo(veiculo.IdVeiculo);
 
-
-            return RedirectToAction("VeiculosCadastrados");
+            return Json(new { success = true, redirectUrl = Url.Action("VeiculosCadastrados") });
         }
         #endregion POST
     }

@@ -55,7 +55,7 @@ namespace CarControl.Infrastructure.Repositories
 
         }
 
-        public void ExcluirVeiculo(int id)
+        public Veiculo ExcluirVeiculo(int id)
         {
             var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
@@ -63,7 +63,10 @@ namespace CarControl.Infrastructure.Repositories
             {
                 _dbset.Remove(veiculo);
                 _context.SaveChanges();
+                return veiculo;
             }
+
+            return null;
             
         }
 

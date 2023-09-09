@@ -11,7 +11,7 @@ namespace CarControl.Infrastructure.Repositories.Interface
         Veiculo ObterVeiculos(int id);
         Veiculo ObterVeiculoPorCPF(string cpf);
         Veiculo EditarVeiculo(Veiculo veiculo);
-        void ExcluirVeiculo(int id);
+        Veiculo ExcluirVeiculo(int id);
 
      
     }

@@ -44,9 +44,9 @@ namespace CarControl.Service
 
         }
 
-        public void ExcluirVeiculo(int id)
+        public Veiculo ExcluirVeiculo(int id)
         {
-            _veiculoRepository.ExcluirVeiculo(id);
+           return _veiculoRepository.ExcluirVeiculo(id);
         }
 
         public Veiculo ObterVeiculoPorCPF(string cpf)

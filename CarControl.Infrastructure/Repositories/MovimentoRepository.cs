@@ -41,9 +41,9 @@ namespace CarControl.Infrastructure.Repositories
             return vagaCadastrada;
 
         }
-        public IEnumerable<Movimento> ConsultaSeTemMovimento(Veiculo veiculo)
+        public IEnumerable<Movimento> ConsultaSeTemMovimento(int idVeiculo)
         {
-            var movimento = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).ToList() ?? null;
+            var movimento = _dbset.Where(p => p.IdVeiculo == idVeiculo).ToList() ?? null;
 
             return movimento;
         }

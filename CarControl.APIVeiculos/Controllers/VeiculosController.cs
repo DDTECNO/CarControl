@@ -1,5 +1,4 @@
 ﻿using CarControl.Domain;
-using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +9,12 @@ namespace CarControl.APIVeiculos.Controllers
     public class VeiculosController : Controller
     {
         private readonly IVeiculoService _veiculoService;
+        private readonly IMovimentoService _movimentoService;
 
-        public VeiculosController(IVeiculoService veiculoService)
+        public VeiculosController(IVeiculoService veiculoService, IMovimentoService movimentoService)
         {
             _veiculoService = veiculoService;
+            _movimentoService = movimentoService;
         }
 
         [HttpGet]
@@ -56,5 +57,36 @@ namespace CarControl.APIVeiculos.Controllers
             return new CreatedAtRouteResult("GetVeiculo", new { id = veiculo.IdVeiculo }, veiculo);
 
         }
+
+        [HttpPut("{id:int}")]
+        public ActionResult Put(int id, Veiculo veiculo)
+        {
+            if (id != veiculo.IdVeiculo)
+            {
+                return BadRequest();
+            }
+
+            _veiculoService.EditarVeiculo(veiculo);
+
+            return Ok(veiculo);
+        }
+
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id) 
+        {
+            //if (_movimentoService.ConsultaSeTemMovimento())
+            //{
+
+            //}
+            var veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
+            if (veiculoExcluido == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(veiculoExcluido);
+        
+        }
+
     }
 }
