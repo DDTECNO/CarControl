@@ -74,14 +74,14 @@ namespace CarControl.APIVeiculos.Controllers
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id) 
         {
-            //if (_movimentoService.ConsultaSeTemMovimento())
-            //{
-
-            //}
+            if (_movimentoService.ConsultaSeTemMovimento(id))
+            {
+                return BadRequest("O veículo possuí movimentações");
+            }
             var veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
             if (veiculoExcluido == null)
             {
-                return NotFound();
+                return NotFound("O veículo não foi encontrado");
             }
 
             return Ok(veiculoExcluido);
