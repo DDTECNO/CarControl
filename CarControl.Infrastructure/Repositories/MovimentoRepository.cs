@@ -3,6 +3,9 @@ using CarControl.Infrastructure.Repositories.Interface;
 using System.Linq;
 using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
+using System.Data.SqlClient;
+using Microsoft.Data.Sqlite;
 
 namespace CarControl.Infrastructure.Repositories
 {
@@ -43,17 +46,33 @@ namespace CarControl.Infrastructure.Repositories
         }
         public IEnumerable<Movimento> ConsultaSeTemMovimento(int idVeiculo)
         {
-            var movimento = _dbset.Where(p => p.IdVeiculo == idVeiculo).ToList() ?? null;
+            var movimentos = _dbset.Where(p => p.IdVeiculo == idVeiculo).ToList() ?? null;
 
-            return movimento;
+            return movimentos;
         }
 
         public IEnumerable<Movimento> ConsultaSeTemMovimento(Movimento movimento)
         {
-            var movimentoVeiculo = _dbset.Where(p => p.IdVeiculo == movimento.IdVeiculo && p.DtSaida == null).ToList() ?? null;
+            var movimentos= _dbset.Where(p => p.IdVeiculo == movimento.IdVeiculo && p.DtSaida == null).ToList() ?? null;
 
-            return movimentoVeiculo;
+            return movimentos;
         }
+
+        public IEnumerable<Movimento> ConsultaTodosMovimentos()
+        {
+            return _dbset.ToList();          
+        }
+
+        public Movimento ConsultaMovimentoDoVeiculo(string cpfCondutor)
+        {
+            //Foi utilizado esse método para conulsta pois o entity não consegue fazer o join passando o ofType com o tipo do dbset,
+            //pois ele não possui suporte para consultas desse tipo   
+            var sql = "SELECT * FROM Movimento WHERE IdVeiculo IN (SELECT IdVeiculo FROM Veiculo WHERE CpfCondutor = @cpfCondutor)";
+            var movimentoDoVeiculo = _dbset.FromSqlRaw(sql, new SqliteParameter("@cpfCondutor", cpfCondutor)).FirstOrDefault();
+
+            return movimentoDoVeiculo;
+        }
+
 
 
         #endregion

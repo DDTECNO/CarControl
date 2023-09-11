@@ -54,6 +54,7 @@ namespace CarControl.Service
             return _veiculoRepository.ObterVeiculoPorCPF(cpf);
         }
 
+
         #endregion CRUD
     }
 }

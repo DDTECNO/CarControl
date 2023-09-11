@@ -37,8 +37,12 @@ namespace CarControl.WebApp
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllersWithViews().AddNewtonsoftJson();
             services.AddControllersWithViews();
+
+            //Connection string
             var connectionString = Configuration["ConnectionStrings:SqliteConnectionString"];
             services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
+
+            //Injeção de dependência
             services.AddScoped<IMovimentoRepository, MovimentoRepository>();
             services.AddScoped<IOperacaoRepository, OperacaoRepository>();
             services.AddScoped<IVagaRepository, VagaRepository>();
@@ -47,6 +51,8 @@ namespace CarControl.WebApp
             services.AddScoped<IOperacaoService, OperacaoService>();
             services.AddScoped<IVagaService, VagaService>();
             services.AddScoped<IVeiculoService, VeiculoService>();
+
+
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -54,14 +60,13 @@ namespace CarControl.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            //Autenticação
-
+         
+            //Serviço de Autenticação de usuário
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("RequerAdmin", policy =>
                     policy.RequireRole("Admin"));
             });
-
 
             services.AddIdentity<ApplicationUser, IdentityRole>(options =>
             {
@@ -93,6 +98,8 @@ namespace CarControl.WebApp
             app.UseAuthorization();
             
 
+
+            //Verificando outro meio de disponibilizar as rotas 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

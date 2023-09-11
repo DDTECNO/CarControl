@@ -1,6 +1,8 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CarControl.Service
@@ -46,6 +48,20 @@ namespace CarControl.Service
 
             return true;    
         }
+
+        public IEnumerable<Movimento> ConsultaTodosMovimentos()
+        {
+            return _movimentoRepository.ConsultaTodosMovimentos();
+        }
+
+        public Movimento ConsultaMovimentoDoVeiculo(string cpfCondutor)
+        {
+            return _movimentoRepository.ConsultaMovimentoDoVeiculo(cpfCondutor);
+        }
+
+
+
+
         #endregion
     }
 }

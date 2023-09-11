@@ -1,9 +1,9 @@
 using CarControl.Infrastructure;
-using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Infrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-using CarControl.Service.Interface;
+using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
+using CarControl.Service.Interface;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +13,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+//Injeção de dependência
 builder.Services.AddScoped<IMovimentoRepository, MovimentoRepository>();
 builder.Services.AddScoped<IOperacaoRepository, OperacaoRepository>();
 builder.Services.AddScoped<IVagaRepository, VagaRepository>();
@@ -22,9 +24,13 @@ builder.Services.AddScoped<IOperacaoService, OperacaoService>();
 builder.Services.AddScoped<IVagaService, VagaService>();
 builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 
+//Connection strings
+
+//Mysql
 //string? mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
 //builder.Services.AddDbContext<CarControlContext>(options =>  options.UseMySql(mySqlConnection,ServerVersion.AutoDetect(mySqlConnection)));
 
+//Sqlite
 var connectionString = builder.Configuration["ConnectionStrings:SqliteConnectionString"];
 builder.Services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
 
@@ -43,6 +49,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
 
 app.MapControllers();
 
