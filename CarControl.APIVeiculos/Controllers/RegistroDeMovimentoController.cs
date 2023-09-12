@@ -37,10 +37,10 @@ namespace CarControl.APIVeiculos.Controllers
 
 
         [HttpGet("{cpfCondutor}", Name = "GetRegitro")]
-        public ActionResult<Movimento> Get(string cpfCondutor)
+        public ActionResult<IEnumerable<Movimento>>Get(string cpfCondutor)
         {
 
-            var movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor);
+            var movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
 
             if(movimento == null) 
             {
@@ -88,13 +88,19 @@ namespace CarControl.APIVeiculos.Controllers
                 return BadRequest();
             }
 
-            _movimentoService.RegistrarSaida(movimento);
+           var movimentoSaida =  _movimentoService.RegistrarSaida(movimento);
 
+            if (movimentoSaida == null)
+            {
+                return BadRequest("A data e hora de saída não pode ser menor que a data e hora de entrada.");
+            }
             return Ok(movimento);    
 
 
         }
 
+        //[HttpDelete]
 
+        //public AcceptedResult Delete(int movimento) { }
     }
 }

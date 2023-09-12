@@ -128,12 +128,12 @@ namespace CarControl.WebApp
                     defaults: new { controller = "CadastroDeVeiculo", action = "DetalhesDoVeiculo" });
 
                 endpoints.MapControllerRoute(
-                    name: "RegistroDeMovimento",
+                    name: "RegistroDeEntrada",
                     pattern: "Home/RegistroDeMovimento/RegistroDeEntrada",
                     defaults: new { controller = "RegistroDeMovimento", action = "RegistroDeEntrada" });
 
                 endpoints.MapControllerRoute(
-                    name: "RegistroDeMovimento",
+                    name: "RegistroDeSaida",
                     pattern: "Home/RegistroDeMovimento/RegistroDeSaida",
                     defaults: new { controller = "RegistroDeMovimento", action = "RegistroDeSaida" });
 

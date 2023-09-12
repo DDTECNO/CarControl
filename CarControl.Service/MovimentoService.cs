@@ -34,7 +34,12 @@ namespace CarControl.Service
 
         public Movimento RegistrarSaida(Movimento movimento)
         {
-            
+            var movimentoVeiculo = _movimentoRepository.ConsultaSeTemMovimentoPorVaga(movimento.IdVaga).FirstOrDefault();
+
+            if(movimento.DtSaida < movimentoVeiculo.DtEntrada || movimento.HrSaida <= movimentoVeiculo.HrEntrada)
+            {
+                return null;
+            }
             return _movimentoRepository.RegistrarSaida(movimento);
 
         }
@@ -54,7 +59,7 @@ namespace CarControl.Service
             return _movimentoRepository.ConsultaTodosMovimentos();
         }
 
-        public Movimento ConsultaMovimentoDoVeiculo(string cpfCondutor)
+        public IEnumerable<Movimento> ConsultaMovimentoDoVeiculo(string cpfCondutor)
         {
             return _movimentoRepository.ConsultaMovimentoDoVeiculo(cpfCondutor);
         }

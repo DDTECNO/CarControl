@@ -215,9 +215,8 @@ namespace CarControl.WebApp.Controllers
                 if (_movimentoService.RegistrarEntrada(movimento) == null)
                 {
                     ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");
-                    TempData["ErrorMessage"] = "O veículo já está em uma vaga, se necessário registre sua saída.";
-
-                  return RedirectToAction("RegistroDeEntrada", "RegistroDeMovimento");
+                    TempData["ErrorMessageEntrada"] = "O veículo já está em uma vaga, se necessário registre sua saída.";  
+                    return RedirectToAction("RegistroDeEntrada", "RegistroDeMovimento");
                 };
 
                 var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
@@ -250,11 +249,15 @@ namespace CarControl.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 var movimentoDeSaida = _movimentoService.RegistrarSaida(movimento);
+               
 
                 if (movimentoDeSaida == null)
                 {
-                    throw new ArgumentException("Vaga não encontrada");
+                    ModelState.AddModelError(string.Empty, "A data e hora de saída não pode ser menor que a data e hora de entrada.");
+                    TempData["ErrorMessageSaida"] = "A data e hora de saída não pode ser menor que a data e hora de entrada.";
+                    return RedirectToAction("RegistroDeSaida", "RegistroDeMovimento");
                 }
+
                 
                 var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
                

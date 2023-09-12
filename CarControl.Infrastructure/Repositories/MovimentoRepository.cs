@@ -58,17 +58,24 @@ namespace CarControl.Infrastructure.Repositories
             return movimentos;
         }
 
+        public IEnumerable<Movimento> ConsultaSeTemMovimentoPorVaga(int idVaga)
+        {
+            var movimentos = _dbset.Where(p => p.IdVaga == idVaga && p.DtSaida == null).ToList() ?? null;
+
+            return movimentos;
+        }
+
         public IEnumerable<Movimento> ConsultaTodosMovimentos()
         {
             return _dbset.ToList();          
         }
 
-        public Movimento ConsultaMovimentoDoVeiculo(string cpfCondutor)
+        public IEnumerable<Movimento> ConsultaMovimentoDoVeiculo(string cpfCondutor)
         {
             //Foi utilizado esse método para conulsta pois o entity não consegue fazer o join passando o ofType com o tipo do dbset,
             //pois ele não possui suporte para consultas desse tipo   
             var sql = "SELECT * FROM Movimento WHERE IdVeiculo IN (SELECT IdVeiculo FROM Veiculo WHERE CpfCondutor = @cpfCondutor)";
-            var movimentoDoVeiculo = _dbset.FromSqlRaw(sql, new SqliteParameter("@cpfCondutor", cpfCondutor)).FirstOrDefault();
+            var movimentoDoVeiculo = _dbset.FromSqlRaw(sql, new SqliteParameter("@cpfCondutor", cpfCondutor)).ToList();
 
             return movimentoDoVeiculo;
         }
