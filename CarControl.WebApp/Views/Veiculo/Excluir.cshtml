@@ -48,8 +48,8 @@
     </div>
 
     <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
-    <a asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
-    <a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
+    <a asp-controller="Veiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
+    <a asp-controller="Veiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
 }
 
 
@@ -67,7 +67,7 @@
                 var token = $('input[name="__RequestVerificationToken"]').val();
                 
                 $.ajax({
-                    url: '/CadastroDeVeiculo/ExcluirVeiculo',
+                    url: '/Veiculo/ExcluirVeiculo',
                     type: 'POST',
                     data: { idVeiculo: itemId, __RequestVerificationToken: token },
                     success: function (response) { 

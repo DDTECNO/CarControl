@@ -36,7 +36,7 @@ namespace CarControl.Service
         {
             var movimentoVeiculo = _movimentoRepository.ConsultaSeTemMovimentoPorVaga(movimento.IdVaga).FirstOrDefault();
 
-            if(movimento.DtSaida < movimentoVeiculo.DtEntrada || movimento.HrSaida <= movimentoVeiculo.HrEntrada)
+            if(movimento.DtSaida < movimentoVeiculo.DtEntrada || movimento.HrSaida < movimentoVeiculo.HrEntrada)
             {
                 return null;
             }

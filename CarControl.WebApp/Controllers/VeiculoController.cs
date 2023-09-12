@@ -7,14 +7,14 @@ using System;
 namespace CarControl.WebApp.Controllers
 {
     [Authorize]
-    public class CadastroDeVeiculoController : Controller
+    public class VeiculoController : Controller
     {
 
         #region DEPENDÊNCIAS
         private readonly IVeiculoService _veiculoService;
         private readonly IMovimentoService _movimentoService;
 
-        public CadastroDeVeiculoController(IVeiculoService veiculoService, IMovimentoService movimentoService)
+        public VeiculoController(IVeiculoService veiculoService, IMovimentoService movimentoService)
         {
             _veiculoService = veiculoService;
             _movimentoService = movimentoService;

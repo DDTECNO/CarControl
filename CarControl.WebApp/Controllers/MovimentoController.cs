@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace CarControl.WebApp.Controllers
 {
     [Authorize]
-    public class RegistroDeMovimentoController : Controller
+    public class MovimentoController : Controller
     {
         #region DEPENDÊNCIAS
         private readonly IVeiculoService _veiculoService;
@@ -17,7 +17,7 @@ namespace CarControl.WebApp.Controllers
         private readonly IOperacaoService _operacaoService;
         private readonly IMovimentoService _movimentoService;
 
-        public RegistroDeMovimentoController(IVeiculoService veiculoService, IVagaService vagaService, IOperacaoService operacaoService, IMovimentoService movimentoService)
+        public MovimentoController(IVeiculoService veiculoService, IVagaService vagaService, IOperacaoService operacaoService, IMovimentoService movimentoService)
         {
             _veiculoService = veiculoService;
             _vagaService = vagaService;
@@ -216,7 +216,7 @@ namespace CarControl.WebApp.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");
                     TempData["ErrorMessageEntrada"] = "O veículo já está em uma vaga, se necessário registre sua saída.";  
-                    return RedirectToAction("RegistroDeEntrada", "RegistroDeMovimento");
+                    return RedirectToAction("RegistroDeEntrada", "Movimento");
                 };
 
                 var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
@@ -227,7 +227,7 @@ namespace CarControl.WebApp.Controllers
                 }
 
             }
-            return RedirectToAction("ConsultarVagas", "ConsultarVagas");
+            return RedirectToAction("ConsultarVagas", "Vagas");
 
         }
 
@@ -255,7 +255,7 @@ namespace CarControl.WebApp.Controllers
                 {
                     ModelState.AddModelError(string.Empty, "A data e hora de saída não pode ser menor que a data e hora de entrada.");
                     TempData["ErrorMessageSaida"] = "A data e hora de saída não pode ser menor que a data e hora de entrada.";
-                    return RedirectToAction("RegistroDeSaida", "RegistroDeMovimento");
+                    return RedirectToAction("RegistroDeSaida", "Movimento");
                 }
 
                 
@@ -266,7 +266,7 @@ namespace CarControl.WebApp.Controllers
                     throw new ArgumentException("Erro ao verificar flag de vaga");
                 }
             }
-            return RedirectToAction("ConsultarVagas", "ConsultarVagas");
+            return RedirectToAction("ConsultarVagas", "Vagas");
 
         }
 

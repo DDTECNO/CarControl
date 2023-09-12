@@ -6,13 +6,13 @@ namespace CarControl.APIVeiculos.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    public class RegistroDeMovimentoController : Controller
+    public class MovimentosController : Controller
     {
         private readonly IMovimentoService _movimentoService;
         private readonly IVeiculoService _veiculoService;
         private readonly IVagaService _vagaService;
 
-        public RegistroDeMovimentoController(IMovimentoService movimentoService, IVeiculoService veiculoService, IVagaService vagaService)
+        public MovimentosController(IMovimentoService movimentoService, IVeiculoService veiculoService, IVagaService vagaService)
         {
             _movimentoService = movimentoService;
             _veiculoService = veiculoService;

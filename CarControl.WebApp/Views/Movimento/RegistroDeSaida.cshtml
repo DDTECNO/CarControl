@@ -47,10 +47,10 @@
 </div>
 
 <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
-<a asp-controller="CadastroDeVeiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
-<a asp-controller="RegistroDeMovimento" asp-action="RegistroDeEntrada">Registrar nova entrada |</a>
-<a asp-controller="ConsultarVagas" asp-action="ConsultarVagas">Consultar vagas  |</a>
-<a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
+<a asp-controller="Veiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
+<a asp-controller="Movimento" asp-action="RegistroDeEntrada">Registrar nova entrada |</a>
+<a asp-controller="Vagas" asp-action="ConsultarVagas">Consultar vagas  |</a>
+<a asp-controller="Veiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
 @section Scripts {
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");

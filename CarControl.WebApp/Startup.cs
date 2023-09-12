@@ -104,38 +104,38 @@ namespace CarControl.WebApp
             {
                 endpoints.MapControllerRoute(
                     name: "CadastroDeVeiculo",
-                    pattern: "Home/CadastroDeVeiculo/CadastroDeVeiculo",
-                    defaults: new { controller = "CadastroDeVeiculo", action = "CadastroDeVeiculo" });
+                    pattern: "Home/Veiculo/CadastroDeVeiculo",
+                    defaults: new { controller = "Veiculo", action = "CadastroDeVeiculo" });
 
                 endpoints.MapControllerRoute(
                     name: "VeiculosCadastrados",
-                    pattern: "Home/CadastroDeVeiculo/VeiculosCadastrados",
-                    defaults: new { controller = "CadastroDeVeiculo", action = "VeiculosCadastrados" });
+                    pattern: "Home/Veiculo/VeiculosCadastrados",
+                    defaults: new { controller = "Veiculo", action = "VeiculosCadastrados" });
                
                 endpoints.MapControllerRoute(
                     name: "EditarVeiculo",
-                    pattern: "Home/CadastroDeVeiculo/EditarVeiculo",
-                    defaults: new { controller = "CadastroDeVeiculo", action = "EditarVeiculo" });
+                    pattern: "Home/Veiculo/EditarVeiculo",
+                    defaults: new { controller = "Veiculo", action = "EditarVeiculo" });
 
                 endpoints.MapControllerRoute(
                     name: "Excluir",
-                    pattern: "Home/CadastroDeVeiculo/Excluir",
-                    defaults: new { controller = "CadastroDeVeiculo", action = "Excluir" });
+                    pattern: "Home/Veiculo/Excluir",
+                    defaults: new { controller = "Veiculo", action = "Excluir" });
 
                 endpoints.MapControllerRoute(
                     name: "DetalhesDoVeiculo",
-                    pattern: "Home/CadastroDeVeiculo/DetalhesDoVeiculo",
-                    defaults: new { controller = "CadastroDeVeiculo", action = "DetalhesDoVeiculo" });
+                    pattern: "Home/Veiculo/DetalhesDoVeiculo",
+                    defaults: new { controller = "Veiculo", action = "DetalhesDoVeiculo" });
 
                 endpoints.MapControllerRoute(
                     name: "RegistroDeEntrada",
-                    pattern: "Home/RegistroDeMovimento/RegistroDeEntrada",
-                    defaults: new { controller = "RegistroDeMovimento", action = "RegistroDeEntrada" });
+                    pattern: "Home/Movimento/RegistroDeEntrada",
+                    defaults: new { controller = "Movimento", action = "RegistroDeEntrada" });
 
                 endpoints.MapControllerRoute(
                     name: "RegistroDeSaida",
-                    pattern: "Home/RegistroDeMovimento/RegistroDeSaida",
-                    defaults: new { controller = "RegistroDeMovimento", action = "RegistroDeSaida" });
+                    pattern: "Home/Movimento/RegistroDeSaida",
+                    defaults: new { controller = "Movimento", action = "RegistroDeSaida" });
 
                 endpoints.MapControllerRoute(
                     name: "default",
@@ -144,8 +144,8 @@ namespace CarControl.WebApp
 
                 endpoints.MapControllerRoute(
                    name: "ConsultarVagas",
-                   pattern: "Home/ConsultarVagas/ConsultarVagas",
-                   defaults: new { controller = "ConsultarVagas", action = "ConsultarVagas" });
+                   pattern: "Home/Vagas/ConsultarVagas",
+                   defaults: new { controller = "Vagas", action = "ConsultarVagas" });
 
 
 

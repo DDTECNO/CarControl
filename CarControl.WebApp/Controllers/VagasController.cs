@@ -5,13 +5,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace CarControl.WebApp.Controllers
 {
     [Authorize]
-    public class ConsultarVagasController : Controller
+    public class VagasController : Controller
     {
 
         #region DEPENDÊNCIAS
         private readonly IVagaService _vagaService;
 
-        public ConsultarVagasController(IVagaService vagaService)
+        public VagasController(IVagaService vagaService)
         {
             _vagaService = vagaService;
         }

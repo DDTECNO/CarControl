@@ -1,15 +1,15 @@
 ﻿@model CarControl.Domain.Veiculo
 
 @{
-    ViewData["Title"] = "Editar veículo";
+    ViewData["Title"] = "Cadastro De veículo";
 }
 
-<h1 class="Titulo">Editar veículo</h1>
+<h1 class="Titulo">Cadastrar veículo</h1>
 
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="EditarVeiculoCadastrado" id="searchForm">
+        <form asp-action="InserirCadastro">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Marca" class="control-label"></label>
@@ -22,7 +22,7 @@
                 <span asp-validation-for="Modelo" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TpVeiculo" class="control-label">Tipo de veículo</label>
+                <label asp-for="TpVeiculo" class="control-label">Tipo de Veículo</label>
                 <input asp-for="TpVeiculo" class="form-control" />
                 <span asp-validation-for="TpVeiculo" class="text-danger"></span>
             </div>
@@ -32,7 +32,7 @@
                 <span asp-validation-for="Cor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PlacaVeiculo" class="control-label">Placa do veículo</label>
+                <label asp-for="PlacaVeiculo" class="control-label">Placa do Veículo</label>
                 <input asp-for="PlacaVeiculo" class="form-control" />
                 <span asp-validation-for="PlacaVeiculo" class="text-danger"></span>
             </div>
@@ -42,17 +42,13 @@
                 <span asp-validation-for="NmCondutor" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CpfCondutor" class="control-label"> CPf do condutor</label>
-                <input asp-for="CpfCondutor" class="form-control" />
+                <label asp-for="CpfCondutor" class="control-label">CPF do Condutor</label>
+                <input type="text" asp-for="CpfCondutor" class="form-control" />
                 <span asp-validation-for="CpfCondutor" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
-                <label asp-for="IdVeiculo" hidden class="control-label">Código do Veículo</label>
-                <input asp-for="IdVeiculo" hidden id="idVeiculo" class="form-control" />
-                <span asp-validation-for="IdVeiculo" hidden class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" id="btnSalvarEdicao"  value="Salvar alterações" class="btn btn-primary" />
+                <input type="submit" value="Cadastrar" class="btn btn-primary" />
             </div>
         </form>
     </div>
@@ -60,20 +56,12 @@
 
 <div>
     <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
-    <a asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
-    <a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
+    <a asp-controller="Movimento" asp-action="RegistroDeEntrada">Registrar nova entrada |</a>
+    <a asp-controller="Movimento" asp-action="RegistroDeSaida">Registrar saída |</a>
+    <a asp-controller="Vagas" asp-action="ConsultarVagas">Consultar vagas  |</a>
+    <a asp-controller="Veiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
 </div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-
-    <script type="text/jscript">
-        $('#btnSalvarEdicao').click(function () {
-            var url = "/CadastroDeVeiculo/EditarVeiculoCadastrado";
-            var id = $("#idVeiculo").val();
-            $.post(url, { idVeiculo: id} 
-            });
-        })
-    </script>
-
 }

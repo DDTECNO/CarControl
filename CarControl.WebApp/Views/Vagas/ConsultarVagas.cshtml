@@ -39,11 +39,11 @@
                 <td class="tdIdVeiculo">
                     @if (item.FlVaga.ToString() == "D")
                     {
-                        <a href="@Url.Action("RegistroDeEntrada", "RegistroDeMovimento")?IdVaga=@item.IdVaga">Registrar entrada</a>
+                        <a href="@Url.Action("RegistroDeEntrada", "Movimento")?IdVaga=@item.IdVaga">Registrar entrada</a>
                     }
                     else
                     {
-                        <a href="@Url.Action("RegistroDeSaida", "RegistroDeMovimento")?IdVaga=@item.IdVaga">Registrar saída</a>
+                        <a href="@Url.Action("RegistroDeSaida", "Movimento")?IdVaga=@item.IdVaga">Registrar saída</a>
                     }                
                 </td>
             </tr>
@@ -51,7 +51,7 @@
     </tbody>
 </table>
 <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
-<a asp-controller="CadastroDeVeiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
-<a asp-controller="RegistroDeMovimento" asp-action="RegistroDeEntrada">Registrar nova entrada |</a>
-<a asp-controller="RegistroDeMovimento" asp-action="RegistroDeSaida">Registrar saída |</a>
-<a asp-controller="CadastroDeveiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>
+<a asp-controller="Veiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
+<a asp-controller="Movimento" asp-action="RegistroDeEntrada">Registrar nova entrada |</a>
+<a asp-controller="Movimento" asp-action="RegistroDeSaida">Registrar saída |</a>
+<a asp-controller="Veiculo" asp-action="VeiculosCadastrados">Consultar veículos cadastrados</a>

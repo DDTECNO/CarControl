@@ -47,16 +47,16 @@
                 @Html.ActionLink("Editar", "EditarVeiculo", new {  id=item.IdVeiculo  }) |
                 @Html.ActionLink("Detalhes", "DetalhesDoVeiculo", new {  id=item.IdVeiculo}) |
                 @Html.ActionLink("Excluir", "Excluir", new { id=item.IdVeiculo }) |
-                <a href="@Url.Action("RegistroDeEntrada", "RegistroDeMovimento")?IdVeiculo=@item.IdVeiculo">Registrar entrada</a> |
-                <a href="@Url.Action("RegistroDeSaida", "RegistroDeMovimento")?IdVeiculo=@item.IdVeiculo">Registrar saída</a>
+                <a href="@Url.Action("RegistroDeEntrada", "Movimento")?IdVeiculo=@item.IdVeiculo">Registrar entrada</a> |
+                <a href="@Url.Action("RegistroDeSaida", "Movimento")?IdVeiculo=@item.IdVeiculo">Registrar saída</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
 <a asp-controller="Home" asp-action="Index">Voltar ao menu  |</a>
-<a asp-controller="CadastroDeVeiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
-<a asp-controller="RegistroDeMovimento" asp-action="RegistroDeEntrada">Registrar nova entrada |</a>
-<a asp-controller="RegistroDeMovimento" asp-action="RegistroDeSaida">Registrar saída |</a>
-<a asp-controller="ConsultarVagas" asp-action="ConsultarVagas">Consultar vagas  |</a>
+<a asp-controller="Veiculo" asp-action="CadastroDeVeiculo">Inserir novo Veículo  |</a>
+<a asp-controller="Movimento" asp-action="RegistroDeEntrada">Registrar nova entrada |</a>
+<a asp-controller="Movimento" asp-action="RegistroDeSaida">Registrar saída |</a>
+<a asp-controller="Vagas" asp-action="ConsultarVagas">Consultar vagas  |</a>
 
