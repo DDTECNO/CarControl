@@ -4,6 +4,7 @@ using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
 using CarControl.Service.Interface;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,8 @@ builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 var connectionString = builder.Configuration["ConnectionStrings:SqliteConnectionString"];
 builder.Services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
 
+//Ignorando o erro de referência ciclica na serialização (Acontece ao inserir uma propriedade para referênciar uma outra, criando um tipo complexo )
+builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 
 

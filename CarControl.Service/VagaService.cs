@@ -1,6 +1,7 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace CarControl.Service
@@ -27,12 +28,38 @@ namespace CarControl.Service
 
         public Vaga AtualizaFLVaga(int idVaga)
         {    
-            return _vagaRepository.AtualizaFLVaga(idVaga);
+            var vaga =  _vagaRepository.VerificaFLVaga(idVaga);
+
+            if (vaga == null)
+            {
+                return null;
+            }
+            else if (vaga.FlVaga == 'D')
+            {
+                _vagaRepository.setFlVaga(idVaga, 'O');         
+            }
+            else
+            {
+                _vagaRepository.setFlVaga(idVaga,'D');              
+            }
+            return vaga;
         }
 
         public Vaga ObterVaga(int idVaga)
         {
             return _vagaRepository.ObterVaga(idVaga);
+        }
+
+        public bool VagaEstaOcupada(int idVaga)
+        {
+            var vaga = _vagaRepository.VagaEstaOcupada(idVaga);
+
+            if (vaga != null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
 

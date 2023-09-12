@@ -8,5 +8,6 @@ namespace CarControl.Service.Interface
         IEnumerable<Vaga> ListaVaga();
         Vaga AtualizaFLVaga(int idVaga);
         Vaga ObterVaga(int idVaga);
+        bool VagaEstaOcupada(int idVaga);
     }
 }

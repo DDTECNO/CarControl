@@ -7,7 +7,9 @@ namespace CarControl.Infrastructure.Repositories.Interface
     {
          
         IEnumerable<Vaga> ListaVaga();
-        Vaga AtualizaFLVaga(int idVaga);
+        Vaga VerificaFLVaga(int idVaga);
         Vaga ObterVaga(int idVaga);
+        Vaga VagaEstaOcupada(int idVaga);
+        void setFlVaga(int idVag,char flvaga);
     }
 }

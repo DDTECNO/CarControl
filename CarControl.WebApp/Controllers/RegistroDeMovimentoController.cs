@@ -205,6 +205,13 @@ namespace CarControl.WebApp.Controllers
 
             if (ModelState.IsValid)
             {
+                if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
+                {
+                    ModelState.AddModelError(string.Empty, "Esta vaga está ocupada.");
+                    TempData["ErrorMessage"] = "Esta vaga está ocupada.";
+                 
+                }
+
                 if (_movimentoService.RegistrarEntrada(movimento) == null)
                 {
                     ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");

@@ -10,11 +10,13 @@ namespace CarControl.APIVeiculos.Controllers
     {
         private readonly IMovimentoService _movimentoService;
         private readonly IVeiculoService _veiculoService;
+        private readonly IVagaService _vagaService;
 
-        public RegistroDeMovimentoController(IMovimentoService movimentoService, IVeiculoService veiculoService)
+        public RegistroDeMovimentoController(IMovimentoService movimentoService, IVeiculoService veiculoService, IVagaService vagaService)
         {
             _movimentoService = movimentoService;
             _veiculoService = veiculoService;
+            _vagaService = vagaService;
         }
 
 
@@ -42,7 +44,7 @@ namespace CarControl.APIVeiculos.Controllers
 
             if(movimento == null) 
             {
-                return NotFound("Movimento não encontrado");         
+                return NotFound("Movimento não encontrado para o condutor");         
             }
             return movimento;
 
@@ -57,13 +59,18 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 return BadRequest();
             }
+
+            if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
+            {
+                return BadRequest("Esta vaga está ocupada");
+            }
             
             var registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
 
 
             if (registroDeEntrada == null)
             {
-                return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Resgitre sua saída");
+                return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída");
             }
 
             var cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
@@ -72,5 +79,8 @@ namespace CarControl.APIVeiculos.Controllers
             return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor}, movimento);
             
         }
+
+
+
     }
 }
