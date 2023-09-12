@@ -80,6 +80,20 @@ namespace CarControl.APIVeiculos.Controllers
             
         }
 
+        [HttpPut ("{idVaga:int}")]
+        public ActionResult PutSaida(int idVaga, Movimento movimento) 
+        { 
+            if(idVaga != movimento.IdVaga)
+            {
+                return BadRequest();
+            }
+
+            _movimentoService.RegistrarSaida(movimento);
+
+            return Ok(movimento);    
+
+
+        }
 
 
     }
