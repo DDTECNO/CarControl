@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CarControl.Domain
 {
@@ -51,6 +52,7 @@ namespace CarControl.Domain
         [Required(ErrorMessage = "O CPF do codutor do veículo é obrigatório")]
         public string CpfCondutor { get; set; }
 
+        [JsonIgnore]
         public ICollection<Movimento> Movimentos { get; set; }
 
         public void Atualiza(Veiculo novoCadastro)

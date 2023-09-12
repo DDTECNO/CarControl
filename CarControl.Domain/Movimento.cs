@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CarControl.Domain
 {
@@ -19,16 +20,22 @@ namespace CarControl.Domain
 
         [Required(ErrorMessage = "A vaga do veículo é obrigatória")]
         public int IdVaga { get; set; }
+
+        [JsonIgnore]
         public Vaga Vaga { get; set; }
 
         [Required(ErrorMessage = "O tipo de opreção do veículo é obrigatório")]
         public int IdTpOperacao { get; set; }
+
+        [JsonIgnore]
         public Operacao TpOperacao { get; set; }
 
         [Required(ErrorMessage = "O veículo é obrigatório")]
         public int IdVeiculo { get; set; }
 
+        [JsonIgnore]
         public Veiculo Veiculo { get; set; }
+
 
         public void Atualiza(Movimento novoCadastro)
         {

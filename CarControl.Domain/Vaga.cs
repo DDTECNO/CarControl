@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace CarControl.Domain
 {
@@ -16,6 +17,7 @@ namespace CarControl.Domain
         [Display(Name = "Situação da vaga")]
         public char FlVaga { get; set; }
 
+        [JsonIgnore]
         public ICollection<Movimento> Movimentos { get; set; }
 
         public Vaga()
