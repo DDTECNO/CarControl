@@ -41,8 +41,7 @@ namespace CarControl.Domain
         {
             this.DtSaida = novoCadastro.DtSaida;
             this.HrSaida = novoCadastro.HrSaida;
-            
-            
+                        
         }
         public Movimento()
         {

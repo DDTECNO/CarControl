@@ -80,6 +80,21 @@ namespace CarControl.Infrastructure.Repositories
             return movimentoDoVeiculo;
         }
 
+        public Movimento ExcluirMovimento(int idMovimento)
+        {
+            var movimento = _dbset.Where(p => p.IdMovimento == idMovimento).FirstOrDefault();
+            
+            if(movimento != null)
+            {
+                _dbset.Remove(movimento);
+                _context.SaveChanges();
+                return movimento;   
+            }
+
+            return null;    
+           
+        }
+
 
 
         #endregion

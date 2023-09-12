@@ -7,6 +7,7 @@
 {
     @Html.AntiForgeryToken()
     <h1 class="Titulo">Excluir</h1>
+    <hr />
     <h3>Deseja excluir esse veículo?</h3>
     <div class="row">
         <div class="col-md-4">
@@ -40,7 +41,7 @@
                 
                 <div class="form-group">
                     <input type="hidden" id="idVeiculo" value="@Model.IdVeiculo" />
-                    <input type="submit" class="btn btn-danger" id="btnExcluir"/>
+                    <input type="submit" value="Excluir" class="btn btn-danger" id="btnExcluir"/>
                 </div>
 
         </div>

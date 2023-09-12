@@ -8,6 +8,7 @@ namespace CarControl.Service.Interface
         IEnumerable<Movimento> ConsultaMovimentoDoVeiculo(string cpfCondutor);
         bool ConsultaSeTemMovimento(int idVeiculo);
         IEnumerable<Movimento> ConsultaTodosMovimentos();
+        Movimento ExcluirMovimento(int idMovimento);
         Movimento RegistrarEntrada(Movimento movimento);
         Movimento RegistrarSaida(Movimento movimento);
     }

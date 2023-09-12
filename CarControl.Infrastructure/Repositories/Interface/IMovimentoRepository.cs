@@ -10,6 +10,7 @@ namespace CarControl.Infrastructure.Repositories.Interface
         IEnumerable<Movimento> ConsultaSeTemMovimento(Movimento movimento);
         IEnumerable<Movimento> ConsultaSeTemMovimentoPorVaga(int idVaga);
         IEnumerable<Movimento> ConsultaTodosMovimentos();
+        Movimento ExcluirMovimento(int idMovimento);
         Movimento RegistrarEntrada(Movimento movimento);
         Movimento RegistrarSaida(Movimento movimento);
     }

@@ -99,8 +99,18 @@ namespace CarControl.APIVeiculos.Controllers
 
         }
 
-        //[HttpDelete]
+        [HttpDelete ("{id:int}")]
+        public ActionResult Delete(int id) 
+        {
 
-        //public AcceptedResult Delete(int movimento) { }
+            var movimentoExcluido = _movimentoService.ExcluirMovimento(id);
+
+            if(movimentoExcluido == null)
+            {
+                return NotFound("Movimento não encontrado");
+            }
+            return Ok(movimentoExcluido);
+        
+        }
     }
 }

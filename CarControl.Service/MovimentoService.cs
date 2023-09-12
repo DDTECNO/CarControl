@@ -64,6 +64,11 @@ namespace CarControl.Service
             return _movimentoRepository.ConsultaMovimentoDoVeiculo(cpfCondutor);
         }
 
+        public Movimento ExcluirMovimento(int idMovimento)
+        {
+            return _movimentoRepository.ExcluirMovimento(idMovimento);
+        }
+
 
 
 
