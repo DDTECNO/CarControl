@@ -177,13 +177,21 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult BuscarVeiculo(Veiculo veiculo)
         {
-            var buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
-            if (buscar == null)
+            try
             {
-                throw new ArgumentException("Veículo não encontrado");
+                var buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
+                if (buscar == null)
+                {
+                    throw new ArgumentException("Veículo não encontrado");
+                }
+
+                return View(buscar);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
             }
 
-            return View(buscar);
 
         }
 
@@ -191,44 +199,48 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RegistroDeEntradaDeVeiculo(MovimentoViewModel movimentoViewModel)
         {
-
-
-            Movimento movimento = new Movimento()
+            try
             {
-                DtEntrada = movimentoViewModel.DtEntrada,
-                HrEntrada = movimentoViewModel.HrEntrada,
-                IdVeiculo = movimentoViewModel.IdVeiculo,
-                IdVaga = movimentoViewModel.IdVaga,             
-                IdTpOperacao = movimentoViewModel.IdOperacao
-            };
-
-
-            if (ModelState.IsValid)
-            {
-                if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
+                Movimento movimento = new Movimento()
                 {
-                    ModelState.AddModelError(string.Empty, "Esta vaga está ocupada.");
-                    TempData["ErrorMessage"] = "Esta vaga está ocupada.";
-                 
-                }
-
-                if (_movimentoService.RegistrarEntrada(movimento) == null)
-                {
-                    ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");
-                    TempData["ErrorMessageEntrada"] = "O veículo já está em uma vaga, se necessário registre sua saída.";  
-                    return RedirectToAction("RegistroDeEntrada", "Movimento");
+                    DtEntrada = movimentoViewModel.DtEntrada,
+                    HrEntrada = movimentoViewModel.HrEntrada,
+                    IdVeiculo = movimentoViewModel.IdVeiculo,
+                    IdVaga = movimentoViewModel.IdVaga,
+                    IdTpOperacao = movimentoViewModel.IdOperacao
                 };
 
-                var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
 
-                if(atualizaFlVaga == null)
+                if (ModelState.IsValid)
                 {
-                    throw new ArgumentException("Erro ao verificar flag de vaga");
+                    if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
+                    {
+                        ModelState.AddModelError(string.Empty, "Esta vaga está ocupada.");
+                        TempData["ErrorMessage"] = "Esta vaga está ocupada.";
+
+                    }
+
+                    if (_movimentoService.RegistrarEntrada(movimento) == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");
+                        TempData["ErrorMessageEntrada"] = "O veículo já está em uma vaga, se necessário registre sua saída.";
+                        return RedirectToAction("RegistroDeEntrada", "Movimento");
+                    };
+
+                    var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+
+                    if (atualizaFlVaga == null)
+                    {
+                        throw new ArgumentException("Erro ao verificar flag de vaga");
+                    }
+
                 }
-
+                return RedirectToAction("ConsultarVagas", "Vagas");
             }
-            return RedirectToAction("ConsultarVagas", "Vagas");
-
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
+            }
         }
 
 
@@ -237,36 +249,43 @@ namespace CarControl.WebApp.Controllers
         public ActionResult RegistroDeSaidaDeVeiculo(MovimentoViewModel movimentoViewModel)
         {
 
-
-            Movimento movimento = new Movimento()
+            try
             {
-                DtSaida = movimentoViewModel.DtSaida,
-                HrSaida = movimentoViewModel.HrSaida,
-                IdVaga = movimentoViewModel.IdVaga,
-              
-            };
-
-            if (ModelState.IsValid)
-            {
-                var movimentoDeSaida = _movimentoService.RegistrarSaida(movimento);
-               
-
-                if (movimentoDeSaida == null)
+                Movimento movimento = new Movimento()
                 {
-                    ModelState.AddModelError(string.Empty, "A data e hora de saída não pode ser menor que a data e hora de entrada.");
-                    TempData["ErrorMessageSaida"] = "A data e hora de saída não pode ser menor que a data e hora de entrada.";
-                    return RedirectToAction("RegistroDeSaida", "Movimento");
-                }
+                    DtSaida = movimentoViewModel.DtSaida,
+                    HrSaida = movimentoViewModel.HrSaida,
+                    IdVaga = movimentoViewModel.IdVaga,
 
-                
-                var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
-               
-                if (atualizaFlVaga == null)
+                };
+
+                if (ModelState.IsValid)
                 {
-                    throw new ArgumentException("Erro ao verificar flag de vaga");
+                    var movimentoDeSaida = _movimentoService.RegistrarSaida(movimento);
+
+
+                    if (movimentoDeSaida == null)
+                    {
+                        ModelState.AddModelError(string.Empty, "A data e hora de saída não pode ser menor que a data e hora de entrada.");
+                        TempData["ErrorMessageSaida"] = "A data e hora de saída não pode ser menor que a data e hora de entrada.";
+                        return RedirectToAction("RegistroDeSaida", "Movimento");
+                    }
+
+
+                    var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+
+                    if (atualizaFlVaga == null)
+                    {
+                        throw new ArgumentException("Erro ao verificar flag de vaga");
+                    }
                 }
+                return RedirectToAction("ConsultarVagas", "Vagas");
             }
-            return RedirectToAction("ConsultarVagas", "Vagas");
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
+            }
+
 
         }
 

@@ -76,11 +76,19 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult InserirCadastro(Veiculo veiculo)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _veiculoService.Create(veiculo);
+                if (ModelState.IsValid)
+                {
+                    _veiculoService.Create(veiculo);
+                }
+                return RedirectToAction("VeiculosCadastrados");
             }
-            return RedirectToAction("VeiculosCadastrados");
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
+            }
+
         }
 
 
@@ -88,15 +96,23 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditarVeiculoCadastrado(Veiculo veiculo)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var editar = _veiculoService.EditarVeiculo(veiculo);
-                if (editar == null)
+                if (ModelState.IsValid)
                 {
-                    throw new ArgumentException("Veículo não encontrado");
+                    var editar = _veiculoService.EditarVeiculo(veiculo);
+                    if (editar == null)
+                    {
+                        throw new ArgumentException("Veículo não encontrado");
+                    }
                 }
+                return RedirectToAction("VeiculosCadastrados");
             }
-            return RedirectToAction("VeiculosCadastrados");
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
+            }
+
         }
 
 
@@ -104,19 +120,27 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult ExcluirVeiculo(int idVeiculo)
         {
-            if (_movimentoService.ConsultaSeTemMovimento(idVeiculo))
+            try
             {
-                return Json(new { success = false });
-            }
-           
-            var veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
-            if (veiculoExcluido==null)
-            {
-                return Json(new { success = false });
-            }
+                if (_movimentoService.ConsultaSeTemMovimento(idVeiculo))
+                {
+                    return Json(new { success = false });
+                }
+
+                var veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
+                if (veiculoExcluido == null)
+                {
+                    return Json(new { success = false });
+                }
 
 
-            return Json(new { success = true, redirectUrl = Url.Action("VeiculosCadastrados") });
+                return Json(new { success = true, redirectUrl = Url.Action("VeiculosCadastrados") });
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
+            }
+
         }
         #endregion POST
     }

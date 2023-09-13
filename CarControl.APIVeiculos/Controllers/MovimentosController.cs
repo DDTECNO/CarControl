@@ -23,15 +23,22 @@ namespace CarControl.APIVeiculos.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Movimento>> Get() 
         {
-
-            var movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
-
-            if (movimentos == null)
+            try
             {
-                return NotFound("Nenhum movimento encontrado");
+                var movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
+
+                if (movimentos == null)
+                {
+                    return NotFound("Nenhum movimento encontrado");
+                }
+
+                return movimentos;
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
             }
 
-            return movimentos;   
 
         }
 
@@ -39,14 +46,20 @@ namespace CarControl.APIVeiculos.Controllers
         [HttpGet("{cpfCondutor}", Name = "GetRegitro")]
         public ActionResult<IEnumerable<Movimento>>Get(string cpfCondutor)
         {
-
-            var movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
-
-            if(movimento == null) 
+            try
             {
-                return NotFound("Movimento não encontrado para o condutor");         
+                var movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
+
+                if (movimento == null)
+                {
+                    return NotFound("Movimento não encontrado para o condutor");
+                }
+                return movimento;
             }
-            return movimento;
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+            }
 
         }
 
@@ -55,62 +68,84 @@ namespace CarControl.APIVeiculos.Controllers
         [HttpPost]   
         public  ActionResult Post(Movimento movimento)
         {
-            if (movimento == null)
+            try
             {
-                return BadRequest();
-            }
+                if (movimento == null)
+                {
+                    return BadRequest();
+                }
 
-            if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
+                if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
+                {
+                    return BadRequest("Esta vaga está ocupada");
+                }
+
+                var registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
+
+
+                if (registroDeEntrada == null)
+                {
+                    return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída");
+                }
+
+                var cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
+
+
+                return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, movimento);
+            }
+            catch (Exception)
             {
-                return BadRequest("Esta vaga está ocupada");
+
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                
             }
-            
-            var registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
-
-
-            if (registroDeEntrada == null)
-            {
-                return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída");
-            }
-
-            var cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
-            
-
-            return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor}, movimento);
-            
+                      
         }
 
         [HttpPut ("{idVaga:int}")]
         public ActionResult Put(int idVaga, Movimento movimento) 
-        { 
-            if(idVaga != movimento.IdVaga)
+        {
+            try
             {
-                return BadRequest();
+                if (idVaga != movimento.IdVaga)
+                {
+                    return BadRequest();
+                }
+
+                var movimentoSaida = _movimentoService.RegistrarSaida(movimento);
+
+                if (movimentoSaida == null)
+                {
+                    return BadRequest("A data e hora de saída não pode ser menor que a data e hora de entrada.");
+                }
+                return Ok(movimento);
             }
-
-           var movimentoSaida =  _movimentoService.RegistrarSaida(movimento);
-
-            if (movimentoSaida == null)
+            catch (Exception)
             {
-                return BadRequest("A data e hora de saída não pode ser menor que a data e hora de entrada.");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
             }
-            return Ok(movimento);    
-
 
         }
 
         [HttpDelete ("{id:int}")]
         public ActionResult Delete(int id) 
         {
-
-            var movimentoExcluido = _movimentoService.ExcluirMovimento(id);
-
-            if(movimentoExcluido == null)
+            try
             {
-                return NotFound("Movimento não encontrado");
+                var movimentoExcluido = _movimentoService.ExcluirMovimento(id);
+
+                if (movimentoExcluido == null)
+                {
+                    return NotFound("Movimento não encontrado");
+                }
+                return Ok(movimentoExcluido);
             }
-            return Ok(movimentoExcluido);
-        
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+            }
+
+
         }
     }
 }

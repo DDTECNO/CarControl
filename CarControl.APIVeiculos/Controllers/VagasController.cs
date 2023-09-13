@@ -18,13 +18,21 @@ namespace CarControl.APIVeiculos.Controllers
         [HttpGet]   
         public ActionResult<IEnumerable<Vaga>> Get()
         {
-          var vagas =  _vagaService.ListaVaga().ToList();
-            
-            if (vagas == null) 
-            { 
-                return NotFound("Nenhuma vaga encontrada");
+            try
+            {
+                var vagas = _vagaService.ListaVaga().ToList();
+
+                if (vagas == null)
+                {
+                    return NotFound("Nenhuma vaga encontrada");
+                }
+                return vagas;
             }
-            return vagas;
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+            }
+
 
         }
     }

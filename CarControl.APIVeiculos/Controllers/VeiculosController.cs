@@ -20,72 +20,111 @@ namespace CarControl.APIVeiculos.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Veiculo>> Get()
         {
-
-            var veiculos = _veiculoService.ListaVeiculos().ToList();
-
-            if (veiculos == null)
+            try
             {
+                var veiculos = _veiculoService.ListaVeiculos().ToList();
 
-                return NotFound("Produtos não encontrados...");
+                if (veiculos == null)
+                {
 
+                    return NotFound("Produtos não encontrados...");
+
+                }
+                return veiculos;
             }
-            return veiculos;
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+            }
+
+
 
         }
 
         [HttpGet("{id:int}", Name = "GetVeiculo")]
         public ActionResult<Veiculo> Get(int id)
         {
-            var veiculo = _veiculoService.ObterVeiculos(id);
-
-            if (veiculo == null)
+            try
             {
-                return NotFound("Produto não encontrado...");
+                var veiculo = _veiculoService.ObterVeiculos(id);
+
+                if (veiculo == null)
+                {
+                    return NotFound("Produto não encontrado...");
+                }
+                return veiculo;
             }
-            return veiculo;
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+            }
+
         }
 
         [HttpPost]
         public ActionResult Post(Veiculo veiculo)
         {
+            try
+            {
+                if (veiculo == null)
+                    return BadRequest();
 
-            if (veiculo == null)
-                return BadRequest();
+                _veiculoService.Create(veiculo);
 
-            _veiculoService.Create(veiculo);
+                return new CreatedAtRouteResult("GetVeiculo", new { id = veiculo.IdVeiculo }, veiculo);
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+            }
 
-            return new CreatedAtRouteResult("GetVeiculo", new { id = veiculo.IdVeiculo }, veiculo);
 
         }
 
         [HttpPut("{id:int}")]
         public ActionResult Put(int id, Veiculo veiculo)
         {
-            if (id != veiculo.IdVeiculo)
+            try
             {
-                return BadRequest();
+                if (id != veiculo.IdVeiculo)
+                {
+                    return BadRequest();
+                }
+
+                _veiculoService.EditarVeiculo(veiculo);
+
+                return Ok(veiculo);
+
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
             }
 
-            _veiculoService.EditarVeiculo(veiculo);
-
-            return Ok(veiculo);
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id) 
+        public ActionResult Delete(int id)
         {
-            if (_movimentoService.ConsultaSeTemMovimento(id))
+            try
             {
-                return BadRequest("O veículo possuí movimentações");
+                if (_movimentoService.ConsultaSeTemMovimento(id))
+                {
+                    return BadRequest("O veículo possuí movimentações");
+                }
+                var veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
+                if (veiculoExcluido == null)
+                {
+                    return NotFound("O veículo não foi encontrado");
+                }
+
+                return Ok(veiculoExcluido);
             }
-            var veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
-            if (veiculoExcluido == null)
+            catch (Exception)
             {
-                return NotFound("O veículo não foi encontrado");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
             }
 
-            return Ok(veiculoExcluido);
-        
         }
 
     }

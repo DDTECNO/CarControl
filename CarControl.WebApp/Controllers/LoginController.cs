@@ -46,50 +46,59 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginUsuario(LoginViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = await _userManager.FindByEmailAsync(model.Email);
-                if (user == null)
+                if (ModelState.IsValid)
                 {
-                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.Verifique seu login e senha e tente novamente");
-                    return View(model);
-                }
-
-                var result = await _signInManager.PasswordSignInAsync(user, model.Senha, isPersistent: false, lockoutOnFailure: true);
-
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
-                if (user.AccessFailedCount >= 4 || user.LockoutEnd >= DateTime.UtcNow)
-                {
-                    
-                    if (user.LockoutEnd >= DateTime.UtcNow)
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    if (user == null)
                     {
-                        ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                        ModelState.AddModelError(string.Empty, "Tentativa de login inválida.Verifique seu login e senha e tente novamente");
                         return View(model);
                     }
-                    
 
-                    if (user.AccessFailedCount >= 4)
+                    var result = await _signInManager.PasswordSignInAsync(user, model.Senha, isPersistent: false, lockoutOnFailure: true);
+
+                    if (result.Succeeded)
                     {
-                        user.LockoutEnabled = true;
-                        await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddMinutes(5));
+                        return RedirectToAction("Index", "Home");
+                    }
+                    if (user.AccessFailedCount >= 4 || user.LockoutEnd >= DateTime.UtcNow)
+                    {
 
-                        ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                        if (user.LockoutEnd >= DateTime.UtcNow)
+                        {
+                            ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                            return View(model);
+                        }
+
+
+                        if (user.AccessFailedCount >= 4)
+                        {
+                            user.LockoutEnabled = true;
+                            await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddMinutes(5));
+
+                            ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                            return View(model);
+                        }
+
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Tentativa de login inválida. Verifique seu login e senha e tente novamente");
                         return View(model);
                     }
-                    
-                }
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida. Verifique seu login e senha e tente novamente");
-                    return View(model);
-                }
 
 
+                }
+                return View(model);
             }
-            return View(model);
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
+            }
+
+            
         }
 
 
@@ -98,60 +107,76 @@ namespace CarControl.WebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistroDeUsuario(RegistroDeUsuarioViewModel model)
         {
-            if (ModelState.IsValid)
+            try
             {
-                var user = new ApplicationUser { UserName = model.NmUsuario, Email = model.Email, PhoneNumber = model.NrTelefone };
-                var result = await _userManager.CreateAsync(user, model.Senha);
-
-                if (result.Succeeded)
+                if (ModelState.IsValid)
                 {
+                    var user = new ApplicationUser { UserName = model.NmUsuario, Email = model.Email, PhoneNumber = model.NrTelefone };
+                    var result = await _userManager.CreateAsync(user, model.Senha);
 
-                    return RedirectToAction("LoginUsuario", "Login");
-                }
-                else
-                {
-                    foreach (var error in result.Errors)
+                    if (result.Succeeded)
                     {
-                        ModelState.AddModelError(string.Empty, error.Description);
+
+                        return RedirectToAction("LoginUsuario", "Login");
+                    }
+                    else
+                    {
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
                     }
                 }
+
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
             }
 
-            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RedefinirSenha(string email, string novaSenha)
         {
-            var user = await _userManager.FindByEmailAsync(email);
-
-            if (user != null)
+            try
             {
-                var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var result = await _userManager.ResetPasswordAsync(user, resetToken, novaSenha);
+                var user = await _userManager.FindByEmailAsync(email);
 
-                if (result.Succeeded)
+                if (user != null)
                 {
-                    await _userManager.ResetAccessFailedCountAsync(user);
-                    return RedirectToAction("LoginUsuario", "Login");
+                    var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    var result = await _userManager.ResetPasswordAsync(user, resetToken, novaSenha);
+
+                    if (result.Succeeded)
+                    {
+                        await _userManager.ResetAccessFailedCountAsync(user);
+                        return RedirectToAction("LoginUsuario", "Login");
+                    }
+                    else
+                    {
+
+                        foreach (var error in result.Errors)
+                        {
+                            ModelState.AddModelError(string.Empty, error.Description);
+                        }
+                        return View();
+                    }
                 }
                 else
                 {
 
-                    foreach (var error in result.Errors)
-                    {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
+                    ModelState.AddModelError(string.Empty, "Usuário não encontrado. Verifique o e-mail digitado e tente novamente");
                     return View();
                 }
             }
-            else
+            catch (Exception ex)
             {
-
-                ModelState.AddModelError(string.Empty, "Usuário não encontrado. Verifique o e-mail digitado e tente novamente");
-                return View();
+                throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
             }
+
         }
         #endregion POST
     }
