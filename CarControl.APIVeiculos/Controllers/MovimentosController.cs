@@ -88,6 +88,13 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída.");
                 }
 
+                var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+
+                if (atualizaFlVaga == null)
+                {
+                    return BadRequest("Erro ao verificar flag de vaga");
+                }
+
                 var cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
 
 
