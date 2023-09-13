@@ -42,7 +42,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public void setFlVaga(int idVaga, char flvaga)
         {
-           var vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault();
+            Vaga vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault();
 
            vaga.FlVaga = flvaga;
 

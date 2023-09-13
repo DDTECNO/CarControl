@@ -33,7 +33,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Veiculo ObterVeiculos(int id)
         {
-            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
+            Veiculo veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
             return veiculo;
         }
@@ -41,7 +41,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Veiculo EditarVeiculo(Veiculo veiculo)
         {
-            var veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault();
+            Veiculo veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault();
 
             if (veiculoCadastrado != null)
             {
@@ -57,7 +57,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Veiculo ExcluirVeiculo(int id)
         {
-            var veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
+            Veiculo veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
             if (veiculo != null)
             {

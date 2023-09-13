@@ -34,7 +34,7 @@ namespace CarControl.Service
 
         public Movimento RegistrarSaida(Movimento movimento)
         {
-            var movimentoVeiculo = _movimentoRepository.ConsultaSeTemMovimentoPorVaga(movimento.IdVaga).FirstOrDefault();
+            Movimento movimentoVeiculo = _movimentoRepository.ConsultaSeTemMovimentoPorVaga(movimento.IdVaga).FirstOrDefault();
 
             if(movimento.DtSaida < movimentoVeiculo.DtEntrada || movimento.HrSaida < movimentoVeiculo.HrEntrada)
             {

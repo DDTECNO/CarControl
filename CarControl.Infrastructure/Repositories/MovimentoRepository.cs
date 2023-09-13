@@ -30,7 +30,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Movimento RegistrarSaida(Movimento movimento)
         {
-            var vagaCadastrada = _dbset.Where(p => p.IdVaga == movimento.IdVaga && p.HrSaida == null).SingleOrDefault();
+            Movimento vagaCadastrada = _dbset.Where(p => p.IdVaga == movimento.IdVaga && p.HrSaida == null).SingleOrDefault();
 
             if (vagaCadastrada == null)
             {
@@ -46,21 +46,21 @@ namespace CarControl.Infrastructure.Repositories
         }
         public IEnumerable<Movimento> ConsultaSeTemMovimento(int idVeiculo)
         {
-            var movimentos = _dbset.Where(p => p.IdVeiculo == idVeiculo).ToList() ?? null;
+            List<Movimento> movimentos = _dbset.Where(p => p.IdVeiculo == idVeiculo).ToList() ?? null;
 
             return movimentos;
         }
 
         public IEnumerable<Movimento> ConsultaSeTemMovimento(Movimento movimento)
         {
-            var movimentos= _dbset.Where(p => p.IdVeiculo == movimento.IdVeiculo && p.DtSaida == null).ToList() ?? null;
+            List<Movimento> movimentos = _dbset.Where(p => p.IdVeiculo == movimento.IdVeiculo && p.DtSaida == null).ToList() ?? null;
 
             return movimentos;
         }
 
         public IEnumerable<Movimento> ConsultaSeTemMovimentoPorVaga(int idVaga)
         {
-            var movimentos = _dbset.Where(p => p.IdVaga == idVaga && p.DtSaida == null).ToList() ?? null;
+            List<Movimento> movimentos = _dbset.Where(p => p.IdVaga == idVaga && p.DtSaida == null).ToList() ?? null;
 
             return movimentos;
         }
@@ -74,15 +74,15 @@ namespace CarControl.Infrastructure.Repositories
         {
             //Foi utilizado esse método para conulsta pois o entity não consegue fazer o join passando o ofType com o tipo do dbset,
             //pois ele não possui suporte para consultas desse tipo   
-            var sql = "SELECT * FROM Movimento WHERE IdVeiculo IN (SELECT IdVeiculo FROM Veiculo WHERE CpfCondutor = @cpfCondutor)";
-            var movimentoDoVeiculo = _dbset.FromSqlRaw(sql, new SqliteParameter("@cpfCondutor", cpfCondutor)).ToList();
+            string sql = "SELECT * FROM Movimento WHERE IdVeiculo IN (SELECT IdVeiculo FROM Veiculo WHERE CpfCondutor = @cpfCondutor)";
+            List<Movimento> movimentoDoVeiculo = _dbset.FromSqlRaw(sql, new SqliteParameter("@cpfCondutor", cpfCondutor)).ToList();
 
             return movimentoDoVeiculo;
         }
 
         public Movimento ExcluirMovimento(int idMovimento)
         {
-            var movimento = _dbset.Where(p => p.IdMovimento == idMovimento).FirstOrDefault();
+            Movimento movimento = _dbset.Where(p => p.IdMovimento == idMovimento).FirstOrDefault();
             
             if(movimento != null)
             {

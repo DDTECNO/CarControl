@@ -22,7 +22,7 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-                var veiculos = _veiculoService.ListaVeiculos().ToList();
+                List<Veiculo> veiculos = _veiculoService.ListaVeiculos().ToList();
 
                 if (veiculos.Count == 0)
                 {
@@ -46,7 +46,7 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-                var veiculo = _veiculoService.ObterVeiculos(id);
+                Veiculo veiculo = _veiculoService.ObterVeiculos(id);
 
                 if (veiculo == null)
                 {
@@ -112,7 +112,7 @@ namespace CarControl.APIVeiculos.Controllers
                 {
                     return BadRequest("O veículo possuí movimentações");
                 }
-                var veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
+                Veiculo veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
                 if (veiculoExcluido == null)
                 {
                     return NotFound("O veículo não foi encontrado");

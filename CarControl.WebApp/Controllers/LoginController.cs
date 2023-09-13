@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
+using SignInResult = Microsoft.AspNetCore.Identity.SignInResult;
 
 namespace CarControl.WebApp.Controllers
 {
@@ -50,14 +51,14 @@ namespace CarControl.WebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
                     if (user == null)
                     {
                         ModelState.AddModelError(string.Empty, "Tentativa de login inválida.Verifique seu login e senha e tente novamente");
                         return View(model);
                     }
 
-                    var result = await _signInManager.PasswordSignInAsync(user, model.Senha, isPersistent: false, lockoutOnFailure: true);
+                    SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Senha, isPersistent: false, lockoutOnFailure: true);
 
                     if (result.Succeeded)
                     {
@@ -111,8 +112,8 @@ namespace CarControl.WebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var user = new ApplicationUser { UserName = model.NmUsuario, Email = model.Email, PhoneNumber = model.NrTelefone };
-                    var result = await _userManager.CreateAsync(user, model.Senha);
+                    ApplicationUser user = new ApplicationUser { UserName = model.NmUsuario, Email = model.Email, PhoneNumber = model.NrTelefone };
+                    IdentityResult result = await _userManager.CreateAsync(user, model.Senha);
 
                     if (result.Succeeded)
                     {
@@ -121,7 +122,7 @@ namespace CarControl.WebApp.Controllers
                     }
                     else
                     {
-                        foreach (var error in result.Errors)
+                        foreach (IdentityError error in result.Errors)
                         {
                             ModelState.AddModelError(string.Empty, error.Description);
                         }
@@ -143,12 +144,12 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(email);
+                ApplicationUser user = await _userManager.FindByEmailAsync(email);
 
                 if (user != null)
                 {
-                    var resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-                    var result = await _userManager.ResetPasswordAsync(user, resetToken, novaSenha);
+                    string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+                    IdentityResult result = await _userManager.ResetPasswordAsync(user, resetToken, novaSenha);
 
                     if (result.Succeeded)
                     {
@@ -158,7 +159,7 @@ namespace CarControl.WebApp.Controllers
                     else
                     {
 
-                        foreach (var error in result.Errors)
+                        foreach (IdentityError error in result.Errors)
                         {
                             ModelState.AddModelError(string.Empty, error.Description);
                         }

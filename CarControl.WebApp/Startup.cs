@@ -39,7 +39,7 @@ namespace CarControl.WebApp
             services.AddControllersWithViews();
 
             //Connection string
-            var connectionString = Configuration["ConnectionStrings:SqliteConnectionString"];
+            string connectionString = Configuration["ConnectionStrings:SqliteConnectionString"];
             services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
 
             //Injeção de dependência

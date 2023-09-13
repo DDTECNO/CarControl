@@ -38,7 +38,7 @@ namespace CarControl.WebApp.Controllers
 
         public ActionResult EditarVeiculo(int id)
         {
-            var viewEditar = _veiculoService.ObterVeiculos(id);
+            Veiculo viewEditar = _veiculoService.ObterVeiculos(id);
 
             if (viewEditar == null)
             {
@@ -50,7 +50,7 @@ namespace CarControl.WebApp.Controllers
 
         public ActionResult DetalhesDoVeiculo(int id)
         {
-            var viewDetalhes = _veiculoService.ObterVeiculos(id);
+            Veiculo viewDetalhes = _veiculoService.ObterVeiculos(id);
             if (viewDetalhes == null)
             {
                 throw new ArgumentException("Veículo não encontrado");
@@ -60,7 +60,7 @@ namespace CarControl.WebApp.Controllers
 
         public ActionResult Excluir(int id)
         {
-            var viewExcluir = _veiculoService.ObterVeiculos(id);
+            Veiculo viewExcluir = _veiculoService.ObterVeiculos(id);
             if (viewExcluir == null)
             {
                 throw new ArgumentException("Veículo não encontrado");
@@ -100,7 +100,7 @@ namespace CarControl.WebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    var editar = _veiculoService.EditarVeiculo(veiculo);
+                    Veiculo editar = _veiculoService.EditarVeiculo(veiculo);
                     if (editar == null)
                     {
                         throw new ArgumentException("Veículo não encontrado");
@@ -127,7 +127,7 @@ namespace CarControl.WebApp.Controllers
                     return Json(new { success = false });
                 }
 
-                var veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
+                Veiculo veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
                 if (veiculoExcluido == null)
                 {
                     return Json(new { success = false });

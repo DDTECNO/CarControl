@@ -46,7 +46,7 @@ namespace CarControl.WebApp.Controllers
 
                 IEnumerable<Vaga> vgs = _vagaService.ListaVaga();
                 IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
-                var mvViewModel1 = new MovimentoViewModel()
+                MovimentoViewModel mvViewModel1 = new MovimentoViewModel()
                 {
                     Veiculos = vcls,
                     Vagas = vgs,
@@ -73,7 +73,7 @@ namespace CarControl.WebApp.Controllers
 
                 IEnumerable<Veiculo> vcls2 = _veiculoService.ListaVeiculos();
                 IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
-                var mvViewModel2 = new MovimentoViewModel()
+                MovimentoViewModel mvViewModel2 = new MovimentoViewModel()
                 {
                     Veiculos = vcls2,
                     Vagas = vgs2,
@@ -90,7 +90,7 @@ namespace CarControl.WebApp.Controllers
             IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
             IEnumerable<Operacao> operacoes = _operacaoService.ListaOperacao();
 
-            var movimentoViewModel = new MovimentoViewModel()
+            MovimentoViewModel movimentoViewModel = new MovimentoViewModel()
             {
                 Veiculos = veiculos,
                 Vagas = vagas,
@@ -116,7 +116,7 @@ namespace CarControl.WebApp.Controllers
                 };
 
                 IEnumerable<Vaga> vgs = _vagaService.ListaVaga();
-                var mvViewModel1 = new MovimentoViewModel()
+                MovimentoViewModel mvViewModel1 = new MovimentoViewModel()
                 {
                     Veiculos = vcls,
                     Vagas = vgs,
@@ -142,7 +142,7 @@ namespace CarControl.WebApp.Controllers
                 };
 
                 IEnumerable<Veiculo> vcls2 = _veiculoService.ListaVeiculos();
-                var mvViewModel2 = new MovimentoViewModel()
+                MovimentoViewModel mvViewModel2 = new MovimentoViewModel()
                 {
                     Veiculos = vcls2,
                     Vagas = vgs2,
@@ -158,7 +158,7 @@ namespace CarControl.WebApp.Controllers
             IEnumerable<Veiculo> veiculos = _veiculoService.ListaVeiculos();
             IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
 
-            var movimentoViewModel = new MovimentoViewModel()
+            MovimentoViewModel movimentoViewModel = new MovimentoViewModel()
             {
                 Veiculos = veiculos,
                 Vagas = vagas,
@@ -179,7 +179,7 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                var buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
+                Veiculo buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
                 if (buscar == null)
                 {
                     throw new ArgumentException("Veículo não encontrado");
@@ -227,7 +227,7 @@ namespace CarControl.WebApp.Controllers
                         return RedirectToAction("RegistroDeEntrada", "Movimento");
                     };
 
-                    var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
 
                     if (atualizaFlVaga == null)
                     {
@@ -261,7 +261,7 @@ namespace CarControl.WebApp.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    var movimentoDeSaida = _movimentoService.RegistrarSaida(movimento);
+                    Movimento movimentoDeSaida = _movimentoService.RegistrarSaida(movimento);
 
 
                     if (movimentoDeSaida == null)
@@ -272,7 +272,7 @@ namespace CarControl.WebApp.Controllers
                     }
 
 
-                    var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
 
                     if (atualizaFlVaga == null)
                     {

@@ -27,8 +27,8 @@ namespace CarControl.Service
 
 
         public Vaga AtualizaFLVaga(int idVaga)
-        {    
-            var vaga =  _vagaRepository.VerificaFLVaga(idVaga);
+        {
+            Vaga vaga =  _vagaRepository.VerificaFLVaga(idVaga);
 
             if (vaga == null)
             {
@@ -52,7 +52,7 @@ namespace CarControl.Service
 
         public bool VagaEstaOcupada(int idVaga)
         {
-            var vaga = _vagaRepository.VagaEstaOcupada(idVaga);
+            Vaga vaga = _vagaRepository.VagaEstaOcupada(idVaga);
 
             if (vaga != null)
             {

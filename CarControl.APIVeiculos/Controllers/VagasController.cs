@@ -20,7 +20,7 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-                var vagas = _vagaService.ListaVaga().ToList();
+                List<Vaga> vagas = _vagaService.ListaVaga().ToList();
 
                 if (vagas.Count() == 0)
                 {

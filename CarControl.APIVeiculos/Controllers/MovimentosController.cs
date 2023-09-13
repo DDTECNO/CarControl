@@ -25,7 +25,7 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-                var movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
+                List<Movimento> movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
 
                 if (movimentos.Count == 0)
                 {
@@ -48,7 +48,7 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-                var movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
+                List<Movimento> movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
 
                 if (movimento.Count == 0)
                 {
@@ -80,7 +80,7 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Esta vaga está ocupada");
                 }
 
-                var registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
+                Movimento registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
 
 
                 if (registroDeEntrada == null)
@@ -88,14 +88,14 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída.");
                 }
 
-                var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
 
                 if (atualizaFlVaga == null)
                 {
                     return BadRequest("Erro ao verificar flag de vaga");
                 }
 
-                var cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
+                Veiculo cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
 
 
                 return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, movimento);
@@ -119,14 +119,14 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Vaga não encontrada");
                 }
 
-                var movimentoSaida = _movimentoService.RegistrarSaida(movimento);
+                Movimento movimentoSaida = _movimentoService.RegistrarSaida(movimento);
 
                 if (movimentoSaida == null)
                 {
                     return BadRequest("A data e hora de saída não pode ser menor que a data e hora de entrada.");
                 }
 
-                var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
 
                 if (atualizaFlVaga == null)
                 {
@@ -147,7 +147,7 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-                var movimentoExcluido = _movimentoService.ExcluirMovimento(id);
+                Movimento movimentoExcluido = _movimentoService.ExcluirMovimento(id);
 
                 if (movimentoExcluido == null)
                 {
