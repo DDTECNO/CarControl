@@ -28,7 +28,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public IEnumerable<Veiculo> ListaVeiculos()
         {
-            return _dbset.AsNoTracking()Take(10).ToList();
+            return _dbset.AsNoTracking().Take(10).ToList();
         }
 
         public Veiculo ObterVeiculos(int id)
