@@ -35,10 +35,8 @@ namespace CarControl.WebApp.Controllers
         {
             if (idVeiculo != 0)
             {
-                Veiculo veiculo = _veiculoService.ObterVeiculos(idVeiculo);
-
-                if (veiculo == null) { throw new ArgumentException("Veículo não encontrado"); }
-
+                Veiculo veiculo = _veiculoService.ObterVeiculos(idVeiculo) ?? throw new ArgumentException("Veículo não encontrado");
+                
                 IEnumerable<Veiculo> vcls = new List<Veiculo>
                 {
                     veiculo
@@ -59,12 +57,8 @@ namespace CarControl.WebApp.Controllers
             }
             if (idVaga != 0) {
 
-                Vaga vaga = _vagaService.ObterVaga(idVaga);
+                Vaga vaga = _vagaService.ObterVaga(idVaga) ?? throw new ArgumentException("Vaga não encontrada");
 
-                if (vaga == null)
-                {
-                    throw new ArgumentException("Vaga não encontrada");               
-                }
 
                 IEnumerable<Vaga> vgs2 = new List<Vaga>
                 {
@@ -129,13 +123,8 @@ namespace CarControl.WebApp.Controllers
             if (idVaga != 0)
             {
 
-                Vaga vaga = _vagaService.ObterVaga(idVaga);
-
-                if (vaga == null)
-                {
-                    throw new ArgumentException("Vaga não encontrada");
-                }
-
+                Vaga vaga = _vagaService.ObterVaga(idVaga) ?? throw new ArgumentException("Vaga não encontrada");
+                
                 IEnumerable<Vaga> vgs2 = new List<Vaga>
                 {
                     vaga
@@ -180,12 +169,8 @@ namespace CarControl.WebApp.Controllers
             try
             {
                 Veiculo buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
-                if (buscar == null)
-                {
-                    throw new ArgumentException("Veículo não encontrado");
-                }
 
-                return View(buscar);
+                return buscar == null ? throw new ArgumentException("Veículo não encontrado") : (ActionResult)View(buscar);
             }
             catch (Exception ex)
             {
@@ -227,13 +212,7 @@ namespace CarControl.WebApp.Controllers
                         return RedirectToAction("RegistroDeEntrada", "Movimento");
                     };
 
-                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
-
-                    if (atualizaFlVaga == null)
-                    {
-                        throw new ArgumentException("Erro ao verificar flag de vaga");
-                    }
-
+                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
                 }
                 return RedirectToAction("ConsultarVagas", "Vagas");
             }
@@ -272,12 +251,7 @@ namespace CarControl.WebApp.Controllers
                     }
 
 
-                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
-
-                    if (atualizaFlVaga == null)
-                    {
-                        throw new ArgumentException("Erro ao verificar flag de vaga");
-                    }
+                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
                 }
                 return RedirectToAction("ConsultarVagas", "Vagas");
             }

@@ -44,7 +44,7 @@ namespace CarControl.Infrastructure.Repositories
         {
             Vaga vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault();
 
-           vaga.FlVaga = flvaga;
+            vaga.FlVaga = flvaga;
 
            _context.SaveChanges();  
         }
