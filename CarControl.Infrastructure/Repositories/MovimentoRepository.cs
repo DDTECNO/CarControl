@@ -67,7 +67,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public IEnumerable<Movimento> ConsultaTodosMovimentos()
         {
-            return _dbset.ToList();          
+            return _dbset.AsNoTracking().Take(10).ToList();          
         }
 
         public IEnumerable<Movimento> ConsultaMovimentoDoVeiculo(string cpfCondutor)

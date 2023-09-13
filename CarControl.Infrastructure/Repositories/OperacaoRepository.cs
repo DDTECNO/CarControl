@@ -1,5 +1,6 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,7 +16,7 @@ namespace CarControl.Infrastructure.Repositories
         #region CRUD
         public IEnumerable<Operacao> ListaOperacao()
         {
-            return _dbset.ToList();
+            return _dbset.AsNoTracking().Take(10).ToList();
         }
         #endregion
     }

@@ -1,5 +1,6 @@
 ﻿using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,7 +28,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public IEnumerable<Veiculo> ListaVeiculos()
         {
-            return _dbset.ToList();
+            return _dbset.AsNoTracking()Take(10).ToList();
         }
 
         public Veiculo ObterVeiculos(int id)
