@@ -116,7 +116,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 if (idVaga != movimento.IdVaga)
                 {
-                    return BadRequest();
+                    return BadRequest("Vaga não encontrada");
                 }
 
                 var movimentoSaida = _movimentoService.RegistrarSaida(movimento);
@@ -125,6 +125,14 @@ namespace CarControl.APIVeiculos.Controllers
                 {
                     return BadRequest("A data e hora de saída não pode ser menor que a data e hora de entrada.");
                 }
+
+                var atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+
+                if (atualizaFlVaga == null)
+                {
+                    return BadRequest("Erro ao verificar flag de vaga");
+                }
+
                 return Ok(movimento);
             }
             catch (Exception)

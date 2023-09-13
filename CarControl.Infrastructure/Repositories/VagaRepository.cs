@@ -37,8 +37,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Vaga VagaEstaOcupada(int idVaga)
         {
-            return _dbset.Where(p => p.IdVaga == idVaga && p.FlVaga.Equals('O')).SingleOrDefault();
-           
+            return _dbset.Where(p => p.IdVaga == idVaga && p.FlVaga.Equals('O')).SingleOrDefault();           
         }
 
         public void setFlVaga(int idVaga, char flvaga)
