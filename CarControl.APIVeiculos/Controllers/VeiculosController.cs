@@ -88,7 +88,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 if (id != veiculo.IdVeiculo)
                 {
-                    return BadRequest();
+                    return BadRequest("Véículo não encontrado");
                 }
 
                 _veiculoService.EditarVeiculo(veiculo);
