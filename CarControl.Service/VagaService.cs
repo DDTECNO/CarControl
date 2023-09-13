@@ -30,10 +30,13 @@ namespace CarControl.Service
         {
             Vaga vaga =  _vagaRepository.VerificaFLVaga(idVaga);
 
+ 
             if (vaga == null)
             {
                 return null;
             }
+
+            //Se a vaga for O seta como D e vice-versa 
             else if (vaga.FlVaga == 'D')
             {
                 _vagaRepository.setFlVaga(idVaga, 'O');         

@@ -36,10 +36,13 @@ namespace CarControl.Service
         {
             Movimento movimentoVeiculo = _movimentoRepository.ConsultaSeTemMovimentoPorVaga(movimento.IdVaga).FirstOrDefault();
 
-            if(movimento.DtSaida < movimentoVeiculo.DtEntrada || movimento.HrSaida < movimentoVeiculo.HrEntrada)
+            //se a data de saída for menor que data de entrada ou data de saída for igual a data de entrada
+            //mas a hora de saída for menor que a de entrada retone null e impede o registro de saída  
+            if(movimento.DtSaida < movimentoVeiculo.DtEntrada || movimento.DtSaida == movimentoVeiculo.DtEntrada && movimento.HrSaida < movimentoVeiculo.HrEntrada)
             {
                 return null;
             }
+           
             return _movimentoRepository.RegistrarSaida(movimento);
 
         }
