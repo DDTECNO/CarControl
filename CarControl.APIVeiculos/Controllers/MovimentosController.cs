@@ -27,7 +27,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 var movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
 
-                if (movimentos == null)
+                if (movimentos.Count == 0)
                 {
                     return NotFound("Nenhum movimento encontrado");
                 }
@@ -36,7 +36,7 @@ namespace CarControl.APIVeiculos.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
             }
 
 
@@ -50,15 +50,15 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 var movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
 
-                if (movimento == null)
+                if (movimento.Count == 0)
                 {
-                    return NotFound("Movimento não encontrado para o condutor");
+                    return NotFound("Movimento não encontrado para o condutor.");
                 }
                 return movimento;
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
             }
 
         }
@@ -85,7 +85,7 @@ namespace CarControl.APIVeiculos.Controllers
 
                 if (registroDeEntrada == null)
                 {
-                    return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída");
+                    return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída.");
                 }
 
                 var cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
@@ -96,7 +96,7 @@ namespace CarControl.APIVeiculos.Controllers
             catch (Exception)
             {
 
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
                 
             }
                       
@@ -122,7 +122,7 @@ namespace CarControl.APIVeiculos.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
             }
 
         }
@@ -136,13 +136,13 @@ namespace CarControl.APIVeiculos.Controllers
 
                 if (movimentoExcluido == null)
                 {
-                    return NotFound("Movimento não encontrado");
+                    return NotFound("Movimento não encontrado.");
                 }
                 return Ok(movimentoExcluido);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
             }
 
 

@@ -24,10 +24,10 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 var veiculos = _veiculoService.ListaVeiculos().ToList();
 
-                if (veiculos == null)
+                if (veiculos.Count == 0)
                 {
 
-                    return NotFound("Produtos não encontrados...");
+                    return NotFound("Veículos não encontrados.");
 
                 }
                 return veiculos;
@@ -50,13 +50,13 @@ namespace CarControl.APIVeiculos.Controllers
 
                 if (veiculo == null)
                 {
-                    return NotFound("Produto não encontrado...");
+                    return NotFound("Veículo não encontrado.");
                 }
                 return veiculo;
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
             }
 
         }
@@ -98,7 +98,7 @@ namespace CarControl.APIVeiculos.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
             }
 
         }
@@ -122,7 +122,7 @@ namespace CarControl.APIVeiculos.Controllers
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
             }
 
         }

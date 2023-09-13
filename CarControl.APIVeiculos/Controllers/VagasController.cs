@@ -22,7 +22,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 var vagas = _vagaService.ListaVaga().ToList();
 
-                if (vagas == null)
+                if (vagas.Count() == 0)
                 {
                     return NotFound("Nenhuma vaga encontrada");
                 }
