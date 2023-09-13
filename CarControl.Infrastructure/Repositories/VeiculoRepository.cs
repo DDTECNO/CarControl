@@ -60,7 +60,7 @@ namespace CarControl.Infrastructure.Repositories
 
             if (veiculo != null)
             {
-                _dbset.Remove(veiculo);
+                _context.Remove(veiculo);
                 _context.SaveChanges();
                 return veiculo;
             }

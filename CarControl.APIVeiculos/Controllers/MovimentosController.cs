@@ -53,7 +53,7 @@ namespace CarControl.APIVeiculos.Controllers
 
 
         [HttpPost]   
-        public  ActionResult PostEntrada(Movimento movimento)
+        public  ActionResult Post(Movimento movimento)
         {
             if (movimento == null)
             {
@@ -81,7 +81,7 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPut ("{idVaga:int}")]
-        public ActionResult PutSaida(int idVaga, Movimento movimento) 
+        public ActionResult Put(int idVaga, Movimento movimento) 
         { 
             if(idVaga != movimento.IdVaga)
             {

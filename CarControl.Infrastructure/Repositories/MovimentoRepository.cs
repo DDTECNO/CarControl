@@ -22,7 +22,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public Movimento RegistrarEntrada(Movimento movimento)
         {
-            _dbset.Add(movimento);
+            _context.Add(movimento);
             _context.SaveChanges();
 
             return movimento;
@@ -86,7 +86,7 @@ namespace CarControl.Infrastructure.Repositories
             
             if(movimento != null)
             {
-                _dbset.Remove(movimento);
+                _context.Remove(movimento);
                 _context.SaveChanges();
                 return movimento;   
             }
