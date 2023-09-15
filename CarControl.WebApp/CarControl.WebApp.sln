@@ -13,7 +13,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Infrastructure",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.APIVeiculos", "..\CarControl.APIVeiculos\CarControl.APIVeiculos.csproj", "{A001491E-EB9E-40ED-8F6E-2F7D18201C89}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.Banco", "..\CarControl.Banco\CarControl.Banco.csproj", "{F14BB4BC-F856-4F4D-9C7E-399EA68E7FC0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Banco", "..\CarControl.Banco\CarControl.Banco.csproj", "{F14BB4BC-F856-4F4D-9C7E-399EA68E7FC0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MinimalApi", "MinimalApi", "{F55A3924-5339-477A-BDF2-2F4FF1A7A271}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

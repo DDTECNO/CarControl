@@ -24,13 +24,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 List<Veiculo> veiculos = _veiculoService.ListaVeiculos().ToList();
 
-                if (veiculos.Count == 0)
-                {
-
-                    return NotFound("Veículos não encontrados.");
-
-                }
-                return veiculos;
+                return veiculos.Count == 0 ? (ActionResult<IEnumerable<Veiculo>>)NotFound("Veículos não encontrados.") : (ActionResult<IEnumerable<Veiculo>>)veiculos;
             }
             catch (Exception)
             {
@@ -48,11 +42,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 Veiculo veiculo = _veiculoService.ObterVeiculos(id);
 
-                if (veiculo == null)
-                {
-                    return NotFound("Veículo não encontrado.");
-                }
-                return veiculo;
+                return veiculo == null ? (ActionResult<Veiculo>)NotFound("Veículo não encontrado.") : (ActionResult<Veiculo>)veiculo;
             }
             catch (Exception)
             {
@@ -67,7 +57,9 @@ namespace CarControl.APIVeiculos.Controllers
             try
             {
                 if (veiculo == null)
+                {
                     return BadRequest();
+                }
 
                 _veiculoService.Create(veiculo);
 

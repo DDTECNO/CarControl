@@ -27,12 +27,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 List<Movimento> movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
 
-                if (movimentos.Count == 0)
-                {
-                    return NotFound("Nenhum movimento encontrado");
-                }
-
-                return movimentos;
+                return movimentos.Count == 0 ? (ActionResult<IEnumerable<Movimento>>)NotFound("Nenhum movimento encontrado") : (ActionResult<IEnumerable<Movimento>>)movimentos;
             }
             catch (Exception)
             {
@@ -50,11 +45,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 List<Movimento> movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
 
-                if (movimento.Count == 0)
-                {
-                    return NotFound("Movimento não encontrado para o condutor.");
-                }
-                return movimento;
+                return movimento.Count == 0 ? (ActionResult<IEnumerable<Movimento>>)NotFound("Movimento não encontrado para o condutor.") : (ActionResult<IEnumerable<Movimento>>)movimento;
             }
             catch (Exception)
             {
@@ -149,11 +140,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 Movimento movimentoExcluido = _movimentoService.ExcluirMovimento(id);
 
-                if (movimentoExcluido == null)
-                {
-                    return NotFound("Movimento não encontrado.");
-                }
-                return Ok(movimentoExcluido);
+                return movimentoExcluido == null ? NotFound("Movimento não encontrado.") : Ok(movimentoExcluido);
             }
             catch (Exception)
             {

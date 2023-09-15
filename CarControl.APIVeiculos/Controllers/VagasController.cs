@@ -22,11 +22,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 List<Vaga> vagas = _vagaService.ListaVaga().ToList();
 
-                if (vagas.Count() == 0)
-                {
-                    return NotFound("Nenhuma vaga encontrada");
-                }
-                return vagas;
+                return vagas.Count() == 0 ? (ActionResult<IEnumerable<Vaga>>)NotFound("Nenhuma vaga encontrada") : (ActionResult<IEnumerable<Vaga>>)vagas;
             }
             catch (Exception)
             {
