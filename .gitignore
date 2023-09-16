@@ -361,3 +361,4 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/CarControl.APIVeiculos/CarControl.APIVeiculos.csproj
