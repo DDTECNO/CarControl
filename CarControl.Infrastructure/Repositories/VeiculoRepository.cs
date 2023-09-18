@@ -3,6 +3,7 @@ using CarControl.Infrastructure.Repositories.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarControl.Infrastructure.Repositories
 {
@@ -16,11 +17,11 @@ namespace CarControl.Infrastructure.Repositories
         }
 
         #region CRUD
-        public Veiculo Create(Veiculo veiculo)
+        public async Task<Veiculo> Create(Veiculo veiculo)
         {
 
             _dbset.Add(veiculo);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return veiculo;
         }

@@ -1,11 +1,12 @@
 ﻿using CarControl.Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CarControl.Service.Interface
 {
     public interface IVeiculoService
     {
-        Veiculo Create(Veiculo veiculo);
+        Task<Veiculo> Create(Veiculo veiculo);
         IEnumerable<Veiculo> ListaVeiculos();
         Veiculo ObterVeiculos(int id);
         Veiculo ObterVeiculoPorCPF(string cpf);

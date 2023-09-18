@@ -2,6 +2,7 @@
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service.Interface;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CarControl.Service
 {
@@ -19,10 +20,10 @@ namespace CarControl.Service
         #endregion DEPENDÊNCIAS
 
         #region CRUD
-        public Veiculo Create(Veiculo veiculo)
+        public async Task<Veiculo> Create(Veiculo veiculo)
         {
 
-            return _veiculoRepository.Create(veiculo);
+            return await _veiculoRepository.Create(veiculo);
         }
 
         public IEnumerable<Veiculo> ListaVeiculos()
@@ -39,14 +40,14 @@ namespace CarControl.Service
 
         public Veiculo EditarVeiculo(Veiculo veiculo)
         {
-            
+
             return _veiculoRepository.EditarVeiculo(veiculo);
 
         }
 
         public Veiculo ExcluirVeiculo(int id)
         {
-           return _veiculoRepository.ExcluirVeiculo(id);
+            return _veiculoRepository.ExcluirVeiculo(id);
         }
 
         public Veiculo ObterVeiculoPorCPF(string cpf)
