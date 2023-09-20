@@ -18,17 +18,22 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Veiculo>> Get()
+        public async Task<ActionResult<IEnumerable<Veiculo>>> Get()
         {
             try
             {
-                List<Veiculo> veiculos = _veiculoService.ListaVeiculos().ToList();
+               var veiculos = await _veiculoService.ListaVeiculos();
 
-                return veiculos.Count == 0 ? (ActionResult<IEnumerable<Veiculo>>)NotFound("Veículos não encontrados.") : (ActionResult<IEnumerable<Veiculo>>)veiculos;
+                if (veiculos == null || !veiculos.Any())
+                {
+                    return NotFound("Veículos não encontrados.");
+                }
+
+                return Ok(veiculos);
             }
             catch (Exception)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solicitação");
             }
 
 

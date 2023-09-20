@@ -27,8 +27,13 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 //Injeção de dependência
+builder.Services.AddScoped<IMovimentoRepository, MovimentoRepository>();
+builder.Services.AddScoped<IOperacaoRepository, OperacaoRepository>();
 builder.Services.AddScoped<IVagaRepository, VagaRepository>();
 builder.Services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+builder.Services.AddScoped<IMovimentoService, MovimentoService>();
+builder.Services.AddScoped<IOperacaoService, OperacaoService>();
+builder.Services.AddScoped<IVagaService, VagaService>();
 builder.Services.AddScoped<IVeiculoService, VeiculoService>();
 
 
@@ -36,13 +41,16 @@ var app = builder.Build();
 
 
 
-app.MapPost("/Veiculo", async (Veiculo veiculo, IVeiculoService vs) =>
+app.MapPost("/Veiculos", async (Veiculo veiculo, IVeiculoService vs) =>
 {
 
     await vs.Create(veiculo);
 
     return Results.Created($"/Veiculos/{veiculo.IdVeiculo}", veiculo);
 });
+
+app.MapGet("/Veiculos", async (IVeiculoService vs) => await vs.ListaVeiculos());
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

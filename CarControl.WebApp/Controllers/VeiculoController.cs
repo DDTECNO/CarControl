@@ -3,6 +3,7 @@ using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Threading.Tasks;
 
 namespace CarControl.WebApp.Controllers
 {
@@ -30,9 +31,9 @@ namespace CarControl.WebApp.Controllers
             return View();
         }
 
-        public ActionResult VeiculosCadastrados()
+        public async Task<ActionResult> VeiculosCadastrados()
         {
-            return View(_veiculoService.ListaVeiculos());
+            return View(await _veiculoService.ListaVeiculos());
         }
 
 

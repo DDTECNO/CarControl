@@ -7,7 +7,7 @@ namespace CarControl.Service.Interface
     public interface IVeiculoService
     {
         Task<Veiculo> Create(Veiculo veiculo);
-        IEnumerable<Veiculo> ListaVeiculos();
+        Task<IEnumerable<Veiculo>> ListaVeiculos();
         Veiculo ObterVeiculos(int id);
         Veiculo ObterVeiculoPorCPF(string cpf);
         Veiculo EditarVeiculo(Veiculo veiculo);

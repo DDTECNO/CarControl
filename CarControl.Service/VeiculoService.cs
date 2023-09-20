@@ -26,9 +26,9 @@ namespace CarControl.Service
             return await _veiculoRepository.Create(veiculo);
         }
 
-        public IEnumerable<Veiculo> ListaVeiculos()
+        public async Task<IEnumerable<Veiculo>> ListaVeiculos()
         {
-            return _veiculoRepository.ListaVeiculos();
+            return await _veiculoRepository.ListaVeiculos();
         }
 
         public Veiculo ObterVeiculos(int id)

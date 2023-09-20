@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CarControl.WebApp.Controllers
 {
@@ -31,7 +32,7 @@ namespace CarControl.WebApp.Controllers
         #region GET 
 
 
-        public ActionResult RegistroDeEntrada(int idVeiculo = 0, int idVaga = 0)
+        public async Task<ActionResult> RegistroDeEntrada(int idVeiculo = 0, int idVaga = 0)
         {
             if (idVeiculo != 0)
             {
@@ -65,7 +66,7 @@ namespace CarControl.WebApp.Controllers
                     vaga
                 };
 
-                IEnumerable<Veiculo> vcls2 = _veiculoService.ListaVeiculos();
+                IEnumerable<Veiculo> vcls2 = await _veiculoService.ListaVeiculos();
                 IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
                 MovimentoViewModel mvViewModel2 = new MovimentoViewModel()
                 {
@@ -80,7 +81,7 @@ namespace CarControl.WebApp.Controllers
             }
 
 
-            IEnumerable<Veiculo> veiculos = _veiculoService.ListaVeiculos();
+            IEnumerable<Veiculo> veiculos = await _veiculoService.ListaVeiculos();
             IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
             IEnumerable<Operacao> operacoes = _operacaoService.ListaOperacao();
 
@@ -97,7 +98,7 @@ namespace CarControl.WebApp.Controllers
         }
 
 
-        public ActionResult RegistroDeSaida(int idVeiculo = 0, int idVaga = 0)
+        public async Task<ActionResult> RegistroDeSaida(int idVeiculo = 0, int idVaga = 0)
         {
 
             if (idVeiculo != 0)
@@ -130,7 +131,7 @@ namespace CarControl.WebApp.Controllers
                     vaga
                 };
 
-                IEnumerable<Veiculo> vcls2 = _veiculoService.ListaVeiculos();
+                IEnumerable<Veiculo> vcls2 = await _veiculoService.ListaVeiculos();
                 MovimentoViewModel mvViewModel2 = new MovimentoViewModel()
                 {
                     Veiculos = vcls2,
@@ -144,7 +145,7 @@ namespace CarControl.WebApp.Controllers
 
 
 
-            IEnumerable<Veiculo> veiculos = _veiculoService.ListaVeiculos();
+            IEnumerable<Veiculo> veiculos = await _veiculoService.ListaVeiculos();
             IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
 
             MovimentoViewModel movimentoViewModel = new MovimentoViewModel()

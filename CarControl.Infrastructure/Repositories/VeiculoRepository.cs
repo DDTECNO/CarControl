@@ -27,9 +27,9 @@ namespace CarControl.Infrastructure.Repositories
         }
 
 
-        public IEnumerable<Veiculo> ListaVeiculos()
+        public async Task<IEnumerable<Veiculo>> ListaVeiculos()
         {
-            return _dbset.AsNoTracking().Take(10).ToList();
+            return await _dbset.AsNoTracking().Take(10).ToListAsync();
         }
 
         public Veiculo ObterVeiculos(int id)
