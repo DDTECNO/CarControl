@@ -169,7 +169,7 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                Veiculo buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
+                Task<Veiculo> buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
 
                 return buscar == null ? throw new ArgumentException("Veículo não encontrado") : (ActionResult)View(buscar);
             }

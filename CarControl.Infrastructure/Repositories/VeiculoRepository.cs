@@ -71,9 +71,9 @@ namespace CarControl.Infrastructure.Repositories
 
         }
 
-        public Veiculo ObterVeiculoPorCPF(string cpf)
+        public async Task<Veiculo> ObterVeiculoPorCPF(string cpf)
         {
-            return _dbset.Where(p => p.CpfCondutor == cpf).SingleOrDefault();
+            return await _dbset.Where(p => p.CpfCondutor == cpf).FirstOrDefaultAsync();
         }
 
         #endregion CRUD

@@ -50,9 +50,9 @@ namespace CarControl.Service
             return _veiculoRepository.ExcluirVeiculo(id);
         }
 
-        public Veiculo ObterVeiculoPorCPF(string cpf)
+        public async Task<Veiculo> ObterVeiculoPorCPF(string cpf)
         {
-            return _veiculoRepository.ObterVeiculoPorCPF(cpf);
+            return await _veiculoRepository.ObterVeiculoPorCPF(cpf);
         }
 
 
