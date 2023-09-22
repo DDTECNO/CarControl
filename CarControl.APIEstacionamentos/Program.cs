@@ -51,6 +51,8 @@ app.MapPost("/Veiculos", async (Veiculo veiculo, IVeiculoService vs) =>
 
 app.MapGet("/Veiculos", async (IVeiculoService vs) => await vs.ListaVeiculos());
 
+app.MapGet("/Veiculos/{cpf}", async (string cpf, IVeiculoService vs) => await vs.ObterVeiculoPorCPF(cpf));
+
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
