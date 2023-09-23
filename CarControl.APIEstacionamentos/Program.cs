@@ -1,7 +1,7 @@
 using CarControl.Domain;
 using CarControl.Infrastructure;
-using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Infrastructure.Repositories;
 using CarControl.Service;
 using CarControl.Service.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -52,24 +52,6 @@ app.MapPost("/Veiculos", async (Veiculo veiculo, IVeiculoService vs) =>
 app.MapGet("/Veiculos", async (IVeiculoService vs) => await vs.ListaVeiculos());
 
 app.MapGet("/Veiculos/{cpf}", async (string cpf, IVeiculoService vs) => await vs.ObterVeiculoPorCPF(cpf));
-
-app.MapPut("/Veiculos/{Id}", async (int id, Veiculo veiculo, IVeiculoService vs) =>
-{
-
-    if (veiculo.IdVeiculo != id)
-    {
-        return Results.BadRequest();
-    }
-
-    Veiculo veiculoAtualizado = await vs.EditarVeiculo(veiculo);
-
-    _ = veiculoAtualizado is null ? Results.NotFound() : Results.Ok(veiculoAtualizado);
-
-
-
-    return Results.Ok(veiculoAtualizado);
-
-});
 
 
 // Configure the HTTP request pipeline.

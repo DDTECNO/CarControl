@@ -38,10 +38,10 @@ namespace CarControl.Service
         }
 
 
-        public async Task<Veiculo> EditarVeiculo(Veiculo veiculo)
+        public Veiculo EditarVeiculo(Veiculo veiculo)
         {
 
-            return await _veiculoRepository.EditarVeiculo(veiculo);
+            return _veiculoRepository.EditarVeiculo(veiculo);
 
         }
 

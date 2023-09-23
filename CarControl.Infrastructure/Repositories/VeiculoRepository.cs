@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CarControl.Infrastructure.Repositories
 {
-    public  class VeiculoRepository : BaseRepository<Veiculo>, IVeiculoRepository
+    public class VeiculoRepository : BaseRepository<Veiculo>, IVeiculoRepository
     {
 
         public VeiculoRepository(CarControlContext context) : base(context)
@@ -40,7 +40,7 @@ namespace CarControl.Infrastructure.Repositories
         }
 
 
-        public async Task<Veiculo> EditarVeiculo(Veiculo veiculo)
+        public Veiculo EditarVeiculo(Veiculo veiculo)
         {
             Veiculo veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault();
 
@@ -48,7 +48,7 @@ namespace CarControl.Infrastructure.Repositories
             {
                 veiculoCadastrado.Atualiza(veiculo);
 
-               await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 return veiculoCadastrado;
             }
 
