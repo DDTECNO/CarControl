@@ -90,7 +90,7 @@ namespace CarControl.WebApp.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Veiculo editar = _veiculoService.EditarVeiculo(veiculo) ?? throw new ArgumentException("Veículo não encontrado");
+                    Task<Veiculo> editar = _veiculoService.EditarVeiculo(veiculo) ?? throw new ArgumentException("Veículo não encontrado");
                 }
                 return RedirectToAction("VeiculosCadastrados");
             }
