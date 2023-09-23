@@ -108,12 +108,12 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                if (_movimentoService.ConsultaSeTemMovimento(idVeiculo))
+                if (_movimentoService.ConsultaSeTemMovimento(idVeiculo).Result)
                 {
                     return Json(new { success = false });
                 }
 
-                Veiculo veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
+                Task<Veiculo> veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
                 if (veiculoExcluido == null)
                 {
                     return Json(new { success = false });

@@ -56,14 +56,14 @@ namespace CarControl.Infrastructure.Repositories
 
         }
 
-        public Veiculo ExcluirVeiculo(int id)
+        public async Task<Veiculo> ExcluirVeiculo(int id)
         {
-            Veiculo veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
+            Veiculo veiculo =await _dbset.Where(p => p.IdVeiculo == id).SingleOrDefaultAsync();
 
             if (veiculo != null)
             {
                 _context.Remove(veiculo);
-                _context.SaveChanges();
+                 await _context.SaveChangesAsync();
                 return veiculo;
             }
 

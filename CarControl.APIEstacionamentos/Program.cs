@@ -67,6 +67,22 @@ app.MapPut("/Veiculos/{Id}", async (int id, Veiculo veiculo, IVeiculoService vs)
 
 });
 
+app.MapDelete("/Veiculos/{id}", async (int id, IVeiculoService vs, IMovimentoService ms) =>
+{
+    if (await ms.ConsultaSeTemMovimento(id))
+    {
+        return Results.BadRequest("O veículo possuí movimentações");
+    }
+
+    Veiculo veiculoExcluido = await vs.ExcluirVeiculo(id);
+
+    if (veiculoExcluido == null)
+    {
+        return Results.NotFound("O veículo não foi encontrado");
+    }
+
+    return Results.NoContent();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using System.Data.SqlClient;
 using Microsoft.Data.Sqlite;
+using System.Threading.Tasks;
 
 namespace CarControl.Infrastructure.Repositories
 {
@@ -44,11 +45,11 @@ namespace CarControl.Infrastructure.Repositories
             return vagaCadastrada;
 
         }
-        public IEnumerable<Movimento> ConsultaSeTemMovimento(int idVeiculo)
+        public async Task<bool> ConsultaSeTemMovimento(int idVeiculo)
         {
-            List<Movimento> movimentos = _dbset.Where(p => p.IdVeiculo == idVeiculo).ToList() ?? null;
+            List<Movimento> movimentos = await _dbset.Where(p => p.IdVeiculo == idVeiculo).ToListAsync() ?? null;
 
-            return movimentos;
+            return movimentos.Any();
         }
 
         public IEnumerable<Movimento> ConsultaSeTemMovimento(Movimento movimento)

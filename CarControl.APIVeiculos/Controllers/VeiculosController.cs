@@ -105,11 +105,11 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-                if (_movimentoService.ConsultaSeTemMovimento(id))
+                if (_movimentoService.ConsultaSeTemMovimento(id).Result)
                 {
                     return BadRequest("O veículo possuí movimentações");
                 }
-                Veiculo veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
+                Task<Veiculo> veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
                 if (veiculoExcluido == null)
                 {
                     return NotFound("O veículo não foi encontrado");
