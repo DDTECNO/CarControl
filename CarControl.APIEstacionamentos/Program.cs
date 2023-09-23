@@ -63,11 +63,7 @@ app.MapPut("/Veiculos/{Id}", async (int id, Veiculo veiculo, IVeiculoService vs)
 
     Veiculo veiculoAtualizado = await vs.EditarVeiculo(veiculo);
 
-    _ = veiculoAtualizado is null ? Results.NotFound() : Results.Ok(veiculoAtualizado);
-
-
-
-    return Results.Ok(veiculoAtualizado);
+    return veiculoAtualizado is null ? Results.NotFound() : Results.Ok(veiculoAtualizado);
 
 });
 
