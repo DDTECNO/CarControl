@@ -11,10 +11,12 @@ namespace CarControl.Domain
 
         [Required]
         [Display(Name = "Nome da vaga")]
+        [JsonPropertyName("nmVaga")]
         public string NmVaga { get; set; }
 
         [Required]
         [Display(Name = "Situação da vaga")]
+        [JsonPropertyName("flVaga")]
         public char FlVaga { get; set; }
 
         [JsonIgnore]

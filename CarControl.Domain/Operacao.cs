@@ -7,9 +7,11 @@ namespace CarControl.Domain
 {
     public class Operacao
     {
+        [JsonPropertyName("idTpOperacao")]
         public int IdTpOperacao { get; set; }
        
         [Required]
+        [JsonPropertyName("nmOperacao")]
         public string NmOperacao { get; set; }
 
         [JsonIgnore]
