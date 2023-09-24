@@ -22,7 +22,7 @@ namespace CarControl.APIVeiculos.Controllers
         {
             try
             {
-               var veiculos = await _veiculoService.ListaVeiculos();
+                var veiculos = await _veiculoService.ListaVeiculos();
 
                 if (veiculos == null || !veiculos.Any())
                 {
@@ -35,8 +35,6 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solicitação");
             }
-
-
 
         }
 
@@ -57,7 +55,7 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post(Veiculo veiculo)
+        public async Task<ActionResult> Post(Veiculo veiculo)
         {
             try
             {
@@ -66,7 +64,7 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest();
                 }
 
-                _veiculoService.Create(veiculo);
+                await _veiculoService.Create(veiculo);
 
                 return new CreatedAtRouteResult("GetVeiculo", new { id = veiculo.IdVeiculo }, veiculo);
             }
@@ -79,7 +77,7 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public ActionResult Put(int id, Veiculo veiculo)
+        public async Task<ActionResult> Put(int id, Veiculo veiculo)
         {
             try
             {
@@ -88,7 +86,7 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Véículo não encontrado");
                 }
 
-                _veiculoService.EditarVeiculo(veiculo);
+                await _veiculoService.EditarVeiculo(veiculo);
 
                 return Ok(veiculo);
 
@@ -101,15 +99,17 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             try
             {
-                if (_movimentoService.ConsultaSeTemMovimento(id))
+                bool movimentacaoVeiculo = await _movimentoService.ConsultaSeTemMovimento(id);
+
+                if (movimentacaoVeiculo)
                 {
                     return BadRequest("O veículo possuí movimentações");
                 }
-                Veiculo veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
+                Task<Veiculo> veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
                 if (veiculoExcluido == null)
                 {
                     return NotFound("O veículo não foi encontrado");

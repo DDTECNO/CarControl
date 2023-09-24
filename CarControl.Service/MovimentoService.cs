@@ -4,6 +4,7 @@ using CarControl.Service.Interface;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace CarControl.Service
 {
@@ -47,9 +48,10 @@ namespace CarControl.Service
 
         }
 
-        public bool ConsultaSeTemMovimento(int idVeiculo)
+        public async Task<bool> ConsultaSeTemMovimento(int idVeiculo)
         {
-            if(!_movimentoRepository.ConsultaSeTemMovimento(idVeiculo).Any())
+            bool movimentos = await _movimentoRepository.ConsultaSeTemMovimento(idVeiculo);
+            if (!movimentos)
             {
                 return false;   
             } 

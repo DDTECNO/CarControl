@@ -38,16 +38,16 @@ namespace CarControl.Service
         }
 
 
-        public Veiculo EditarVeiculo(Veiculo veiculo)
+        public async Task<Veiculo> EditarVeiculo(Veiculo veiculo)
         {
 
-            return _veiculoRepository.EditarVeiculo(veiculo);
+            return await _veiculoRepository.EditarVeiculo(veiculo);
 
         }
 
-        public Veiculo ExcluirVeiculo(int id)
+        public async Task<Veiculo> ExcluirVeiculo(int id)
         {
-            return _veiculoRepository.ExcluirVeiculo(id);
+            return await _veiculoRepository.ExcluirVeiculo(id);
         }
 
         public async Task<Veiculo> ObterVeiculoPorCPF(string cpf)

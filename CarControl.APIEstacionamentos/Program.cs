@@ -1,7 +1,7 @@
 using CarControl.Domain;
 using CarControl.Infrastructure;
-using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Infrastructure.Repositories;
+using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
 using CarControl.Service.Interface;
 using Microsoft.EntityFrameworkCore;
@@ -53,6 +53,37 @@ app.MapGet("/Veiculos", async (IVeiculoService vs) => await vs.ListaVeiculos());
 
 app.MapGet("/Veiculos/{cpf}", async (string cpf, IVeiculoService vs) => await vs.ObterVeiculoPorCPF(cpf));
 
+app.MapPut("/Veiculos/{Id}", async (int id, Veiculo veiculo, IVeiculoService vs) =>
+{
+
+    if (veiculo.IdVeiculo != id)
+    {
+        return Results.BadRequest();
+    }
+
+    Veiculo veiculoAtualizado = await vs.EditarVeiculo(veiculo);
+
+    return veiculoAtualizado is null ? Results.NotFound() : Results.Ok(veiculoAtualizado);
+
+});
+
+app.MapDelete("/Veiculos/{id}", async (int id, IVeiculoService vs, IMovimentoService ms) =>
+{
+    bool movimentacaoVeiculo = await ms.ConsultaSeTemMovimento(id);
+    if (movimentacaoVeiculo)
+    {
+        return Results.BadRequest("O veículo possuí movimentações");
+    }
+
+    Veiculo veiculoExcluido = await vs.ExcluirVeiculo(id);
+
+    if (veiculoExcluido == null)
+    {
+        return Results.NotFound("O veículo não foi encontrado");
+    }
+
+    return Results.NoContent();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
