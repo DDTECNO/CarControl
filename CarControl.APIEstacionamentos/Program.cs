@@ -69,7 +69,8 @@ app.MapPut("/Veiculos/{Id}", async (int id, Veiculo veiculo, IVeiculoService vs)
 
 app.MapDelete("/Veiculos/{id}", async (int id, IVeiculoService vs, IMovimentoService ms) =>
 {
-    if (await ms.ConsultaSeTemMovimento(id))
+    bool movimentacaoVeiculo = await ms.ConsultaSeTemMovimento(id);
+    if (movimentacaoVeiculo)
     {
         return Results.BadRequest("O veículo possuí movimentações");
     }
