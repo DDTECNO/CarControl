@@ -1,8 +1,12 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Domain;
+using CarControl.Domain.ViewModel;
+using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace CarControl.WebApp.Controllers
@@ -12,13 +16,15 @@ namespace CarControl.WebApp.Controllers
     {
 
         #region DEPENDÊNCIAS
+        private readonly IMapper _mapper;
         private readonly IVeiculoService _veiculoService;
         private readonly IMovimentoService _movimentoService;
 
-        public VeiculoController(IVeiculoService veiculoService, IMovimentoService movimentoService)
+        public VeiculoController(IVeiculoService veiculoService, IMovimentoService movimentoService, IMapper mapper)
         {
             _veiculoService = veiculoService;
             _movimentoService = movimentoService;
+            _mapper = mapper;
         }
 
 
@@ -33,29 +39,40 @@ namespace CarControl.WebApp.Controllers
 
         public async Task<ActionResult> VeiculosCadastrados()
         {
-            return View(await _veiculoService.ListaVeiculos());
+            IEnumerable<VeiculoDTO> veiculos = await _veiculoService.ListarVeiculos();
+
+            IEnumerable<VeiculoViewModel> veiculosViewModel = _mapper.Map<IEnumerable<VeiculoViewModel>>(veiculos);
+
+            return View(veiculosViewModel);
         }
 
 
         public ActionResult EditarVeiculo(int id)
         {
-            Veiculo viewEditar = _veiculoService.ObterVeiculos(id) ?? throw new ArgumentException("Veículo não encontrado");
-            return View(viewEditar);
+            VeiculoDTO veiculo = _veiculoService.ObterVeiculo(id) ?? throw new ArgumentException("Veículo não encontrado");
+
+            VeiculoViewModel veiculoViewModel = _mapper.Map<VeiculoViewModel>(veiculo);
+
+            return View(veiculoViewModel);
         }
 
 
         public ActionResult DetalhesDoVeiculo(int id)
         {
-            Veiculo viewDetalhes = _veiculoService.ObterVeiculos(id) ?? throw new ArgumentException("Veículo não encontrado");
+            VeiculoDTO veiculo = _veiculoService.ObterVeiculo(id) ?? throw new ArgumentException("Veículo não encontrado");
 
-            return View(viewDetalhes);
+            VeiculoViewModel veiculoViewModel = _mapper.Map<VeiculoViewModel>(veiculo);
+
+            return View(veiculoViewModel);
         }
 
         public ActionResult Excluir(int id)
         {
-            Veiculo viewExcluir = _veiculoService.ObterVeiculos(id) ?? throw new ArgumentException("Veículo não encontrado");
+            VeiculoDTO veiculo = _veiculoService.ObterVeiculo(id) ?? throw new ArgumentException("Veículo não encontrado");
 
-            return View(viewExcluir);
+            VeiculoViewModel veiculoViewModel = _mapper.Map<VeiculoViewModel>(veiculo);
+
+            return View(veiculoViewModel);
 
         }
         #endregion GET
@@ -64,14 +81,12 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult InserirCadastro(Veiculo veiculo)
+        public ActionResult InserirCadastro(VeiculoDTO veiculoDTO)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    _veiculoService.Create(veiculo);
-                }
+                _veiculoService.InserirVeiculo(veiculoDTO);
+
                 return RedirectToAction("VeiculosCadastrados");
             }
             catch (Exception ex)
@@ -84,14 +99,12 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditarVeiculoCadastrado(Veiculo veiculo)
+        public ActionResult EditarVeiculoCadastrado(VeiculoDTO veiculoDTO)
         {
             try
             {
-                if (ModelState.IsValid)
-                {
-                    Task<Veiculo> editar = _veiculoService.EditarVeiculo(veiculo) ?? throw new ArgumentException("Veículo não encontrado");
-                }
+                Task<VeiculoDTO> editar = _veiculoService.EditarVeiculo(veiculoDTO) ?? throw new ArgumentException("Veículo não encontrado");
+
                 return RedirectToAction("VeiculosCadastrados");
             }
             catch (Exception ex)
@@ -113,7 +126,8 @@ namespace CarControl.WebApp.Controllers
                     return Json(new { success = false });
                 }
 
-                Task<Veiculo> veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
+                Task<VeiculoDTO> veiculoExcluido = _veiculoService.ExcluirVeiculo(idVeiculo);
+
                 if (veiculoExcluido == null)
                 {
                     return Json(new { success = false });

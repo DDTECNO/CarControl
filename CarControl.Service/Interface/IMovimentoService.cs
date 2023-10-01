@@ -1,4 +1,5 @@
 ﻿using CarControl.Domain;
+using CarControl.Service.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@ namespace CarControl.Service.Interface
         Task<bool> ConsultaSeTemMovimento(int idVeiculo);
         IEnumerable<Movimento> ConsultaTodosMovimentos();
         Movimento ExcluirMovimento(int idMovimento);
-        Movimento RegistrarEntrada(Movimento movimento);
-        Movimento RegistrarSaida(Movimento movimento);
+        MovimentoDTO RegistrarEntrada(MovimentoDTO movimento);
+        MovimentoDTO RegistrarSaida(MovimentoDTO movimento);
     }
 }

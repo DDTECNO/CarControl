@@ -1,13 +1,15 @@
 ﻿using CarControl.Domain;
+using CarControl.Service.DTO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CarControl.Service.Interface
 {
     public interface IVagaService
     {
-        IEnumerable<Vaga> ListaVaga();
+        Task<IEnumerable<VagaDTO>> ListaVaga();
         Vaga AtualizaFLVaga(int idVaga);
-        Vaga ObterVaga(int idVaga);
+        VagaDTO ObterVaga(int idVaga);
         bool VagaEstaOcupada(int idVaga);
     }
 }

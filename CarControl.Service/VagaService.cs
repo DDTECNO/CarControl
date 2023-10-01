@@ -1,36 +1,44 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Service.DTO;
 using CarControl.Service.Interface;
-using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CarControl.Service
 {
     public class VagaService : IVagaService
     {
         #region DEPENDÊNCIAS
+        private readonly IMapper _mapper;
         private readonly IVagaRepository _vagaRepository;
 
-        public VagaService(IVagaRepository vagaRepository)
+        public VagaService(IVagaRepository vagaRepository, IMapper mapper)
         {
             _vagaRepository = vagaRepository;
+            _mapper = mapper;
         }
         # endregion DEPENDÊNCIAS
 
         #region CRUD
 
 
-        public IEnumerable<Vaga> ListaVaga()
+        public async Task<IEnumerable<VagaDTO>> ListaVaga()
         {
-            return _vagaRepository.ListaVaga();
+            IEnumerable<Vaga> vagas = await _vagaRepository.ListaVaga();
+
+            var vagasDTO = _mapper.Map<IEnumerable<VagaDTO>>(vagas);
+
+            return vagasDTO;
         }
 
 
         public Vaga AtualizaFLVaga(int idVaga)
         {
-            Vaga vaga =  _vagaRepository.VerificaFLVaga(idVaga);
+            Vaga vaga = _vagaRepository.VerificaFLVaga(idVaga);
 
- 
+
             if (vaga == null)
             {
                 return null;
@@ -39,18 +47,22 @@ namespace CarControl.Service
             //Se a vaga for O seta como D e vice-versa 
             else if (vaga.FlVaga == 'D')
             {
-                _vagaRepository.setFlVaga(idVaga, 'O');         
+                _vagaRepository.SetFlVaga(idVaga, 'O');
             }
             else
             {
-                _vagaRepository.setFlVaga(idVaga,'D');              
+                _vagaRepository.SetFlVaga(idVaga, 'D');
             }
             return vaga;
         }
 
-        public Vaga ObterVaga(int idVaga)
+        public VagaDTO ObterVaga(int idVaga)
         {
-            return _vagaRepository.ObterVaga(idVaga);
+            Vaga vaga = _vagaRepository.ObterVaga(idVaga);
+
+            VagaDTO vagaDTO = _mapper.Map<VagaDTO>(vaga);
+
+            return vagaDTO;
         }
 
         public bool VagaEstaOcupada(int idVaga)
