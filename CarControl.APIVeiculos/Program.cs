@@ -1,7 +1,9 @@
+using AutoMapper.EquivalencyExpression;
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
+using CarControl.Service.External;
 using CarControl.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
@@ -38,6 +40,8 @@ builder.Services.AddDbContext<CarControlContext>(options => options.UseSqlite(co
 //Ignorando o erro de referência ciclica na serialização (Acontece ao inserir uma propriedade para referênciar uma outra, criando um tipo complexo )
 builder.Services.AddControllers().AddJsonOptions(options => options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
+//AutoMapper
+builder.Services.AddAutoMapper(cfg => { cfg.AddCollectionMappers(); }, typeof(AutoMapperProfile).Assembly);
 
 
 WebApplication app = builder.Build();

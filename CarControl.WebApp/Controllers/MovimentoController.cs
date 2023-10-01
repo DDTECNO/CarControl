@@ -1,5 +1,7 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Domain;
 using CarControl.Domain.ViewModel;
+using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,17 +15,19 @@ namespace CarControl.WebApp.Controllers
     public class MovimentoController : Controller
     {
         #region DEPENDÊNCIAS
+        private readonly IMapper _mapper;
         private readonly IVeiculoService _veiculoService;
         private readonly IVagaService _vagaService;
         private readonly IOperacaoService _operacaoService;
         private readonly IMovimentoService _movimentoService;
 
-        public MovimentoController(IVeiculoService veiculoService, IVagaService vagaService, IOperacaoService operacaoService, IMovimentoService movimentoService)
+        public MovimentoController(IVeiculoService veiculoService, IVagaService vagaService, IOperacaoService operacaoService, IMovimentoService movimentoService, IMapper mapper)
         {
             _veiculoService = veiculoService;
             _vagaService = vagaService;
             _operacaoService = operacaoService;
             _movimentoService = movimentoService;
+            _mapper = mapper;
         }
 
 
@@ -34,130 +38,141 @@ namespace CarControl.WebApp.Controllers
 
         public async Task<ActionResult> RegistroDeEntrada(int idVeiculo = 0, int idVaga = 0)
         {
-            if (idVeiculo != 0)
-            {
-                Veiculo veiculo = _veiculoService.ObterVeiculos(idVeiculo) ?? throw new ArgumentException("Veículo não encontrado");
-                
-                IEnumerable<Veiculo> vcls = new List<Veiculo>
-                {
-                    veiculo
-                };
+            IEnumerable<OperacaoDTO> ops = _operacaoService.ListaOperacao();
+            IEnumerable<VagaDTO> vgs = await _vagaService.ListaVaga();
+            IEnumerable<VeiculoDTO> vcls = await _veiculoService.ListarVeiculos();
 
-                IEnumerable<Vaga> vgs = _vagaService.ListaVaga();
-                IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
-                MovimentoViewModel mvViewModel1 = new MovimentoViewModel()
+            if (idVeiculo != 0 || idVaga != 0)
+            {
+
+                if (idVaga != 0)
+                {
+
+                    VagaDTO vaga = _vagaService.ObterVaga(idVaga) ?? throw new ArgumentException("Vaga não encontrada");
+
+                    vgs = new List<VagaDTO>
+                    {
+                      vaga
+                    };
+
+                }
+                else
+                {
+                    vgs = await _vagaService.ListaVaga();
+                }
+
+                if (idVeiculo != 0)
+                {
+
+                    VeiculoDTO veiculo = _veiculoService.ObterVeiculo(idVeiculo) ?? throw new ArgumentException("Veículo não encontrado");
+
+                    vcls = new List<VeiculoDTO>
+                   {
+                      veiculo
+                   };
+
+                }
+                else
+                {
+                    vcls = await _veiculoService.ListarVeiculos();
+                }
+
+
+                MovimentoDTO movimentoDTO = new MovimentoDTO()
                 {
                     Veiculos = vcls,
                     Vagas = vgs,
                     Operacoes = ops,
-
                 };
 
-                return View(mvViewModel1);
+                MovimentoViewModel movimentoViewModel = _mapper.Map<MovimentoViewModel>(movimentoDTO);
+
+                return View(movimentoViewModel);
 
             }
-            if (idVaga != 0) {
-
-                Vaga vaga = _vagaService.ObterVaga(idVaga) ?? throw new ArgumentException("Vaga não encontrada");
-
-
-                IEnumerable<Vaga> vgs2 = new List<Vaga>
-                {
-                    vaga
-                };
-
-                IEnumerable<Veiculo> vcls2 = await _veiculoService.ListaVeiculos();
-                IEnumerable<Operacao> ops = _operacaoService.ListaOperacao();
-                MovimentoViewModel mvViewModel2 = new MovimentoViewModel()
-                {
-                    Veiculos = vcls2,
-                    Vagas = vgs2,
-                    Operacoes = ops,
-
-                };
-
-                return View(mvViewModel2);
-
-            }
-
-
-            IEnumerable<Veiculo> veiculos = await _veiculoService.ListaVeiculos();
-            IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
-            IEnumerable<Operacao> operacoes = _operacaoService.ListaOperacao();
-
-            MovimentoViewModel movimentoViewModel = new MovimentoViewModel()
+            else
             {
-                Veiculos = veiculos,
-                Vagas = vagas,
-                Operacoes = operacoes,
-            };
+                MovimentoDTO movimentoDTO = new MovimentoDTO()
+                {
+                    Veiculos = vcls,
+                    Vagas = vgs,
+                    Operacoes = ops,
+                };
+
+                MovimentoViewModel movimentoViewModel = _mapper.Map<MovimentoViewModel>(movimentoDTO);
+
+                return View(movimentoViewModel);
+            }
 
 
-
-            return View(movimentoViewModel);
         }
 
 
         public async Task<ActionResult> RegistroDeSaida(int idVeiculo = 0, int idVaga = 0)
         {
+            IEnumerable<VeiculoDTO> vcls = await _veiculoService.ListarVeiculos();
+            IEnumerable<VagaDTO> vgs = await _vagaService.ListaVaga();
 
-            if (idVeiculo != 0)
+            if (idVeiculo != 0 || idVaga != 0)
             {
-                Veiculo veiculo = _veiculoService.ObterVeiculos(idVeiculo);
-
-                IEnumerable<Veiculo> vcls = new List<Veiculo>
+                if (idVeiculo != 0)
                 {
-                    veiculo
-                };
+                    VeiculoDTO veiculo = _veiculoService.ObterVeiculo(idVeiculo);
 
-                IEnumerable<Vaga> vgs = _vagaService.ListaVaga();
-                MovimentoViewModel mvViewModel1 = new MovimentoViewModel()
+                    vcls = new List<VeiculoDTO>
+                    {
+                      veiculo
+                    };
+
+                }
+                else
+                {
+                    vcls = await _veiculoService.ListarVeiculos();
+                }
+                if (idVaga != 0)
+                {
+
+                    VagaDTO vaga = _vagaService.ObterVaga(idVaga) ?? throw new ArgumentException("Vaga não encontrada");
+
+                    vgs = new List<VagaDTO>
+                    {
+                        vaga
+                    };
+                }
+                else
+                {
+
+                    vgs = await _vagaService.ListaVaga();
+                }
+
+                MovimentoDTO movimentoDTO = new MovimentoDTO()
                 {
                     Veiculos = vcls,
                     Vagas = vgs,
 
                 };
 
-                return View(mvViewModel1);
+                MovimentoViewModel movimentoViewModel = _mapper.Map<MovimentoViewModel>(movimentoDTO);
 
+                return View(movimentoViewModel);
             }
-            if (idVaga != 0)
+            else
             {
 
-                Vaga vaga = _vagaService.ObterVaga(idVaga) ?? throw new ArgumentException("Vaga não encontrada");
-                
-                IEnumerable<Vaga> vgs2 = new List<Vaga>
+                MovimentoDTO movimentoDTO = new MovimentoDTO()
                 {
-                    vaga
-                };
-
-                IEnumerable<Veiculo> vcls2 = await _veiculoService.ListaVeiculos();
-                MovimentoViewModel mvViewModel2 = new MovimentoViewModel()
-                {
-                    Veiculos = vcls2,
-                    Vagas = vgs2,
+                    Veiculos = vcls,
+                    Vagas = vgs,
 
                 };
 
-                return View(mvViewModel2);
+                MovimentoViewModel movimentoViewModel = _mapper.Map<MovimentoViewModel>(movimentoDTO);
+
+                return View(movimentoViewModel);
 
             }
 
-
-
-            IEnumerable<Veiculo> veiculos = await _veiculoService.ListaVeiculos();
-            IEnumerable<Vaga> vagas = _vagaService.ListaVaga();
-
-            MovimentoViewModel movimentoViewModel = new MovimentoViewModel()
-            {
-                Veiculos = veiculos,
-                Vagas = vagas,
-             
-            };
-
-            return View(movimentoViewModel);
         }
-
 
         #endregion GET
 
@@ -165,11 +180,11 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult BuscarVeiculo(Veiculo veiculo)
+        public ActionResult BuscarVeiculo(VeiculoDTO veiculoDTO)
         {
             try
             {
-                Task<Veiculo> buscar = _veiculoService.ObterVeiculoPorCPF(veiculo.CpfCondutor);
+                Task<VeiculoDTO> buscar = _veiculoService.ObterVeiculoPorCPF(veiculoDTO.CpfCondutor);
 
                 return buscar == null ? throw new ArgumentException("Veículo não encontrado") : (ActionResult)View(buscar);
             }
@@ -177,7 +192,6 @@ namespace CarControl.WebApp.Controllers
             {
                 throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
             }
-
 
         }
 
@@ -187,7 +201,7 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                Movimento movimento = new Movimento()
+                MovimentoDTO movimentoDTO = new MovimentoDTO()
                 {
                     DtEntrada = movimentoViewModel.DtEntrada,
                     HrEntrada = movimentoViewModel.HrEntrada,
@@ -197,24 +211,23 @@ namespace CarControl.WebApp.Controllers
                 };
 
 
-                if (ModelState.IsValid)
+
+                if (!_vagaService.VagaEstaOcupada(movimentoDTO.IdVaga))
                 {
-                    if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
-                    {
-                        ModelState.AddModelError(string.Empty, "Esta vaga está ocupada.");
-                        TempData["ErrorMessage"] = "Esta vaga está ocupada.";
+                    ModelState.AddModelError(string.Empty, "Esta vaga está ocupada.");
+                    TempData["ErrorMessage"] = "Esta vaga está ocupada.";
 
-                    }
-
-                    if (_movimentoService.RegistrarEntrada(movimento) == null)
-                    {
-                        ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");
-                        TempData["ErrorMessageEntrada"] = "O veículo já está em uma vaga, se necessário registre sua saída.";
-                        return RedirectToAction("RegistroDeEntrada", "Movimento");
-                    };
-
-                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
                 }
+
+                if (_movimentoService.RegistrarEntrada(movimentoDTO) == null)
+                {
+                    ModelState.AddModelError(string.Empty, "O veículo já está em uma vaga, se necessário resgistre sua saída.");
+                    TempData["ErrorMessageEntrada"] = "O veículo já está em uma vaga, se necessário registre sua saída.";
+                    return RedirectToAction("RegistroDeEntrada", "Movimento");
+                };
+
+                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimentoDTO.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
+
                 return RedirectToAction("ConsultarVagas", "Vagas");
             }
             catch (Exception ex)
@@ -231,7 +244,7 @@ namespace CarControl.WebApp.Controllers
 
             try
             {
-                Movimento movimento = new Movimento()
+                MovimentoDTO movimentoDTO = new MovimentoDTO()
                 {
                     DtSaida = movimentoViewModel.DtSaida,
                     HrSaida = movimentoViewModel.HrSaida,
@@ -241,7 +254,7 @@ namespace CarControl.WebApp.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    Movimento movimentoDeSaida = _movimentoService.RegistrarSaida(movimento);
+                    MovimentoDTO movimentoDeSaida = _movimentoService.RegistrarSaida(movimentoDTO);
 
 
                     if (movimentoDeSaida == null)
@@ -252,7 +265,7 @@ namespace CarControl.WebApp.Controllers
                     }
 
 
-                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
+                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimentoDTO.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
                 }
                 return RedirectToAction("ConsultarVagas", "Vagas");
             }

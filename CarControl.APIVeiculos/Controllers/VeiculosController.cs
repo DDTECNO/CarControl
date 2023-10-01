@@ -1,4 +1,6 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Domain;
+using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,28 +10,33 @@ namespace CarControl.APIVeiculos.Controllers
     [ApiController]
     public class VeiculosController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IVeiculoService _veiculoService;
         private readonly IMovimentoService _movimentoService;
 
-        public VeiculosController(IVeiculoService veiculoService, IMovimentoService movimentoService)
+        public VeiculosController(IVeiculoService veiculoService, IMovimentoService movimentoService, IMapper mapper)
         {
             _veiculoService = veiculoService;
             _movimentoService = movimentoService;
+            _mapper = mapper;
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Veiculo>>> Get()
+        public async Task<ActionResult<IEnumerable<VeiculoDTO>>> Get()
         {
             try
             {
-                var veiculos = await _veiculoService.ListaVeiculos();
+                IEnumerable<VeiculoDTO> veiculos = await _veiculoService.ListarVeiculos();
+
+
+                IEnumerable<VeiculoDTO> veiculosDTO = _mapper.Map<IEnumerable<VeiculoDTO>>(veiculos);
 
                 if (veiculos == null || !veiculos.Any())
                 {
                     return NotFound("Veículos não encontrados.");
                 }
 
-                return Ok(veiculos);
+                return Ok(veiculosDTO);
             }
             catch (Exception)
             {
@@ -39,13 +46,14 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetVeiculo")]
-        public ActionResult<Veiculo> Get(int id)
+        public ActionResult<VeiculoDTO> Get(int id)
         {
             try
             {
-                Veiculo veiculo = _veiculoService.ObterVeiculos(id);
+                VeiculoDTO veiculo = _veiculoService.ObterVeiculo(id);
 
-                return veiculo == null ? (ActionResult<Veiculo>)NotFound("Veículo não encontrado.") : (ActionResult<Veiculo>)veiculo;
+                VeiculoDTO veiculosDTO = _mapper.Map<VeiculoDTO>(veiculo);
+                return veiculosDTO == null ? (ActionResult<VeiculoDTO>)NotFound("Veículo não encontrado.") : (ActionResult<VeiculoDTO>)veiculosDTO;
             }
             catch (Exception)
             {
@@ -55,18 +63,18 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Veiculo veiculo)
+        public async Task<ActionResult> Post(VeiculoDTO veiculoDTO)
         {
             try
             {
-                if (veiculo == null)
+                if (veiculoDTO == null)
                 {
                     return BadRequest();
                 }
+           
+                await _veiculoService.InserirVeiculo(veiculoDTO);
 
-                await _veiculoService.Create(veiculo);
-
-                return new CreatedAtRouteResult("GetVeiculo", new { id = veiculo.IdVeiculo }, veiculo);
+                return new CreatedAtRouteResult("GetVeiculo", new { id = veiculoDTO.IdVeiculo }, veiculoDTO);
             }
             catch (Exception)
             {
@@ -77,18 +85,19 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int id, Veiculo veiculo)
+        public async Task<ActionResult> Put(int id, VeiculoDTO veiculoDTO)
         {
             try
             {
-                if (id != veiculo.IdVeiculo)
+                if (id != veiculoDTO.IdVeiculo)
                 {
                     return BadRequest("Véículo não encontrado");
                 }
+                
 
-                await _veiculoService.EditarVeiculo(veiculo);
+                await _veiculoService.EditarVeiculo(veiculoDTO);
 
-                return Ok(veiculo);
+                return Ok(veiculoDTO);
 
             }
             catch (Exception)
@@ -105,17 +114,22 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 bool movimentacaoVeiculo = await _movimentoService.ConsultaSeTemMovimento(id);
 
+
                 if (movimentacaoVeiculo)
                 {
                     return BadRequest("O veículo possuí movimentações");
                 }
-                Task<Veiculo> veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
+                VeiculoDTO veiculoExcluido = await _veiculoService.ExcluirVeiculo(id);
+
+               
                 if (veiculoExcluido == null)
                 {
                     return NotFound("O veículo não foi encontrado");
                 }
 
-                return Ok(veiculoExcluido);
+                VeiculoDTO veiculoExcluidoDTO = _mapper.Map<VeiculoDTO>(veiculoExcluido);
+
+                return Ok(veiculoExcluidoDTO);
             }
             catch (Exception)
             {

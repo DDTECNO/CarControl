@@ -1,4 +1,6 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Domain;
+using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,21 +10,25 @@ namespace CarControl.APIVeiculos.Controllers
     [ApiController]
     public class VagasController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IVagaService _vagaService;
 
-        public VagasController(IVagaService vagaService)
+        public VagasController(IVagaService vagaService, IMapper mapper)
         {
             _vagaService = vagaService;
+            _mapper = mapper;
         }
 
         [HttpGet]   
-        public ActionResult<IEnumerable<Vaga>> Get()
+        public async Task<ActionResult<IEnumerable<VagaDTO>>> Get()
         {
             try
             {
-                List<Vaga> vagas = _vagaService.ListaVaga().ToList();
+               IEnumerable<VagaDTO> vagas = await _vagaService.ListaVaga();
 
-                return vagas.Count == 0 ? (ActionResult<IEnumerable<Vaga>>)NotFound("Nenhuma vaga encontrada") : (ActionResult<IEnumerable<Vaga>>)vagas;
+                var vagasDTO = _mapper.Map<IEnumerable<VagaDTO>>(vagas);
+
+                return !vagas.Any() ? (ActionResult<IEnumerable<VagaDTO>>)NotFound("Nenhuma vaga encontrada") : Ok(vagasDTO);
             }
             catch (Exception)
             {

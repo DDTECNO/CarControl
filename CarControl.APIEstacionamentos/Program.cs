@@ -1,8 +1,11 @@
+using AutoMapper.EquivalencyExpression;
 using CarControl.Domain;
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
+using CarControl.Service.DTO;
+using CarControl.Service.External;
 using CarControl.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,8 +21,8 @@ var builder = WebApplication.CreateBuilder(args);
 string? connectionString = builder.Configuration["ConnectionStrings:SqliteConnectionString"];
 builder.Services.AddDbContext<CarControlContext>(options => options.UseSqlite(connectionString));
 
-
-
+//AutoMapper
+builder.Services.AddAutoMapper(cfg => { cfg.AddCollectionMappers(); }, typeof(AutoMapperProfile).Assembly);
 
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -41,27 +44,27 @@ var app = builder.Build();
 
 
 
-app.MapPost("/Veiculos", async (Veiculo veiculo, IVeiculoService vs) =>
+app.MapPost("/Veiculos", async (VeiculoDTO veiculo, IVeiculoService vs) =>
 {
 
-    await vs.Create(veiculo);
+    await vs.InserirVeiculo(veiculo);
 
     return Results.Created($"/Veiculos/{veiculo.IdVeiculo}", veiculo);
 });
 
-app.MapGet("/Veiculos", async (IVeiculoService vs) => await vs.ListaVeiculos());
+app.MapGet("/Veiculos", async (IVeiculoService vs) => await vs.ListarVeiculos());
 
 app.MapGet("/Veiculos/{cpf}", async (string cpf, IVeiculoService vs) => await vs.ObterVeiculoPorCPF(cpf));
 
-app.MapPut("/Veiculos/{Id}", async (int id, Veiculo veiculo, IVeiculoService vs) =>
+app.MapPut("/Veiculos/{Id}", async (int id, VeiculoDTO veiculoDTO, IVeiculoService vs) =>
 {
 
-    if (veiculo.IdVeiculo != id)
+    if (veiculoDTO.IdVeiculo != id)
     {
         return Results.BadRequest();
     }
 
-    Veiculo veiculoAtualizado = await vs.EditarVeiculo(veiculo);
+    VeiculoDTO veiculoAtualizado = await vs.EditarVeiculo(veiculoDTO);
 
     return veiculoAtualizado is null ? Results.NotFound() : Results.Ok(veiculoAtualizado);
 
@@ -75,7 +78,7 @@ app.MapDelete("/Veiculos/{id}", async (int id, IVeiculoService vs, IMovimentoSer
         return Results.BadRequest("O veículo possuí movimentações");
     }
 
-    Veiculo veiculoExcluido = await vs.ExcluirVeiculo(id);
+    VeiculoDTO veiculoExcluido = await vs.ExcluirVeiculo(id);
 
     if (veiculoExcluido == null)
     {
