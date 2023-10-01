@@ -9,7 +9,7 @@ namespace CarControl.Infrastructure.Repositories.Interface
 
         Task<Veiculo> Create(Veiculo veiculo);
         Task<IEnumerable<Veiculo>> ListaVeiculos();
-        Veiculo ObterVeiculos(int id);
+        Veiculo ObterVeiculo(int id);
         Task<Veiculo> ObterVeiculoPorCPF(string cpf);
         Task<Veiculo> EditarVeiculo(Veiculo veiculo);
         Task<Veiculo> ExcluirVeiculo(int id);

@@ -1,6 +1,9 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Domain;
+using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace CarControl.APIVeiculos.Controllers
 {
@@ -8,26 +11,32 @@ namespace CarControl.APIVeiculos.Controllers
     [ApiController]
     public class MovimentosController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IMovimentoService _movimentoService;
         private readonly IVeiculoService _veiculoService;
         private readonly IVagaService _vagaService;
 
-        public MovimentosController(IMovimentoService movimentoService, IVeiculoService veiculoService, IVagaService vagaService)
+        public MovimentosController(IMovimentoService movimentoService, IVeiculoService veiculoService, IVagaService vagaService, IMapper mapper)
         {
             _movimentoService = movimentoService;
             _veiculoService = veiculoService;
             _vagaService = vagaService;
+            _mapper = mapper;
         }
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<Movimento>> Get() 
+        public ActionResult<IEnumerable<MovimentoDTO>> Get() 
         {
             try
             {
-                List<Movimento> movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
 
-                return movimentos.Count == 0 ? (ActionResult<IEnumerable<Movimento>>)NotFound("Nenhum movimento encontrado") : (ActionResult<IEnumerable<Movimento>>)movimentos;
+                IEnumerable<Movimento> movimentos = _movimentoService.ConsultaTodosMovimentos().ToList();
+
+                IEnumerable<MovimentoDTO> movimentosDTO = _mapper.Map<IEnumerable<MovimentoDTO>>(movimentos);
+
+
+                return !movimentos.Any() ? (ActionResult<IEnumerable<MovimentoDTO>>)NotFound("Nenhum movimento encontrado") : Ok(movimentosDTO);
             }
             catch (Exception)
             {
@@ -39,13 +48,15 @@ namespace CarControl.APIVeiculos.Controllers
 
 
         [HttpGet("{cpfCondutor}", Name = "GetRegitro")]
-        public ActionResult<IEnumerable<Movimento>>Get(string cpfCondutor)
+        public ActionResult<IEnumerable<MovimentoDTO>>Get(string cpfCondutor)
         {
             try
             {
-                List<Movimento> movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
+                IEnumerable<Movimento> movimento = _movimentoService.ConsultaMovimentoDoVeiculo(cpfCondutor).ToList();
 
-                return movimento.Count == 0 ? (ActionResult<IEnumerable<Movimento>>)NotFound("Movimento não encontrado para o condutor.") : (ActionResult<IEnumerable<Movimento>>)movimento;
+                IEnumerable<MovimentoDTO> movimentoDTO = _mapper.Map<IEnumerable<MovimentoDTO>>(movimento);
+
+                return !movimento.Any() ? (ActionResult<IEnumerable<MovimentoDTO>>)NotFound("Movimento não encontrado para o condutor.") : Ok(movimentoDTO);
             }
             catch (Exception)
             {
@@ -57,22 +68,24 @@ namespace CarControl.APIVeiculos.Controllers
 
 
         [HttpPost]   
-        public  ActionResult Post(Movimento movimento)
+        public  ActionResult Post(MovimentoDTO movimentoDTO)
         {
             try
             {
-                if (movimento == null)
+                if (movimentoDTO == null)
                 {
                     return BadRequest();
                 }
 
-                if (!_vagaService.VagaEstaOcupada(movimento.IdVaga))
+                if (!_vagaService.VagaEstaOcupada(movimentoDTO.IdVaga))
                 {
                     return BadRequest("Esta vaga está ocupada");
                 }
 
-                Movimento registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
+                Movimento movimento = _mapper.Map<Movimento>(movimentoDTO);
 
+                Movimento registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
+            
 
                 if (registroDeEntrada == null)
                 {
@@ -86,10 +99,12 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Erro ao verificar flag de vaga");
                 }
 
-                Veiculo cpfCondutor = _veiculoService.ObterVeiculos(movimento.IdVeiculo);
+                VeiculoDTO cpfCondutor = _veiculoService.ObterVeiculo(movimento.IdVeiculo);
 
 
-                return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, movimento);
+                MovimentoDTO entradaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO); ;
+
+                return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, entradaRegistrada);
             }
             catch (Exception)
             {
@@ -101,14 +116,16 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPut ("{idVaga:int}")]
-        public ActionResult Put(int idVaga, Movimento movimento) 
+        public ActionResult Put(int idVaga, MovimentoDTO movimentoDTO) 
         {
             try
             {
-                if (idVaga != movimento.IdVaga)
+                if (idVaga != movimentoDTO.IdVaga)
                 {
                     return BadRequest("Vaga não encontrada");
                 }
+
+                Movimento movimento = _mapper.Map<Movimento>(movimentoDTO);
 
                 Movimento movimentoSaida = _movimentoService.RegistrarSaida(movimento);
 
@@ -117,14 +134,16 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("A data e hora de saída não pode ser menor que a data e hora de entrada.");
                 }
 
-                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimentoDTO.IdVaga);
 
                 if (atualizaFlVaga == null)
                 {
                     return BadRequest("Erro ao verificar flag de vaga");
                 }
 
-                return Ok(movimento);
+                MovimentoDTO saidaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO); 
+
+                return Ok(saidaRegistrada);
             }
             catch (Exception)
             {
@@ -140,7 +159,9 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 Movimento movimentoExcluido = _movimentoService.ExcluirMovimento(id);
 
-                return movimentoExcluido == null ? NotFound("Movimento não encontrado.") : Ok(movimentoExcluido);
+                MovimentoDTO saidaRegistrada = _mapper.Map<MovimentoDTO>(movimentoExcluido);
+
+                return movimentoExcluido == null ? NotFound("Movimento não encontrado.") : Ok(saidaRegistrada);
             }
             catch (Exception)
             {

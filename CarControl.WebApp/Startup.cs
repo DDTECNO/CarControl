@@ -1,8 +1,10 @@
+using AutoMapper.EquivalencyExpression;
 using CarControl.Domain;
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
+using CarControl.Service.External;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -13,7 +15,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace CarControl.WebApp
 {
@@ -52,6 +53,8 @@ namespace CarControl.WebApp
             services.AddScoped<IVagaService, VagaService>();
             services.AddScoped<IVeiculoService, VeiculoService>();
 
+            //AutoMapper
+            services.AddAutoMapper(cfg => { cfg.AddCollectionMappers(); }, typeof(AutoMapperProfile).Assembly);
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -60,7 +63,7 @@ namespace CarControl.WebApp
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-         
+
             //Serviço de Autenticação de usuário
             services.AddAuthorization(options =>
             {
@@ -74,6 +77,7 @@ namespace CarControl.WebApp
             })
              .AddEntityFrameworkStores<CarControlContext>()
              .AddDefaultTokenProviders();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,7 +100,7 @@ namespace CarControl.WebApp
             app.UseStaticFiles();
             app.UseAuthentication();
             app.UseAuthorization();
-            
+
 
 
             //Verificando outro meio de disponibilizar as rotas 
@@ -111,7 +115,7 @@ namespace CarControl.WebApp
                     name: "VeiculosCadastrados",
                     pattern: "Home/Veiculo/VeiculosCadastrados",
                     defaults: new { controller = "Veiculo", action = "VeiculosCadastrados" });
-               
+
                 endpoints.MapControllerRoute(
                     name: "EditarVeiculo",
                     pattern: "Home/Veiculo/EditarVeiculo",
@@ -140,7 +144,7 @@ namespace CarControl.WebApp
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Login}/{action=LoginUsuario}/{id?}");
-                    endpoints.MapRazorPages();
+                endpoints.MapRazorPages();
 
                 endpoints.MapControllerRoute(
                    name: "ConsultarVagas",
