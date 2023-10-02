@@ -82,9 +82,8 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Esta vaga está ocupada");
                 }
 
-                Movimento movimento = _mapper.Map<Movimento>(movimentoDTO);
 
-                Movimento registroDeEntrada = _movimentoService.RegistrarEntrada(movimento);
+                MovimentoDTO registroDeEntrada = _movimentoService.RegistrarEntrada(movimentoDTO);
             
 
                 if (registroDeEntrada == null)
@@ -92,19 +91,19 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Já existe uma entrada sem registro para o veículo em questão. Registre sua saída.");
                 }
 
-                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimento.IdVaga);
+                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimentoDTO.IdVaga);
 
                 if (atualizaFlVaga == null)
                 {
                     return BadRequest("Erro ao verificar flag de vaga");
                 }
 
-                VeiculoDTO cpfCondutor = _veiculoService.ObterVeiculo(movimento.IdVeiculo);
+                VeiculoDTO cpfCondutor = _veiculoService.ObterVeiculo(movimentoDTO.IdVeiculo);
 
 
                 MovimentoDTO entradaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO); ;
 
-                return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, entradaRegistrada);
+                return new CreatedAtRouteResult("GetRegitro", new {  cpfCondutor = cpfCondutor.CpfCondutor }, entradaRegistrada);
             }
             catch (Exception)
             {
@@ -125,9 +124,7 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Vaga não encontrada");
                 }
 
-                Movimento movimento = _mapper.Map<Movimento>(movimentoDTO);
-
-                Movimento movimentoSaida = _movimentoService.RegistrarSaida(movimento);
+                MovimentoDTO movimentoSaida = _movimentoService.RegistrarSaida(movimentoDTO);
 
                 if (movimentoSaida == null)
                 {

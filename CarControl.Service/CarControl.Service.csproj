@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\CarControl.Common\CarControl.Common.csproj" />
     <ProjectReference Include="..\CarControl.Infrastructure\CarControl.Infrastructure.csproj" />
   </ItemGroup>
 

@@ -1,5 +1,4 @@
 using AutoMapper.EquivalencyExpression;
-using CarControl.Domain;
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;

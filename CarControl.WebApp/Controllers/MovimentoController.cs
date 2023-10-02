@@ -35,7 +35,13 @@ namespace CarControl.WebApp.Controllers
 
         #region GET 
 
-
+        /// <summary>
+        /// Se a chamada partir da tela de vagas ou da tela de veículos, é previamente selecionado a vaga ou veículo para movimentação.
+        /// </summary>
+        /// <param name="idVeiculo"></param>
+        /// <param name="idVaga"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<ActionResult> RegistroDeEntrada(int idVeiculo = 0, int idVaga = 0)
         {
             IEnumerable<OperacaoDTO> ops = _operacaoService.ListaOperacao();
@@ -107,7 +113,13 @@ namespace CarControl.WebApp.Controllers
 
         }
 
-
+        /// <summary>
+        /// Se a chamada partir da tela de vagas ou da tela de veículos, é previamente selecionado a vaga ou veículo para movimentação.
+        /// </summary>
+        /// <param name="idVeiculo"></param>
+        /// <param name="idVaga"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
         public async Task<ActionResult> RegistroDeSaida(int idVeiculo = 0, int idVaga = 0)
         {
             IEnumerable<VeiculoDTO> vcls = await _veiculoService.ListarVeiculos();
@@ -252,21 +264,20 @@ namespace CarControl.WebApp.Controllers
 
                 };
 
-                if (ModelState.IsValid)
+
+                MovimentoDTO movimentoDeSaida = _movimentoService.RegistrarSaida(movimentoDTO);
+
+
+                if (movimentoDeSaida == null)
                 {
-                    MovimentoDTO movimentoDeSaida = _movimentoService.RegistrarSaida(movimentoDTO);
-
-
-                    if (movimentoDeSaida == null)
-                    {
-                        ModelState.AddModelError(string.Empty, "A data e hora de saída não pode ser menor que a data e hora de entrada.");
-                        TempData["ErrorMessageSaida"] = "A data e hora de saída não pode ser menor que a data e hora de entrada.";
-                        return RedirectToAction("RegistroDeSaida", "Movimento");
-                    }
-
-
-                    Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimentoDTO.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
+                    ModelState.AddModelError(string.Empty, "A data e hora de saída não pode ser menor que a data e hora de entrada.");
+                    TempData["ErrorMessageSaida"] = "A data e hora de saída não pode ser menor que a data e hora de entrada.";
+                    return RedirectToAction("RegistroDeSaida", "Movimento");
                 }
+
+
+                Vaga atualizaFlVaga = _vagaService.AtualizaFLVaga(movimentoDTO.IdVaga) ?? throw new ArgumentException("Erro ao verificar flag de vaga");
+
                 return RedirectToAction("ConsultarVagas", "Vagas");
             }
             catch (Exception ex)
