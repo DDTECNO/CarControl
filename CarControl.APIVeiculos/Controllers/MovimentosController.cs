@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
+using CarControl.Common.DTO;
 using CarControl.Domain;
-using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
 
 namespace CarControl.APIVeiculos.Controllers
 {
@@ -26,7 +25,7 @@ namespace CarControl.APIVeiculos.Controllers
 
 
         [HttpGet]
-        public ActionResult<IEnumerable<MovimentoDTO>> Get() 
+        public ActionResult<IEnumerable<MovimentoDTO>> Get()
         {
             try
             {
@@ -48,7 +47,7 @@ namespace CarControl.APIVeiculos.Controllers
 
 
         [HttpGet("{cpfCondutor}", Name = "GetRegitro")]
-        public ActionResult<IEnumerable<MovimentoDTO>>Get(string cpfCondutor)
+        public ActionResult<IEnumerable<MovimentoDTO>> Get(string cpfCondutor)
         {
             try
             {
@@ -67,8 +66,8 @@ namespace CarControl.APIVeiculos.Controllers
 
 
 
-        [HttpPost]   
-        public  ActionResult Post(MovimentoDTO movimentoDTO)
+        [HttpPost]
+        public ActionResult Post(MovimentoDTO movimentoDTO)
         {
             try
             {
@@ -84,7 +83,7 @@ namespace CarControl.APIVeiculos.Controllers
 
 
                 MovimentoDTO registroDeEntrada = _movimentoService.RegistrarEntrada(movimentoDTO);
-            
+
 
                 if (registroDeEntrada == null)
                 {
@@ -103,19 +102,19 @@ namespace CarControl.APIVeiculos.Controllers
 
                 MovimentoDTO entradaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO); ;
 
-                return new CreatedAtRouteResult("GetRegitro", new {  cpfCondutor = cpfCondutor.CpfCondutor }, entradaRegistrada);
+                return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, entradaRegistrada);
             }
             catch (Exception)
             {
 
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ocorreu um erro ao tratar a solictação.");
-                
+
             }
-                      
+
         }
 
-        [HttpPut ("{idVaga:int}")]
-        public ActionResult Put(int idVaga, MovimentoDTO movimentoDTO) 
+        [HttpPut("{idVaga:int}")]
+        public ActionResult Put(int idVaga, MovimentoDTO movimentoDTO)
         {
             try
             {
@@ -138,7 +137,7 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Erro ao verificar flag de vaga");
                 }
 
-                MovimentoDTO saidaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO); 
+                MovimentoDTO saidaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO);
 
                 return Ok(saidaRegistrada);
             }
@@ -149,8 +148,8 @@ namespace CarControl.APIVeiculos.Controllers
 
         }
 
-        [HttpDelete ("{id:int}")]
-        public ActionResult Delete(int id) 
+        [HttpDelete("{id:int}")]
+        public ActionResult Delete(int id)
         {
             try
             {

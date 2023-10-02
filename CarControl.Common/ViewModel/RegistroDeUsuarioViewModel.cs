@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CarControl.Domain.ViewModel
+namespace CarControl.Common.ViewModel
 {
     public class RegistroDeUsuarioViewModel
     {

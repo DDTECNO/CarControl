@@ -1,5 +1,5 @@
-﻿using CarControl.Domain;
-using CarControl.Domain.ViewModel;
+﻿using CarControl.Common.ViewModel;
+using CarControl.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -99,7 +99,7 @@ namespace CarControl.WebApp.Controllers
                 throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
             }
 
-            
+
         }
 
 

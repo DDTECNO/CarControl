@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using CarControl.Domain;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
-namespace CarControl.Domain.ViewModel
+namespace CarControl.Common.ViewModel
 {
     public class VagaViewModel
     {

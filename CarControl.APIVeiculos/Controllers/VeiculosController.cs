@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using CarControl.Service.DTO;
+using CarControl.Common.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
 

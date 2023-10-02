@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CarControl.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace CarControl.Domain.ViewModel
+namespace CarControl.Common.ViewModel
 {
     public class MovimentoViewModel
     {
