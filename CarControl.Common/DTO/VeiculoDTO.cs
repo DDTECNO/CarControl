@@ -1,10 +1,9 @@
 ﻿using CarControl.Domain;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 
-namespace CarControl.Service.DTO
+namespace CarControl.Common.DTO
 {
     public class VeiculoDTO
     {
@@ -56,7 +55,7 @@ namespace CarControl.Service.DTO
 
         [JsonIgnore]
         public ICollection<Movimento> Movimentos { get; set; }
-   
+
 
         public VeiculoDTO()
         {

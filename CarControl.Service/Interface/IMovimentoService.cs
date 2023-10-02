@@ -1,5 +1,5 @@
-﻿using CarControl.Domain;
-using CarControl.Service.DTO;
+﻿using CarControl.Common.DTO;
+using CarControl.Domain;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
+using CarControl.Common.DTO;
+using CarControl.Common.ViewModel;
 using CarControl.Domain;
-using CarControl.Domain.ViewModel;
-using CarControl.Service.DTO;
 
-namespace CarControl.Service.External
+namespace CarControl.Common.AutoMapper
 {
     public class AutoMapperProfile : Profile
     {

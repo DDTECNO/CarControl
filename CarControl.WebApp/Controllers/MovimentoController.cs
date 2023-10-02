@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using CarControl.Common.DTO;
+using CarControl.Common.ViewModel;
 using CarControl.Domain;
-using CarControl.Domain.ViewModel;
-using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

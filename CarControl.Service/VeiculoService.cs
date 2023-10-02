@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using CarControl.Common.DTO;
 using CarControl.Domain;
 using CarControl.Infrastructure.Repositories.Interface;
-using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using System.Collections.Generic;
 using System.Threading.Tasks;

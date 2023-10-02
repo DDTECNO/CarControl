@@ -1,10 +1,10 @@
 using AutoMapper.EquivalencyExpression;
+using CarControl.Common.AutoMapper;
 using CarControl.Domain;
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
-using CarControl.Service.External;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;

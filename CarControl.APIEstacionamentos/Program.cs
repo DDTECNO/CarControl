@@ -1,10 +1,10 @@
 using AutoMapper.EquivalencyExpression;
+using CarControl.Common.AutoMapper;
+using CarControl.Common.DTO;
 using CarControl.Infrastructure;
 using CarControl.Infrastructure.Repositories;
 using CarControl.Infrastructure.Repositories.Interface;
 using CarControl.Service;
-using CarControl.Service.DTO;
-using CarControl.Service.External;
 using CarControl.Service.Interface;
 using Microsoft.EntityFrameworkCore;
 

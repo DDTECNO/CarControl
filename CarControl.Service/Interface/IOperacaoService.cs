@@ -1,5 +1,4 @@
-﻿using CarControl.Domain;
-using CarControl.Service.DTO;
+﻿using CarControl.Common.DTO;
 using System.Collections.Generic;
 
 namespace CarControl.Service.Interface
