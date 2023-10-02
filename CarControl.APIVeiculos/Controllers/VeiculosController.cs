@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CarControl.Domain;
 using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -71,7 +70,7 @@ namespace CarControl.APIVeiculos.Controllers
                 {
                     return BadRequest();
                 }
-           
+
                 await _veiculoService.InserirVeiculo(veiculoDTO);
 
                 return new CreatedAtRouteResult("GetVeiculo", new { id = veiculoDTO.IdVeiculo }, veiculoDTO);
@@ -93,7 +92,7 @@ namespace CarControl.APIVeiculos.Controllers
                 {
                     return BadRequest("Véículo não encontrado");
                 }
-                
+
 
                 await _veiculoService.EditarVeiculo(veiculoDTO);
 
@@ -121,7 +120,7 @@ namespace CarControl.APIVeiculos.Controllers
                 }
                 VeiculoDTO veiculoExcluido = await _veiculoService.ExcluirVeiculo(id);
 
-               
+
                 if (veiculoExcluido == null)
                 {
                     return NotFound("O veículo não foi encontrado");

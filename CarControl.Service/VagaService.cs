@@ -33,7 +33,11 @@ namespace CarControl.Service
             return vagasDTO;
         }
 
-
+        /// <summary>
+        ///   Se a vaga for O seta como D e vice-versa 
+        /// </summary>
+        /// <param name="idVaga"></param>
+        /// <returns></returns>
         public Vaga AtualizaFLVaga(int idVaga)
         {
             Vaga vaga = _vagaRepository.VerificaFLVaga(idVaga);
@@ -44,7 +48,6 @@ namespace CarControl.Service
                 return null;
             }
 
-            //Se a vaga for O seta como D e vice-versa 
             else if (vaga.FlVaga == 'D')
             {
                 _vagaRepository.SetFlVaga(idVaga, 'O');

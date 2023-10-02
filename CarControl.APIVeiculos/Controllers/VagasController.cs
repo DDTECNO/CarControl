@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using CarControl.Domain;
 using CarControl.Service.DTO;
 using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Mvc;
@@ -19,12 +18,12 @@ namespace CarControl.APIVeiculos.Controllers
             _mapper = mapper;
         }
 
-        [HttpGet]   
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<VagaDTO>>> Get()
         {
             try
             {
-               IEnumerable<VagaDTO> vagas = await _vagaService.ListaVaga();
+                IEnumerable<VagaDTO> vagas = await _vagaService.ListaVaga();
 
                 var vagasDTO = _mapper.Map<IEnumerable<VagaDTO>>(vagas);
 
