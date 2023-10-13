@@ -1,7 +1,7 @@
 ﻿using CarControl.Domain;
 using System.Collections.Generic;
 
-namespace CarControl.Infrastructure.Repositories.Interface
+namespace CarControl.Infrastructure.Interface
 {
     public interface IOperacaoRepository
     {

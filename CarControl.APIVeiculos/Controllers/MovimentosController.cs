@@ -2,12 +2,16 @@
 using CarControl.Common.DTO;
 using CarControl.Domain;
 using CarControl.Service.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.APIVeiculos.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class MovimentosController : Controller
     {
         private readonly IMapper _mapper;
@@ -100,9 +104,8 @@ namespace CarControl.APIVeiculos.Controllers
                 VeiculoDTO cpfCondutor = _veiculoService.ObterVeiculo(movimentoDTO.IdVeiculo);
 
 
-                MovimentoDTO entradaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO); ;
 
-                return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, entradaRegistrada);
+                return new CreatedAtRouteResult("GetRegitro", new { cpfCondutor = cpfCondutor.CpfCondutor }, movimentoDTO);
             }
             catch (Exception)
             {
@@ -137,9 +140,7 @@ namespace CarControl.APIVeiculos.Controllers
                     return BadRequest("Erro ao verificar flag de vaga");
                 }
 
-                MovimentoDTO saidaRegistrada = _mapper.Map<MovimentoDTO>(movimentoDTO);
-
-                return Ok(saidaRegistrada);
+                return Ok(movimentoDTO);
             }
             catch (Exception)
             {

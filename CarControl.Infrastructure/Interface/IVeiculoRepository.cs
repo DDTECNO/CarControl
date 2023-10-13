@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace CarControl.Infrastructure.Repositories.Interface
+namespace CarControl.Infrastructure.Interface
 {
     public interface IVeiculoRepository
     {

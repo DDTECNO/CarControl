@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CarControl.Infrastructure
 {
-    public class CarControlContext : IdentityDbContext<ApplicationUser>
+    public class CarControlContext : IdentityDbContext<IdentityUser>
     {
         public CarControlContext(DbContextOptions options) : base(options)
         {
@@ -20,7 +20,7 @@ namespace CarControl.Infrastructure
             modelBuilder.Entity<Vaga>().HasKey(pp => new { pp.IdVaga });
             modelBuilder.Entity<Operacao>().HasKey(pp => new { pp.IdTpOperacao });
             modelBuilder.Entity<Movimento>().HasKey(pp => new { pp.IdMovimento});
-            modelBuilder.Entity<ApplicationUser>().HasKey(pp => new { pp.Id});
+            modelBuilder.Entity<IdentityUser>().HasKey(pp => new { pp.Id});
 
             modelBuilder.Entity<Movimento>().Property(e => e.IdMovimento).ValueGeneratedOnAdd();
 

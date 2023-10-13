@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using CarControl.Common.DTO;
-using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Infrastructure.Interface;
 using CarControl.Service.Interface;
 using System.Collections.Generic;
 

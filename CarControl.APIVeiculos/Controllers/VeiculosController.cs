@@ -1,23 +1,24 @@
 ﻿using AutoMapper;
 using CarControl.Common.DTO;
 using CarControl.Service.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.APIVeiculos.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class VeiculosController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly IVeiculoService _veiculoService;
         private readonly IMovimentoService _movimentoService;
 
-        public VeiculosController(IVeiculoService veiculoService, IMovimentoService movimentoService, IMapper mapper)
+        public VeiculosController(IVeiculoService veiculoService, IMovimentoService movimentoService)
         {
             _veiculoService = veiculoService;
             _movimentoService = movimentoService;
-            _mapper = mapper;
         }
 
         [HttpGet]
@@ -28,14 +29,13 @@ namespace CarControl.APIVeiculos.Controllers
                 IEnumerable<VeiculoDTO> veiculos = await _veiculoService.ListarVeiculos();
 
 
-                IEnumerable<VeiculoDTO> veiculosDTO = _mapper.Map<IEnumerable<VeiculoDTO>>(veiculos);
 
                 if (veiculos == null || !veiculos.Any())
                 {
                     return NotFound("Veículos não encontrados.");
                 }
 
-                return Ok(veiculosDTO);
+                return Ok(veiculos);
             }
             catch (Exception)
             {
@@ -51,8 +51,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 VeiculoDTO veiculo = _veiculoService.ObterVeiculo(id);
 
-                VeiculoDTO veiculosDTO = _mapper.Map<VeiculoDTO>(veiculo);
-                return veiculosDTO == null ? (ActionResult<VeiculoDTO>)NotFound("Veículo não encontrado.") : (ActionResult<VeiculoDTO>)veiculosDTO;
+                return veiculo == null ? (ActionResult<VeiculoDTO>)NotFound("Veículo não encontrado.") : (ActionResult<VeiculoDTO>)veiculo;
             }
             catch (Exception)
             {
@@ -126,9 +125,8 @@ namespace CarControl.APIVeiculos.Controllers
                     return NotFound("O veículo não foi encontrado");
                 }
 
-                VeiculoDTO veiculoExcluidoDTO = _mapper.Map<VeiculoDTO>(veiculoExcluido);
 
-                return Ok(veiculoExcluidoDTO);
+                return Ok(veiculoExcluido);
             }
             catch (Exception)
             {

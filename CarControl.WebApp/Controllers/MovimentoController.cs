@@ -192,11 +192,15 @@ namespace CarControl.WebApp.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult BuscarVeiculo(VeiculoDTO veiculoDTO)
+        public ActionResult BuscarVeiculo(VeiculoViewModel veiculoViewModel)
         {
             try
             {
+                VeiculoDTO veiculoDTO = _mapper.Map<VeiculoDTO>(veiculoViewModel);
+
                 Task<VeiculoDTO> buscar = _veiculoService.ObterVeiculoPorCPF(veiculoDTO.CpfCondutor);
+
+
 
                 return buscar == null ? throw new ArgumentException("Veículo não encontrado") : (ActionResult)View(buscar);
             }

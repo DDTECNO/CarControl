@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.APIEstacionament
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{4CE4D7ED-36D1-425D-8199-5D9184B72A04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.Common", "..\CarControl.Common\CarControl.Common.csproj", "{4327A641-0D6B-4B97-9854-968C517A46CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Common", "..\CarControl.Common\CarControl.Common.csproj", "{4327A641-0D6B-4B97-9854-968C517A46CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
