@@ -1,21 +1,23 @@
 ﻿using AutoMapper;
 using CarControl.Common.DTO;
 using CarControl.Service.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.APIVeiculos.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class VagasController : Controller
     {
-        private readonly IMapper _mapper;
         private readonly IVagaService _vagaService;
 
-        public VagasController(IVagaService vagaService, IMapper mapper)
+        public VagasController(IVagaService vagaService)
         {
             _vagaService = vagaService;
-            _mapper = mapper;
         }
 
         [HttpGet]
@@ -25,9 +27,7 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 IEnumerable<VagaDTO> vagas = await _vagaService.ListaVaga();
 
-                var vagasDTO = _mapper.Map<IEnumerable<VagaDTO>>(vagas);
-
-                return !vagas.Any() ? (ActionResult<IEnumerable<VagaDTO>>)NotFound("Nenhuma vaga encontrada") : Ok(vagasDTO);
+                return !vagas.Any() ? (ActionResult<IEnumerable<VagaDTO>>)NotFound("Nenhuma vaga encontrada") : Ok(vagas);
             }
             catch (Exception)
             {

@@ -1,5 +1,5 @@
 ﻿using CarControl.Domain;
-using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Infrastructure.Interface;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
