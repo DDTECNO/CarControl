@@ -1,11 +1,15 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Common.DTO;
 using CarControl.Service.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.APIVeiculos.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class VeiculosController : Controller
     {
         private readonly IVeiculoService _veiculoService;
@@ -18,11 +22,13 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Veiculo>>> Get()
+        public async Task<ActionResult<IEnumerable<VeiculoDTO>>> Get()
         {
             try
             {
-                var veiculos = await _veiculoService.ListaVeiculos();
+                IEnumerable<VeiculoDTO> veiculos = await _veiculoService.ListarVeiculos();
+
+
 
                 if (veiculos == null || !veiculos.Any())
                 {
@@ -39,13 +45,13 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpGet("{id:int}", Name = "GetVeiculo")]
-        public ActionResult<Veiculo> Get(int id)
+        public ActionResult<VeiculoDTO> Get(int id)
         {
             try
             {
-                Veiculo veiculo = _veiculoService.ObterVeiculos(id);
+                VeiculoDTO veiculo = _veiculoService.ObterVeiculo(id);
 
-                return veiculo == null ? (ActionResult<Veiculo>)NotFound("Veículo não encontrado.") : (ActionResult<Veiculo>)veiculo;
+                return veiculo == null ? (ActionResult<VeiculoDTO>)NotFound("Veículo não encontrado.") : (ActionResult<VeiculoDTO>)veiculo;
             }
             catch (Exception)
             {
@@ -55,18 +61,18 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post(Veiculo veiculo)
+        public async Task<ActionResult> Post(VeiculoDTO veiculoDTO)
         {
             try
             {
-                if (veiculo == null)
+                if (veiculoDTO == null)
                 {
                     return BadRequest();
                 }
 
-                await _veiculoService.Create(veiculo);
+                await _veiculoService.InserirVeiculo(veiculoDTO);
 
-                return new CreatedAtRouteResult("GetVeiculo", new { id = veiculo.IdVeiculo }, veiculo);
+                return new CreatedAtRouteResult("GetVeiculo", new { id = veiculoDTO.IdVeiculo }, veiculoDTO);
             }
             catch (Exception)
             {
@@ -77,18 +83,19 @@ namespace CarControl.APIVeiculos.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public async Task<ActionResult> Put(int id, Veiculo veiculo)
+        public async Task<ActionResult> Put(int id, VeiculoDTO veiculoDTO)
         {
             try
             {
-                if (id != veiculo.IdVeiculo)
+                if (id != veiculoDTO.IdVeiculo)
                 {
                     return BadRequest("Véículo não encontrado");
                 }
 
-                await _veiculoService.EditarVeiculo(veiculo);
 
-                return Ok(veiculo);
+                await _veiculoService.EditarVeiculo(veiculoDTO);
+
+                return Ok(veiculoDTO);
 
             }
             catch (Exception)
@@ -105,15 +112,19 @@ namespace CarControl.APIVeiculos.Controllers
             {
                 bool movimentacaoVeiculo = await _movimentoService.ConsultaSeTemMovimento(id);
 
+
                 if (movimentacaoVeiculo)
                 {
                     return BadRequest("O veículo possuí movimentações");
                 }
-                Task<Veiculo> veiculoExcluido = _veiculoService.ExcluirVeiculo(id);
+                VeiculoDTO veiculoExcluido = await _veiculoService.ExcluirVeiculo(id);
+
+
                 if (veiculoExcluido == null)
                 {
                     return NotFound("O veículo não foi encontrado");
                 }
+
 
                 return Ok(veiculoExcluido);
             }

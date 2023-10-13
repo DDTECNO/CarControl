@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Banco", "..\CarC
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "MinimalApi", "MinimalApi", "{F55A3924-5339-477A-BDF2-2F4FF1A7A271}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CarControl.APIEstacionamentos", "..\CarControl.APIEstacionamentos\CarControl.APIEstacionamentos.csproj", "{A0168EE6-0337-451A-9D7D-E526D4C08069}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.APIEstacionamentos", "..\CarControl.APIEstacionamentos\CarControl.APIEstacionamentos.csproj", "{A0168EE6-0337-451A-9D7D-E526D4C08069}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "API", "API", "{4CE4D7ED-36D1-425D-8199-5D9184B72A04}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CarControl.Common", "..\CarControl.Common\CarControl.Common.csproj", "{4327A641-0D6B-4B97-9854-968C517A46CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{A0168EE6-0337-451A-9D7D-E526D4C08069}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0168EE6-0337-451A-9D7D-E526D4C08069}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0168EE6-0337-451A-9D7D-E526D4C08069}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4327A641-0D6B-4B97-9854-968C517A46CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4327A641-0D6B-4B97-9854-968C517A46CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4327A641-0D6B-4B97-9854-968C517A46CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4327A641-0D6B-4B97-9854-968C517A46CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

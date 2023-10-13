@@ -1,6 +1,11 @@
-﻿using CarControl.Service.Interface;
+﻿using AutoMapper;
+using CarControl.Common.DTO;
+using CarControl.Common.ViewModel;
+using CarControl.Service.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CarControl.WebApp.Controllers
 {
@@ -10,19 +15,25 @@ namespace CarControl.WebApp.Controllers
 
         #region DEPENDÊNCIAS
         private readonly IVagaService _vagaService;
+        private readonly IMapper _mapper;
 
-        public VagasController(IVagaService vagaService)
+        public VagasController(IVagaService vagaService, IMapper mapper)
         {
             _vagaService = vagaService;
+            _mapper = mapper;
         }
 
 
         #endregion DEPENDÊNCIAS
 
         #region GET
-        public ActionResult ConsultarVagas()
+        public async Task<ActionResult> ConsultarVagas()
         {
-            return View(_vagaService.ListaVaga());
+            IEnumerable<VagaDTO> vagas = await _vagaService.ListaVaga();
+
+            IEnumerable<VagaViewModel> vagaViewModel = _mapper.Map<IEnumerable<VagaViewModel>>(vagas);
+
+            return View(vagaViewModel);
         }
         #endregion GET
 

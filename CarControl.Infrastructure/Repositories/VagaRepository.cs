@@ -1,10 +1,11 @@
 ﻿using CarControl.Domain;
-using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace CarControl.Infrastructure.Repositories
 {
@@ -18,9 +19,9 @@ namespace CarControl.Infrastructure.Repositories
         #region CRUD
 
 
-        public IEnumerable<Vaga> ListaVaga()
+        public async Task<IEnumerable<Vaga>> ListaVaga()
         {
-            return _dbset.AsNoTracking().Take(10).ToList();
+            return await  _dbset.AsNoTracking().Take(10).ToListAsync();
         }
 
 
@@ -40,7 +41,7 @@ namespace CarControl.Infrastructure.Repositories
             return _dbset.Where(p => p.IdVaga == idVaga && p.FlVaga.Equals('O')).SingleOrDefault();           
         }
 
-        public void setFlVaga(int idVaga, char flvaga)
+        public void SetFlVaga(int idVaga, char flvaga)
         {
             Vaga vaga = _dbset.Where(p => p.IdVaga == idVaga).SingleOrDefault();
 

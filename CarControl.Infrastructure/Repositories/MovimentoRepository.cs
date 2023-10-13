@@ -1,11 +1,9 @@
-﻿ using CarControl.Domain;
-using CarControl.Infrastructure.Repositories.Interface;
-using System.Linq;
-using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using System.Data.SqlClient;
+﻿using CarControl.Domain;
+using CarControl.Infrastructure.Interface;
 using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CarControl.Infrastructure.Repositories
@@ -18,7 +16,7 @@ namespace CarControl.Infrastructure.Repositories
 
         }
 
-      
+
         #region  CRUD
 
         public Movimento RegistrarEntrada(Movimento movimento)
@@ -33,16 +31,19 @@ namespace CarControl.Infrastructure.Repositories
         {
             Movimento vagaCadastrada = _dbset.Where(p => p.IdVaga == movimento.IdVaga && p.HrSaida == null).SingleOrDefault();
 
-            if (vagaCadastrada == null)
+
+ 
+            if (movimento != null)
             {
-                return null;
+                vagaCadastrada.HrSaida = movimento.HrSaida;
+                vagaCadastrada.DtSaida = movimento.DtSaida;
+
+                _context.SaveChanges();
+                return movimento;
             }
 
-            vagaCadastrada.Atualiza(movimento);
 
-            _context.SaveChanges();
-
-            return vagaCadastrada;
+            return null;
 
         }
         public async Task<bool> ConsultaSeTemMovimento(int idVeiculo)
@@ -68,7 +69,7 @@ namespace CarControl.Infrastructure.Repositories
 
         public IEnumerable<Movimento> ConsultaTodosMovimentos()
         {
-            return _dbset.AsNoTracking().Take(10).ToList();          
+            return _dbset.AsNoTracking().Take(50).ToList();
         }
 
         public IEnumerable<Movimento> ConsultaMovimentoDoVeiculo(string cpfCondutor)
@@ -84,16 +85,16 @@ namespace CarControl.Infrastructure.Repositories
         public Movimento ExcluirMovimento(int idMovimento)
         {
             Movimento movimento = _dbset.Where(p => p.IdMovimento == idMovimento).FirstOrDefault();
-            
-            if(movimento != null)
+
+            if (movimento != null)
             {
                 _context.Remove(movimento);
                 _context.SaveChanges();
-                return movimento;   
+                return movimento;
             }
 
-            return null;    
-           
+            return null;
+
         }
 
 

@@ -1,5 +1,5 @@
 ﻿using CarControl.Domain;
-using CarControl.Infrastructure.Repositories.Interface;
+using CarControl.Infrastructure.Interface;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +32,7 @@ namespace CarControl.Infrastructure.Repositories
             return await _dbset.AsNoTracking().Take(10).ToListAsync();
         }
 
-        public Veiculo ObterVeiculos(int id)
+        public Veiculo ObterVeiculo(int id)
         {
             Veiculo veiculo = _dbset.Where(p => p.IdVeiculo == id).SingleOrDefault();
 
@@ -42,14 +42,13 @@ namespace CarControl.Infrastructure.Repositories
 
         public async Task<Veiculo> EditarVeiculo(Veiculo veiculo)
         {
-            Veiculo veiculoCadastrado = _dbset.Where(p => p.IdVeiculo == veiculo.IdVeiculo).SingleOrDefault();
+  
 
-            if (veiculoCadastrado != null)
+            if (veiculo != null)
             {
-                veiculoCadastrado.Atualiza(veiculo);
-
-               await _context.SaveChangesAsync();
-                return veiculoCadastrado;
+                _context.Entry(veiculo).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return veiculo;
             }
 
             return null;

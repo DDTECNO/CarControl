@@ -1,11 +1,16 @@
-﻿using CarControl.Domain;
+﻿using AutoMapper;
+using CarControl.Common.DTO;
 using CarControl.Service.Interface;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CarControl.APIVeiculos.Controllers
 {
     [Route("[controller]")]
     [ApiController]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+
     public class VagasController : Controller
     {
         private readonly IVagaService _vagaService;
@@ -15,14 +20,14 @@ namespace CarControl.APIVeiculos.Controllers
             _vagaService = vagaService;
         }
 
-        [HttpGet]   
-        public ActionResult<IEnumerable<Vaga>> Get()
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<VagaDTO>>> Get()
         {
             try
             {
-                List<Vaga> vagas = _vagaService.ListaVaga().ToList();
+                IEnumerable<VagaDTO> vagas = await _vagaService.ListaVaga();
 
-                return vagas.Count == 0 ? (ActionResult<IEnumerable<Vaga>>)NotFound("Nenhuma vaga encontrada") : (ActionResult<IEnumerable<Vaga>>)vagas;
+                return !vagas.Any() ? (ActionResult<IEnumerable<VagaDTO>>)NotFound("Nenhuma vaga encontrada") : Ok(vagas);
             }
             catch (Exception)
             {

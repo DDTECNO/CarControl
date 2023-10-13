@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CarControl.Domain.ViewModel
+namespace CarControl.Common.DTO.Autenticacao
 {
-    public class LoginViewModel
+    public class LoginDTO
     {
         [Required(ErrorMessage = "O e-mail é obrigatório")]
         [EmailAddress]
-        public string Email { get; set; }
+        public required string Email { get; set; }
 
         [Required(ErrorMessage = "A senha é obrigatória")]
         [DataType(DataType.Password)]
-        public string Senha { get; set; }
+        public required string Senha { get; set; }
 
     }
 }

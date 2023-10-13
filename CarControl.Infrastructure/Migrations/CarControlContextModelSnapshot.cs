@@ -116,7 +116,7 @@ namespace CarControl.Infrastructure.Migrations
 
                     b.HasIndex("IdVeiculo");
 
-                    b.ToTable("Movimento");
+                    b.ToTable("Movimento", (string)null);
                 });
 
             modelBuilder.Entity("CarControl.Domain.Operacao", b =>
@@ -131,7 +131,7 @@ namespace CarControl.Infrastructure.Migrations
 
                     b.HasKey("IdTpOperacao");
 
-                    b.ToTable("Operacao");
+                    b.ToTable("Operacao", (string)null);
                 });
 
             modelBuilder.Entity("CarControl.Domain.Vaga", b =>
@@ -149,7 +149,7 @@ namespace CarControl.Infrastructure.Migrations
 
                     b.HasKey("IdVaga");
 
-                    b.ToTable("Vaga");
+                    b.ToTable("Vaga", (string)null);
                 });
 
             modelBuilder.Entity("CarControl.Domain.Veiculo", b =>
@@ -195,7 +195,7 @@ namespace CarControl.Infrastructure.Migrations
 
                     b.HasKey("IdVeiculo");
 
-                    b.ToTable("Veiculo");
+                    b.ToTable("Veiculo", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

@@ -5,4 +5,4 @@ Persistência realizada no banco SqLite. Arquivo de banco se encontra na camada 
 connection string e executar as migrações para o mapeamento em outro banco como MySQL ou SqlServer. A escolha do Sqlite foi somente para facilitar na execução do projeto localmente. 
 
 
-Versão 1.1.1
+Versão 1.2.2

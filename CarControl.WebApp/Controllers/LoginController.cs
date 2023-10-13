@@ -1,5 +1,6 @@
-﻿using CarControl.Domain;
-using CarControl.Domain.ViewModel;
+﻿using AutoMapper;
+using CarControl.Common.DTO.Autenticacao;
+using CarControl.Common.ViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -13,13 +14,15 @@ namespace CarControl.WebApp.Controllers
     public class LoginController : Controller
     {
         #region  DEPENDÊNCIAS
-        private readonly SignInManager<ApplicationUser> _signInManager;
-        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IMapper _mapper;
 
-        public LoginController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public LoginController(SignInManager<IdentityUser> signInManager, UserManager<IdentityUser> userManager, IMapper mapper)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _mapper = mapper;
         }
         # endregion DEPENDÊNCIAS
 
@@ -49,59 +52,58 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                LoginDTO loginDTO = _mapper.Map<LoginDTO>(model); 
+
+                IdentityUser user = await _userManager.FindByEmailAsync(loginDTO.Email);
+                if (user == null)
                 {
-                    ApplicationUser user = await _userManager.FindByEmailAsync(model.Email);
-                    if (user == null)
+                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida.Verifique seu login e senha e tente novamente");
+                    return View(model);
+                }
+
+                SignInResult result = await _signInManager.PasswordSignInAsync(user, loginDTO.Senha, isPersistent: false, lockoutOnFailure: true);
+
+                LoginViewModel loginViewModel = _mapper.Map<LoginViewModel>(loginDTO);
+
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Home");
+                }
+                if (user.AccessFailedCount >= 4 || user.LockoutEnd >= DateTime.UtcNow)
+                {
+
+                    if (user.LockoutEnd >= DateTime.UtcNow)
                     {
-                        ModelState.AddModelError(string.Empty, "Tentativa de login inválida.Verifique seu login e senha e tente novamente");
-                        return View(model);
+                        ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                        return View(loginViewModel);
                     }
 
-                    SignInResult result = await _signInManager.PasswordSignInAsync(user, model.Senha, isPersistent: false, lockoutOnFailure: true);
 
-                    if (result.Succeeded)
+                    if (user.AccessFailedCount >= 4)
                     {
-                        return RedirectToAction("Index", "Home");
+                        user.LockoutEnabled = true;
+                        await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddMinutes(5));
+
+                        ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
+                        return View(loginViewModel);
                     }
-                    if (user.AccessFailedCount >= 4 || user.LockoutEnd >= DateTime.UtcNow)
-                    {
-
-                        if (user.LockoutEnd >= DateTime.UtcNow)
-                        {
-                            ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
-                            return View(model);
-                        }
-
-
-                        if (user.AccessFailedCount >= 4)
-                        {
-                            user.LockoutEnabled = true;
-                            await _userManager.SetLockoutEndDateAsync(user, DateTimeOffset.UtcNow.AddMinutes(5));
-
-                            ModelState.AddModelError(string.Empty, "Conta bloqueada por excesso de tentativas");
-                            return View(model);
-                        }
-
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, "Tentativa de login inválida. Verifique seu login e senha e tente novamente");
-                        return View(model);
-                    }
-
 
                 }
-                return View(model);
+                else
+                {
+                    ModelState.AddModelError(string.Empty, "Tentativa de login inválida. Verifique seu login e senha e tente novamente");
+                    return View(loginViewModel);
+                }
+
+                return View(loginViewModel);
             }
             catch (Exception ex)
             {
                 throw new Exception("Ocorreu um erro interno na aplicação." + ex.Message);
             }
 
-            
-        }
 
+        }
 
 
         [HttpPost]
@@ -110,26 +112,27 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                if (ModelState.IsValid)
+                RegistroDeUsuarioDTO registroDeUsuarioDTO = _mapper.Map<RegistroDeUsuarioDTO>(model);
+
+                IdentityUser user = _mapper.Map<IdentityUser>(registroDeUsuarioDTO);   
+
+                IdentityResult result = await _userManager.CreateAsync(user, registroDeUsuarioDTO.Senha);
+
+                if (result.Succeeded)
                 {
-                    ApplicationUser user = new ApplicationUser { UserName = model.NmUsuario, Email = model.Email, PhoneNumber = model.NrTelefone };
-                    IdentityResult result = await _userManager.CreateAsync(user, model.Senha);
-
-                    if (result.Succeeded)
+                    return RedirectToAction("LoginUsuario", "Login");
+                }
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
                     {
-
-                        return RedirectToAction("LoginUsuario", "Login");
-                    }
-                    else
-                    {
-                        foreach (IdentityError error in result.Errors)
-                        {
-                            ModelState.AddModelError(string.Empty, error.Description);
-                        }
+                        ModelState.AddModelError(string.Empty, error.Description);
                     }
                 }
 
-                return View(model);
+                RegistroDeUsuarioViewModel registroDeUsuarioViewModel = _mapper.Map<RegistroDeUsuarioViewModel>(registroDeUsuarioDTO);
+
+                return View(registroDeUsuarioViewModel);
             }
             catch (Exception ex)
             {
@@ -144,7 +147,7 @@ namespace CarControl.WebApp.Controllers
         {
             try
             {
-                ApplicationUser user = await _userManager.FindByEmailAsync(email);
+                IdentityUser user = await _userManager.FindByEmailAsync(email);
 
                 if (user != null)
                 {

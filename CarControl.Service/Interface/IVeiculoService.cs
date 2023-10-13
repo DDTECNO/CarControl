@@ -1,4 +1,4 @@
-﻿using CarControl.Domain;
+﻿using CarControl.Common.DTO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -6,11 +6,11 @@ namespace CarControl.Service.Interface
 {
     public interface IVeiculoService
     {
-        Task<Veiculo> Create(Veiculo veiculo);
-        Task<IEnumerable<Veiculo>> ListaVeiculos();
-        Veiculo ObterVeiculos(int id);
-        Task<Veiculo> ObterVeiculoPorCPF(string cpf);
-        Task<Veiculo> EditarVeiculo(Veiculo veiculo);
-        Task<Veiculo> ExcluirVeiculo(int id);
+        Task<VeiculoDTO> InserirVeiculo(VeiculoDTO veiculo);
+        Task<IEnumerable<VeiculoDTO>> ListarVeiculos();
+        VeiculoDTO ObterVeiculo(int id);
+        Task<VeiculoDTO> ObterVeiculoPorCPF(string cpf);
+        Task<VeiculoDTO> EditarVeiculo(VeiculoDTO veiculo);
+        Task<VeiculoDTO> ExcluirVeiculo(int id);
     }
 }

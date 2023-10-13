@@ -1,15 +1,16 @@
 ﻿using CarControl.Domain;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
-namespace CarControl.Infrastructure.Repositories.Interface
+namespace CarControl.Infrastructure.Interface
 {
     public interface IVagaRepository
     {
-         
-        IEnumerable<Vaga> ListaVaga();
+
+        Task<IEnumerable<Vaga>> ListaVaga();
         Vaga VerificaFLVaga(int idVaga);
         Vaga ObterVaga(int idVaga);
         Vaga VagaEstaOcupada(int idVaga);
-        void setFlVaga(int idVag,char flvaga);
+        void SetFlVaga(int idVag, char flvaga);
     }
 }

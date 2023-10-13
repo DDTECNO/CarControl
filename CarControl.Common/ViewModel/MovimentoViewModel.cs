@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CarControl.Domain;
 using System.ComponentModel.DataAnnotations;
 
-namespace CarControl.Domain.ViewModel
+namespace CarControl.Common.ViewModel
 {
     public class MovimentoViewModel
     {
@@ -23,25 +22,25 @@ namespace CarControl.Domain.ViewModel
         [Required(ErrorMessage = "A hora de entrada do veículo é obrigatória")]
         public TimeSpan HrSaida { get; set; }
 
-        public IEnumerable<Vaga> Vagas { get; set; }
+        public IEnumerable<Vaga>? Vagas { get; set; }
 
         [Required(ErrorMessage = "A vaga do veículo é obrigatória")]
         public int IdVaga { get; set; }
 
-        public IEnumerable<Veiculo> Veiculos { get; set; }
+        public IEnumerable<Veiculo>? Veiculos { get; set; }
 
         [Required(ErrorMessage = "O veículo é obrigatório")]
         public int IdVeiculo { get; set; }
 
-        public IEnumerable<Operacao> Operacoes { get; set; }
+        public IEnumerable<Operacao>? Operacoes { get; set; }
 
         [Required(ErrorMessage = "A operação é obrigatória")]
         public int IdOperacao { get; set; }
 
-        public IEnumerable<Movimento> Movimentos { get; set; }
-        public Movimento Movimento { get; set; }
+        public IEnumerable<Movimento>? Movimentos { get; set; }
+        public Movimento? Movimento { get; set; }
 
-        public Vaga Vaga { get; set; }
+        public Vaga? Vaga { get; set; }
 
     }
 }
